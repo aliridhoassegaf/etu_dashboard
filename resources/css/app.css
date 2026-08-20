@@ -1,0 +1,8 @@
+/*
+ * Vireo — Laravel edition · single CSS entry.
+ * Delegates entirely to the SHARED token core copied verbatim from the HTML
+ * reference (resources/css/styles/app.css). Never edit token values here — the
+ * shared `styles/` tree is the source of truth and proves cross-edition parity.
+ * The shared entry already does `@import 'tailwindcss'` + the full token chain.
+ */
+@import './styles/app.css';
