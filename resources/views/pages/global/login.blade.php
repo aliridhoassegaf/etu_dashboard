@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en" data-ax-route="auth/sign-in-basic">
+
+<head>
+  @include('partials.head')
+  @include('partials.head-auth-custom')
+</head>
+
+<body class="ax-standalone">
+  @include('partials.loader')
+
+  <main class="ax-center" id="ax-main" style="inline-size:100%;max-inline-size:400px;position:relative;z-index:1;">
+    <div style="inline-size:100%;display:flex;flex-direction:column;gap:var(--ax-space-5);">
+
+      <!-- ════ AUTH CARD ════ -->
+      <section class="ax-card" role="region" aria-label="Sign in" x-data="axAuthForm()"
+        style="border-radius:var(--ax-radius-xl);">
+        <div class="ax-card__body"
+          style="padding:var(--ax-space-8);display:flex;flex-direction:column;gap:var(--ax-space-5);">
+
+          <!-- heading -->
+          <header
+            style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:var(--ax-space-1);">
+            <div>
+              <img src="{{ asset('assets/img') }}/logo-express.png" style="max-width:200px;">
+            </div>
+
+            <p style="margin:0;font-size:var(--ax-text-sm);color:var(--ax-text-muted);">Welcome back — sign in to your
+              workspace.</p>
+          </header>
+
+          <!-- global error -->
+          {{-- <div role="alert" x-cloak x-transition class="ax-alert ax-alert--danger"
+            style="padding:var(--ax-space-3) var(--ax-space-4);">
+            <svg class="ax-alert__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+              <path d="M12 8v4" />
+              <path d="M12 16h.01" />
+            </svg>
+            <div class="ax-alert__content">
+              <p class="ax-alert__message" style="color:var(--ax-danger-500);">Incorrect email or password. Please try
+                again.</p>
+            </div>
+          </div> --}}
+
+          <!-- form -->
+          <form id="form_login" class="ax-stack" style="display:flex;flex-direction:column;gap:var(--ax-space-4);"
+            novalidate>
+
+            <div class="ax-field">
+              <label class="ax-label" for="si-email">Email</label>
+
+              <div class="ax-field__control">
+                <input id="si-email" name="email" type="text" class="ax-input ax-input--with-trailing"
+                  placeholder="you@website.com" aria-describedby="si-email-error">
+
+                <span class="ax-field__affix ax-field__affix--trailing" aria-hidden="true"
+                  style="color:var(--ax-danger-500);display:none;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+                    <path d="M12 8v4" />
+                    <path d="M12 16h.01" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+
+
+            <div class="ax-field">
+
+              <div class="ax-cluster" style="justify-content:space-between;">
+                <label class="ax-label" for="si-pass">Password</label>
+
+                <a class="ax-link" href="/src/html/auth/reset-password-basic.html" style="font-size:var(--ax-text-xs);">
+                  Forgot password?
+                </a>
+              </div>
+
+              <div class="ax-field__control">
+
+                <input id="si-pass" name="password" class="ax-input ax-input--with-trailing"
+                  autocomplete="current-password" placeholder="••••••••••" :type="reveal ? 'text' : 'password'"
+                  aria-describedby="si-pass-error">
+
+                <!-- Show / Hide Password -->
+                <button type="button" class="ax-field__affix ax-field__affix--trailing ax-field__affix--button"
+                  @click="reveal = !reveal" :aria-pressed="reveal"
+                  :aria-label="reveal ? 'Hide password' : 'Show password'">
+
+                  <!-- Eye -->
+                  <svg x-show="!reveal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                    <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                  </svg>
+
+                  <!-- Eye Off -->
+                  <svg x-show="reveal" x-cloak viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" />
+
+                    <path
+                      d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 -9 6c-.666 1.11 -1.379 2.067 -2.138 2.87" />
+
+                    <path d="M3 3l18 18" />
+                  </svg>
+
+                </button>
+
+              </div>
+
+            </div>
+
+            <button type="submit" class="ax-btn ax-btn--primary ax-btn--lg ax-btn--block"
+              :class="loading && 'is-loading'" :aria-busy="loading">
+              <span class="ax-btn__spinner" aria-hidden="true"></span>
+              <span class="ax-btn__label">Sign in</span>
+            </button>
+          </form>
+
+        </div>
+      </section>
+
+      <p style="text-align:center;margin:0;font-size:var(--ax-text-2xs);color:var(--ax-text-subtle);">
+        Need support? <a class="ax-link" href="/src/html/pages/terms.html">Help Center</a>
+      </p>
+    </div>
+  </main>
+
+  <script>
+    function axOffappTools() {
+      return {
+        theme: document.documentElement.getAttribute('data-ax-theme') || 'light',
+        locale: (localStorage.getItem('ax:lang') || 'EN').toUpperCase(),
+        toggleTheme() {
+          this.theme = this.theme === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-ax-theme', this.theme);
+          try { localStorage.setItem('ax:theme', this.theme); } catch (e) { }
+        },
+        cycleLocale() {
+          const order = ['EN', 'FR', 'DE', 'ES', 'AR'];
+          this.locale = order[(order.indexOf(this.locale) + 1) % order.length];
+          try { localStorage.setItem('ax:lang', this.locale); } catch (e) { }
+        },
+      };
+    }
+    function axAuthForm() {
+      return {
+        email: '', password: '', remember: false, reveal: false,
+        emailErr: '', passErr: '', error: false, loading: false,
+        validate() {
+          this.emailErr = !this.email.trim()
+            ? 'Enter your email or username.'
+            : (this.email.includes('@') && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(this.email.trim()) ? 'Enter a valid email address.' : '');
+          this.passErr = !this.password ? 'Enter your password.' : '';
+          return !this.emailErr && !this.passErr;
+        },
+        submit() {
+          this.error = false;
+          if (!this.validate()) return;
+          this.loading = true;
+          // Demo only — never hits the network. Simulates a wrong-credential response.
+          setTimeout(() => { this.loading = false; this.error = true; }, 900);
+        },
+      };
+    }
+  </script>
+  @include('partials.foot-auth-custom')
+  @include('partials.validation-auth-custom')
+</body>
+
+</html>

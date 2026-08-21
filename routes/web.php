@@ -16,6 +16,11 @@ Route::get('/', fn () => view('pages.global.read', [
     'route' => 'global/read',
 ]))->name('global.read');
 
+Route::get('/login', fn () => view('pages.global.login', [
+    'title' => 'Login',
+    'route' => 'global/login',
+]))->name('global.login');
+
 // Default route — Sales dashboard (index)
 // Route::get('/', fn () => view('pages.dashboards.sales', [
 //     'title' => 'Sales',
