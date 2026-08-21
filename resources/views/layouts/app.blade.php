@@ -2,7 +2,10 @@
 {{-- lang + dir are set by the anti-flash IIFE in partials.head before first paint;
      the @route attr seeds nav.js active-trail / breadcrumb (manifest slug). --}}
 <html lang="en" data-ax-route="{{ $route ?? 'dashboards/sales' }}">
-<head>@include('partials.head')</head>
+<head>
+  @include('partials.head')
+  @include('partials.head-custom')
+</head>
 <body>
   @include('partials.loader')
   <div class="ax-ambient" aria-hidden="true"><i></i></div>
@@ -24,5 +27,6 @@
   {{-- Per-page scripts (charts/datatables/editors) push here; they run AFTER the
        Vite module bundle (resources/js/app.js) which boots Alpine + vireo.js. --}}
   @stack('scripts')
+  @include('partials.foot-custom')
 </body>
 </html>

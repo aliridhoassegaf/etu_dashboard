@@ -3,9 +3,9 @@
   <div class="ax-sidebar__brand">
     <a class="ax-sidebar__logo" href="/" aria-label="Vireo home">
       <span class="ax-sidebar__mark" aria-hidden="true">
-        <svg class="ax-icon" viewBox="0 0 32 32" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="axmk0" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse"><stop stop-color="#2BC4B0"/><stop offset="0.55" stop-color="#1E9E96"/><stop offset="1" stop-color="#6D5CF0"/></linearGradient></defs><path d="M4 4 H16 A12 12 0 0 1 28 16 V28 A0 0 0 0 1 28 28 H16 A12 12 0 0 1 4 16 V4 Z" fill="url(#axmk0)" stroke="none"/><circle cx="20.5" cy="11.5" r="2.6" fill="#0A0C11" fill-opacity="0.92" stroke="none"/></svg>
+        <img src="{{ asset('assets/img') }}/icon-express.png" style="max-width: 40px;">
       </span>
-      <span class="ax-sidebar__wordmark">VIREO</span>
+      <span class="ax-sidebar__wordmark">Express Group</span>
     </a>
   </div>
 
@@ -423,8 +423,8 @@
     <div class="ax-sidebar__user">
       <img class="ax-avatar ax-sidebar__user-avatar" src="https://i.pravatar.cc/80?img=12" alt="" width="36" height="36" />
       <span class="ax-sidebar__user-meta">
-        <b class="ax-sidebar__user-name">Jacob Gerrald</b>
-        <small class="ax-sidebar__user-mail">jacob@vireo.io</small>
+        <b class="ax-sidebar__user-name">Ali Ridho</b>
+        <small class="ax-sidebar__user-mail">aliridho@expressgroup.co.id</small>
       </span>
       <a class="ax-sidebar__logout" href="/pages/logout" aria-label="Log out">
         <svg class="ax-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" /><path d="M9 12h12l-3 -3" /><path d="M18 15l3 -3" /></svg>

@@ -21,34 +21,6 @@
   <!-- ===== BODY (scrolls) ===== -->
   <div class="ax-customizer__body">
 
-    <!-- COLOR MODE -->
-    <section class="ax-customizer__section">
-      <p class="ax-eyebrow">Color Mode</p>
-      <div class="ax-segmented" role="radiogroup" aria-label="Color mode">
-        <button type="button" class="ax-segmented__btn" role="radio" :aria-checked="mode==='light'" :class="{'is-active': mode==='light'}" data-ax-set="mode" data-ax-value="light" @click="setMode('light')">
-          <svg class="ax-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" /></svg>
-          <span>Light</span>
-        </button>
-        <button type="button" class="ax-segmented__btn" role="radio" :aria-checked="mode==='dark'" :class="{'is-active': mode==='dark'}" data-ax-set="mode" data-ax-value="dark" @click="setMode('dark')">
-          <svg class="ax-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454l0 .008" /></svg>
-          <span>Dark</span>
-        </button>
-        <button type="button" class="ax-segmented__btn" role="radio" :aria-checked="mode==='system'" :class="{'is-active': mode==='system'}" data-ax-set="mode" data-ax-value="system" @click="setMode('system')">
-          <svg class="ax-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><path d="M3 5a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-10" /><path d="M7 20h10" /><path d="M9 16v4" /><path d="M15 16v4" /></svg>
-          <span>System</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- DIRECTION -->
-    <section class="ax-customizer__section">
-      <p class="ax-eyebrow">Direction</p>
-      <div class="ax-segmented" role="radiogroup" aria-label="Direction">
-        <button type="button" class="ax-segmented__btn" role="radio" :aria-checked="dir==='ltr'" :class="{'is-active': dir==='ltr'}" data-ax-set="dir" data-ax-value="ltr" @click="setDir('ltr')"><span>LTR</span></button>
-        <button type="button" class="ax-segmented__btn" role="radio" :aria-checked="dir==='rtl'" :class="{'is-active': dir==='rtl'}" data-ax-set="dir" data-ax-value="rtl" @click="setDir('rtl')"><span>RTL</span></button>
-      </div>
-    </section>
-
     <!-- FONT — the family in use, plus a search across every Google family.
          There is no shortlist: the default (Inter) keeps the shipped Inter +
          Space Grotesk pairing, and anything picked from the catalog drives body

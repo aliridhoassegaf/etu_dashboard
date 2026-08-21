@@ -11,11 +11,16 @@ use Illuminate\Support\Facades\Route;
 | active-trail + breadcrumb). See CONVENTIONS.md.
 */
 
+Route::get('/', fn () => view('pages.global.read', [
+    'title' => 'Global Read',
+    'route' => 'global/read',
+]))->name('global.read');
+
 // Default route — Sales dashboard (index)
-Route::get('/', fn () => view('pages.dashboards.sales', [
-    'title' => 'Sales',
-    'route' => 'dashboards/sales',
-]))->name('dashboards.sales');
+// Route::get('/', fn () => view('pages.dashboards.sales', [
+//     'title' => 'Sales',
+//     'route' => 'dashboards/sales',
+// ]))->name('dashboards.sales');
 
 Route::get('/apps/calendar', fn () => view('pages.apps.calendar', ['title' => 'Calendar', 'route' => 'apps/calendar']))->name('apps.calendar');
 Route::get('/apps/chat', fn () => view('pages.apps.chat', ['title' => 'Chat', 'route' => 'apps/chat']))->name('apps.chat');
