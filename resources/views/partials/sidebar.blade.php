@@ -174,7 +174,7 @@
       </button>
     </div>
 
-    <p class="ax-sidebar__section" role="presentation">Settings</p>
+    <p class="ax-sidebar__section" role="presentation">Configuration</p>
 
     <div class="ax-nav__group" data-ax-collapse>
       <button type="button" class="ax-nav__item ax-nav__item--parent" role="treeitem" aria-level="1"

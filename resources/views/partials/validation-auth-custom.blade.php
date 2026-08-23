@@ -59,10 +59,6 @@
           .hide();
       },
 
-      submitHandler: function (form) {
-        console.log('Form valid');
-      }
-
     });
 
   });

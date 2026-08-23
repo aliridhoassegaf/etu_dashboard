@@ -30,7 +30,8 @@
           </header>
 
           <!-- global error -->
-          {{-- <div role="alert" x-cloak x-transition class="ax-alert ax-alert--danger"
+          @if(session('success'))
+          <div role="alert" x-cloak x-transition class="ax-alert ax-alert--success"
             style="padding:var(--ax-space-3) var(--ax-space-4);">
             <svg class="ax-alert__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -39,20 +40,35 @@
               <path d="M12 16h.01" />
             </svg>
             <div class="ax-alert__content">
-              <p class="ax-alert__message" style="color:var(--ax-danger-500);">Incorrect email or password. Please try
-                again.</p>
+              <p class="ax-alert__message" style="color:var(--ax-success-500);">{{ session('success') }}</p>
             </div>
-          </div> --}}
+          </div>
+          @endif
+
+          @if(session('error'))
+          <div role="alert" x-cloak x-transition class="ax-alert ax-alert--danger"
+            style="padding:var(--ax-space-3) var(--ax-space-4);">
+            <svg class="ax-alert__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+              <path d="M12 8v4" />
+              <path d="M12 16h.01" />
+            </svg>
+            <div class="ax-alert__content">
+              <p class="ax-alert__message" style="color:var(--ax-danger-500);">{{ session('error') }}</p>
+            </div>
+          </div>
+          @endif
 
           <!-- form -->
-          <form id="form_login" class="ax-stack" style="display:flex;flex-direction:column;gap:var(--ax-space-4);"
+          <form method="POST" id="form_login" action="{{ route('admin.login.process') }}" class="ax-stack" style="display:flex;flex-direction:column;gap:var(--ax-space-4);"
             novalidate>
-
+            @csrf
             <div class="ax-field">
               <label class="ax-label" for="si-email">Email</label>
 
               <div class="ax-field__control">
-                <input id="si-email" name="email" type="text" class="ax-input ax-input--with-trailing"
+                <input id="si-email" value="aliridho@expressgroup.co.id" name="email" type="text" class="ax-input ax-input--with-trailing"
                   placeholder="you@website.com" aria-describedby="si-email-error">
 
                 <span class="ax-field__affix ax-field__affix--trailing" aria-hidden="true"
@@ -80,7 +96,7 @@
 
               <div class="ax-field__control">
 
-                <input id="si-pass" name="password" class="ax-input ax-input--with-trailing"
+                <input id="si-pass" value="Password123!" name="password" class="ax-input ax-input--with-trailing"
                   autocomplete="current-password" placeholder="••••••••••" :type="reveal ? 'text' : 'password'"
                   aria-describedby="si-pass-error">
 

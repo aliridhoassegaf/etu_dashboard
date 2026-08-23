@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\AdminController;
+
 /*
 |--------------------------------------------------------------------------
 | Vireo routes (Phase B — all pages wired)
@@ -11,15 +13,14 @@ use Illuminate\Support\Facades\Route;
 | active-trail + breadcrumb). See CONVENTIONS.md.
 */
 
-Route::get('/', fn () => view('pages.global.read', [
-    'title' => 'Global Read',
-    'route' => 'global/read',
-]))->name('global.read');
+Route::get('/', [AdminController::class, 'login'])
+    ->name('admin.login');
 
-Route::get('/login', fn () => view('pages.global.login', [
-    'title' => 'Login',
-    'route' => 'global/login',
-]))->name('global.login');
+Route::post('/admin-login', [AdminController::class, 'loginProcess'])
+    ->name('admin.login.process');
+
+Route::get('/admin', [AdminController::class, 'read'])
+    ->name('admin.read');
 
 // Default route — Sales dashboard (index)
 // Route::get('/', fn () => view('pages.dashboards.sales', [

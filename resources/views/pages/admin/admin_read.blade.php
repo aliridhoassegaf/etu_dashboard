@@ -222,6 +222,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
             </tr>
           </thead>
           <tbody>
+            @foreach($result as $value)
             <tr class="ax-table__row">
               <td class="ax-table__td" style="color:var(--ax-text-muted);">
                 <label class="ax-check"
@@ -230,7 +231,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                 </label>
               </td>
               <td class="ax-table__td" style="font-weight:var(--ax-weight-medium);color:var(--ax-text-strong);">
-                <a href="#">Ali Ridho</a>
+                <a href="#">{{ $value['fullname'] }}</a>
               </td>
               <td class="ax-table__td" style="color:var(--ax-text-muted);">aliridho@expressgroup.co.id</td>
               <td class="ax-table__td" style="color:var(--ax-text-muted);">082246054709</td>
@@ -308,92 +309,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                 </div>
               </td>
             </tr>
-            <tr class="ax-table__row">
-              <td class="ax-table__td" style="color:var(--ax-text-muted);">
-                <label class="ax-check"
-                  style="display:flex;gap:var(--ax-space-3);align-items:center;min-height:auto;padding-inline-start:var(--ax-space-5);">
-                  <input type="checkbox" class="ax-checkbox row-checkbox">
-                </label>
-              </td>
-              <td class="ax-table__td" style="font-weight:var(--ax-weight-medium);color:var(--ax-text-strong);">
-                <a href="#">Aldo Assegaf</a>
-              </td>
-              <td class="ax-table__td" style="color:var(--ax-text-muted);">aliridho@expressgroup.co.id</td>
-              <td class="ax-table__td" style="color:var(--ax-text-muted);">082246054709</td>
-              <td class="ax-table__td" style="color:var(--ax-text-muted);">Technology</td>
-              <td class="ax-table__td"><span class="ax-badge ax-badge--soft ax-badge--success ax-badge--pill"><span
-                    class="ax-badge__dot"></span>Active</span></td>
-              <td class="ax-table__td">
-                <div class="ax-cluster" style="gap:6px;flex-wrap:nowrap;">
-
-                  <a class="ax-btn ax-btn--secondary ax-btn--sm ax-btn--icon" href="#" aria-label="Email">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                      class="icon icon-tabler icons-tabler-outline icon-tabler-eye">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                      <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
-                    </svg>
-                  </a>
-
-                  <a class="ax-btn ax-btn--secondary ax-btn--sm ax-btn--icon" href="#" aria-label="Email"><svg
-                      xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                      class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                      <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
-                      <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415" />
-                      <path d="M16 5l3 3" />
-                    </svg></a>
-
-                  <div x-data="axModal()">
-                    <button type="button" class="ax-btn ax-btn--secondary ax-btn--sm ax-btn--icon" @click="show()">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                        class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M4 7l16 0" />
-                        <path d="M10 11l0 6" />
-                        <path d="M14 11l0 6" />
-                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                      </svg>
-                    </button>
-                    <template x-teleport="body">
-                      <div class="ax-modal ax-modal--centered" x-show="open" x-cloak @keydown.escape.window="hide()"
-                        role="alertdialog" aria-modal="true" aria-labelledby="m-confirm-title"
-                        aria-describedby="m-confirm-desc">
-                        <div class="ax-modal__backdrop" x-show="open" x-transition.opacity @click="hide()"></div>
-                        <div class="ax-modal__dialog ax-modal__dialog--sm" x-show="open" x-transition
-                          x-trap.inert.noscroll="open">
-                          <div class="ax-modal__body"
-                            style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:var(--ax-space-3);">
-                            <span class="ax-modal__status ax-modal__status--danger"><svg viewBox="0 0 24 24" width="24"
-                                height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
-                                stroke-linejoin="round" aria-hidden="true">
-                                <path d="M12 9v4" />
-                                <path d="M12 16v.01" />
-                                <path
-                                  d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
-                              </svg></span>
-                            <h2 class="ax-modal__title" id="m-confirm-title">Are you sure?</h2>
-                            <p id="m-confirm-desc" style="margin:0;color:var(--ax-text-muted);">Are you sure you
-                              want to delete this data? This action cannot be undone.</p>
-                          </div>
-                          <div class="ax-modal__footer" style="justify-content:center;">
-                            <button type="button" class="ax-btn ax-btn--ghost" @click="hide()">Cancel</button>
-                            <button type="button" class="ax-btn ax-btn--primary"
-                              style="background:var(--ax-danger-500);box-shadow:none;"
-                              @click="hide(); $toast({ msg:'Invoice deleted', ttl:3000 })">Delete</button>
-                          </div>
-                        </div>
-                      </div>
-                    </template>
-                  </div>
-
-                </div>
-              </td>
-            </tr>
+            @endforeach
           </tbody>
         </table>
       </div>
