@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminRoleController;
+use App\Http\Controllers\AdminActivityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +23,12 @@ Route::post('/admin-login', [AdminController::class, 'loginProcess'])
 
 Route::get('/admin', [AdminController::class, 'read'])
     ->name('admin.read');
+
+Route::get('/admin-role', [AdminRoleController::class, 'read'])
+    ->name('admin_role.read');
+
+Route::get('/admin-activity', [AdminActivityController::class, 'read'])
+    ->name('admin_activity.read');
 
 // Default route — Sales dashboard (index)
 // Route::get('/', fn () => view('pages.dashboards.sales', [

@@ -4,7 +4,7 @@
 <html lang="en" data-ax-route="{{ $route ?? 'dashboards/sales' }}">
 <head>
   @include('partials.head')
-  @include('partials.head-custom')
+  @yield('head_custom')
 </head>
 <body>
   @include('partials.loader')
@@ -27,6 +27,6 @@
   {{-- Per-page scripts (charts/datatables/editors) push here; they run AFTER the
        Vite module bundle (resources/js/app.js) which boots Alpine + vireo.js. --}}
   @stack('scripts')
-  @include('partials.foot-custom')
+  @yield('foot_custom')
 </body>
 </html>

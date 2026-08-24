@@ -263,14 +263,14 @@
         </svg>
       </button>
       <div class="ax-nav__children" role="group" data-ax-collapse-panel>
-        <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="2" href="/dashboards/sales"
+        <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="2" href="{{ url("admin") }}"
           tabindex="-1">
           <span class="ax-nav__bar" aria-hidden="true"></span><span class="ax-nav__label">Admin Users</span>
         </a>
-        <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="2" href="/dashboards/analytics"
+        <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="2" href="{{ url("admin-role") }}"
           tabindex="-1"><span class="ax-nav__bar" aria-hidden="true"></span><span class="ax-nav__label">Admin
             Roles</span></a>
-        <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="2" href="/dashboards/ecommerce"
+        <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="2" href="{{ url("admin-activity") }}"
           tabindex="-1"><span class="ax-nav__bar" aria-hidden="true"></span><span class="ax-nav__label">Admin
             Activities</span></a>
       </div>

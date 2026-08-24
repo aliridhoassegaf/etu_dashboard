@@ -56,13 +56,20 @@ class AdminController extends Controller
             abort(404);
         }
 
-        $data = ApiHelper::get('/admin', $request->all());
+        $params = $request->all();
+        // $params['per_page'] = $request->per_page ?? 1;
+
+        $data = ApiHelper::get('/admin', $params);
+
+        $adminRoles = ApiHelper::get('/admin-role');
 
         return view('pages.admin.admin_read', [
-            'title' => 'Admin',
+            'title' => 'Admin Users',
             'route' => 'admin/read',
             'result' => $data['data'] ?? [],
+            'data_state' => $data['data_state'],
             'pagination' => $data['pagination'] ?? [],
+            'adminRoles' => $adminRoles['data'] ?? [],
         ]);
 
     }
