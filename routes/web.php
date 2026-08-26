@@ -6,6 +6,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminRoleController;
 use App\Http\Controllers\AdminActivityController;
 
+use App\Http\Controllers\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | Vireo routes (Phase B — all pages wired)
@@ -29,6 +31,9 @@ Route::get('/admin-role', [AdminRoleController::class, 'read'])
 
 Route::get('/admin-activity', [AdminActivityController::class, 'read'])
     ->name('admin_activity.read');
+
+Route::get('/user', [UserController::class, 'read'])
+    ->name('user.read');
 
 // Default route — Sales dashboard (index)
 // Route::get('/', fn () => view('pages.dashboards.sales', [

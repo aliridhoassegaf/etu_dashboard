@@ -102,11 +102,30 @@
 })();
 </script>
 
-<title>{{ ($title ?? 'Sales') }} · Vireo</title>
+<title>{{ $title }} · {{ env("APP_NAME") }}</title>
 <meta name="description" content="Vireo — premium multipurpose admin & dashboard template with an Aurora glass interface, 17 dashboards, 8 web apps and a full eCommerce suite." />
 <meta name="theme-color" content="#0A0C11" media="(prefers-color-scheme: dark)" />
 <meta name="theme-color" content="#FCFBF9" media="(prefers-color-scheme: light)" />
-<link rel="icon" type="image/svg+xml" href="/src/assets/favicon.svg" />
+
+<!-- Favicon -->
+<link rel="apple-touch-icon" sizes="57x57" href="{{ asset('assets') }}/img/favicon.ico/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="{{ asset('assets') }}/img/favicon.ico/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="{{ asset('assets') }}/img/favicon.ico/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets') }}/img/favicon.ico/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="{{ asset('assets') }}/img/favicon.ico/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="{{ asset('assets') }}/img/favicon.ico/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="{{ asset('assets') }}/img/favicon.ico/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="{{ asset('assets') }}/img/favicon.ico/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets') }}/img/favicon.ico/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"
+  href="{{ asset('assets') }}/img/favicon.ico/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets') }}/img/favicon.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="{{ asset('assets') }}/img/favicon.ico/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets') }}/img/favicon.ico/favicon-16x16.png">
+<link rel="manifest" href="{{ asset('assets') }}/img/favicon.ico/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
 
 {{-- Google Fonts — Inter (sans) · Space Grotesk (display) · JetBrains Mono (mono) · token brief §7.1 --}}
 <link rel="preconnect" href="https://fonts.googleapis.com" />

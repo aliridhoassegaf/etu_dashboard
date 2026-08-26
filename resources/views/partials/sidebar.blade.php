@@ -67,6 +67,12 @@
           <path d="M9 6l6 6l-6 6" />
         </svg>
       </button>
+      <div class="ax-nav__children" role="group" data-ax-collapse-panel>
+        <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="2" href="{{ url("user") }}"
+          tabindex="-1">
+          <span class="ax-nav__bar" aria-hidden="true"></span><span class="ax-nav__label">Leads</span>
+        </a>
+      </div>
     </div>
 
     <div class="ax-nav__group" data-ax-collapse>
