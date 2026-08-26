@@ -125,7 +125,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                                   {{ $value_select['name'] }}
                               </option>
                             @empty
-                              <option value="" disabled>No roles available</option>
+                              <option value="" disabled>No data available</option>
                             @endforelse
                           </select>
                         </div>

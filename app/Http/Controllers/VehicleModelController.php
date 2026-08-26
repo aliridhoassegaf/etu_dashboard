@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use App\Helpers\ApiHelper;
 
-class UserController extends Controller
+class VehicleModelController extends Controller
 {
     public function read(Request $request)
     {
@@ -13,28 +13,21 @@ class UserController extends Controller
             return redirect('/');
         }
         $permissions = session('permissions', []);
-        if (!in_array('user.read', $permissions)) {
+        if (!in_array('vehicle_model.read', $permissions)) {
             abort(404);
         }
 
         $params = $request->all();
         // $params['per_page'] = $request->per_page ?? 1;
 
-        $data = ApiHelper::get('/user', $params);
+        $data = ApiHelper::get('/vehicle-model', $params);
 
-        $userRoles = ApiHelper::get('/user-role');
-        $userStatus = ApiHelper::get('/user-status',[
-            "with_sort"=>1
-        ]);
-
-        return view('pages.user.user_read', [
-            'title' => 'Driver Leads',
-            'route' => 'user/read',
+        return view('pages.vehicle_model.vehicle_model_read', [
+            'title' => 'Vehicle Models',
+            'route' => 'vehicle-model/read',
             'result' => $data['data'] ?? [],
             'data_state' => $data['data_state'],
             'pagination' => $data['pagination'] ?? [],
-            'userRoles' => $userRoles['data'] ?? [],
-            'userStatus' => $userStatus['data'] ?? [],
         ]);
 
     }

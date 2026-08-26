@@ -8,6 +8,11 @@ use App\Http\Controllers\AdminActivityController;
 
 use App\Http\Controllers\UserController;
 
+use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\VehicleSupplierController;
+use App\Http\Controllers\VehicleBrandController;
+use App\Http\Controllers\VehicleModelController;
+
 /*
 |--------------------------------------------------------------------------
 | Vireo routes (Phase B — all pages wired)
@@ -34,6 +39,18 @@ Route::get('/admin-activity', [AdminActivityController::class, 'read'])
 
 Route::get('/user', [UserController::class, 'read'])
     ->name('user.read');
+
+Route::get('/vehicle', [VehicleController::class, 'read'])
+    ->name('vehicle.read');
+
+Route::get('/vehicle-supplier', [VehicleSupplierController::class, 'read'])
+    ->name('vehicle_supplier.read');
+    
+Route::get('/vehicle-brand', [VehicleBrandController::class, 'read'])
+    ->name('vehicle_brand.read');
+
+Route::get('/vehicle-model', [VehicleModelController::class, 'read'])
+    ->name('vehicle_model.read');
 
 // Default route — Sales dashboard (index)
 // Route::get('/', fn () => view('pages.dashboards.sales', [

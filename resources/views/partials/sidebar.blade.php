@@ -92,6 +92,24 @@
           <path d="M9 6l6 6l-6 6" />
         </svg>
       </button>
+      <div class="ax-nav__children" role="group" data-ax-collapse-panel>
+        <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="2" href="{{ url("vehicle") }}"
+          tabindex="-1">
+          <span class="ax-nav__bar" aria-hidden="true"></span><span class="ax-nav__label">Vehicles</span>
+        </a>
+        <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="2" href="{{ url("vehicle-model") }}"
+          tabindex="-1">
+          <span class="ax-nav__bar" aria-hidden="true"></span><span class="ax-nav__label">Vehicle Models</span>
+        </a>
+        <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="2" href="{{ url("vehicle-brand") }}"
+          tabindex="-1">
+          <span class="ax-nav__bar" aria-hidden="true"></span><span class="ax-nav__label">Vehicle Brands</span>
+        </a>
+        <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="2" href="{{ url("vehicle-supplier") }}"
+          tabindex="-1">
+          <span class="ax-nav__bar" aria-hidden="true"></span><span class="ax-nav__label">Vehicle Suppliers</span>
+        </a>
+      </div>
     </div>
 
     <div class="ax-nav__group" data-ax-collapse>
