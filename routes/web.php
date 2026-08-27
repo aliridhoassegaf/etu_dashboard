@@ -27,13 +27,13 @@ Route::get('/', [AdminController::class, 'login'])
     ->name('admin.login');
 Route::post('/admin-login', [AdminController::class, 'loginProcess'])
     ->name('admin.login.process');
-
 Route::get('/admin', [AdminController::class, 'read'])
     ->name('admin.read');
 Route::get('/admin/{id}', [AdminController::class, 'view'])
     ->name('admin.view');
 Route::get('/admin-profile', [AdminController::class, 'profile'])
     ->name('admin.profile');
+Route::get('/admin-logout', [AdminController::class, 'logout']);
 
 Route::get('/admin-role', [AdminRoleController::class, 'read'])
     ->name('admin_role.read');

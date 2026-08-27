@@ -320,7 +320,7 @@
         <b class="ax-sidebar__user-name">Ali Ridho</b>
         <small class="ax-sidebar__user-mail">aliridho@expressgroup.co.id</small>
       </span>
-      <a class="ax-sidebar__logout" href="/pages/logout" aria-label="Log out">
+      <a class="ax-sidebar__logout" href="{{ url("admin-logout") }}" aria-label="Logout">
         <svg class="ax-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
           stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true">
           <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />

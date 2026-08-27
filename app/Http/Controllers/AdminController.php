@@ -7,6 +7,31 @@ use App\Helpers\ApiHelper;
 
 class AdminController extends Controller
 {
+    public function logout(Request $request)
+    {
+        try {
+            $response = Http::withToken(session('token'))
+                ->post(env('API_URL') . '/admin-logout');
+
+            if ($response->successful()) {
+                $result = $response->json();
+
+                if (isset($result['message'])) {
+                    $message = $result['message'];
+                }
+            }
+        } catch (\Exception $e) {
+            \Log::error('API LOGOUT ERROR', [
+                'message' => $e->getMessage()
+            ]);
+        }
+
+        $request->session()->flush();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/')->with('success', $message);
+    }
     public function view($id)
     {
         if (!session()->has('token')) {
