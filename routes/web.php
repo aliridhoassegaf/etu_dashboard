@@ -12,6 +12,7 @@ use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\VehicleSupplierController;
 use App\Http\Controllers\VehicleBrandController;
 use App\Http\Controllers\VehicleModelController;
+use App\Http\Controllers\CompanyPoolController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,33 +25,55 @@ use App\Http\Controllers\VehicleModelController;
 
 Route::get('/', [AdminController::class, 'login'])
     ->name('admin.login');
-
 Route::post('/admin-login', [AdminController::class, 'loginProcess'])
     ->name('admin.login.process');
 
 Route::get('/admin', [AdminController::class, 'read'])
     ->name('admin.read');
+Route::get('/admin/{id}', [AdminController::class, 'view'])
+    ->name('admin.view');
+Route::get('/admin-profile', [AdminController::class, 'profile'])
+    ->name('admin.profile');
 
 Route::get('/admin-role', [AdminRoleController::class, 'read'])
     ->name('admin_role.read');
+Route::get('/admin-role/{id}', [AdminRoleController::class, 'view'])
+    ->name('admin_role.view');
 
 Route::get('/admin-activity', [AdminActivityController::class, 'read'])
     ->name('admin_activity.read');
+Route::get('/admin-activity/{id}', [AdminActivityController::class, 'view'])
+    ->name('admin_activity.view');
 
 Route::get('/user', [UserController::class, 'read'])
     ->name('user.read');
+Route::get('/user/{id}', [UserController::class, 'view'])
+    ->name('user.view');
 
 Route::get('/vehicle', [VehicleController::class, 'read'])
     ->name('vehicle.read');
+Route::get('/vehicle/{id}', [VehicleController::class, 'view'])
+    ->name('vehicle.view');
 
 Route::get('/vehicle-supplier', [VehicleSupplierController::class, 'read'])
     ->name('vehicle_supplier.read');
+Route::get('/vehicle-supplier/{id}', [VehicleSupplierController::class, 'view'])
+    ->name('vehicle_supplier.view');
     
 Route::get('/vehicle-brand', [VehicleBrandController::class, 'read'])
     ->name('vehicle_brand.read');
+Route::get('/vehicle-brand/{id}', [VehicleBrandController::class, 'view'])
+    ->name('vehicle_brand.view');
 
 Route::get('/vehicle-model', [VehicleModelController::class, 'read'])
     ->name('vehicle_model.read');
+Route::get('/vehicle-model/{id}', [VehicleModelController::class, 'view'])
+    ->name('vehicle_model.view');
+
+Route::get('/company-pool', [CompanyPoolController::class, 'read'])
+    ->name('company_pool.read');
+Route::get('/company-pool/{id}', [CompanyPoolController::class, 'view'])
+    ->name('company_pool.view');
 
 // Default route — Sales dashboard (index)
 // Route::get('/', fn () => view('pages.dashboards.sales', [

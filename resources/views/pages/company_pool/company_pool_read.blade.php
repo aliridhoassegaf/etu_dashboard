@@ -41,13 +41,13 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
             aria-hidden="true">
             <path d="M9 6l6 6l-6 6"></path>
           </svg></li>
-        <li class="ax-breadcrumb__item" aria-current="page">Admins</li>
+        <li class="ax-breadcrumb__item" aria-current="page">Vehicles</li>
         <li class="ax-breadcrumb__sep" aria-hidden="true"><svg class="ax-icon ax-icon--directional" viewBox="0 0 24 24"
             fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
             aria-hidden="true">
             <path d="M9 6l6 6l-6 6"></path>
           </svg></li>
-        <li class="ax-breadcrumb__item" aria-current="page">Admin Roles</li>
+        <li class="ax-breadcrumb__item" aria-current="page">Company Pool</li>
       </ol>
     </nav>
     <!-- ───── DEFAULT TABLE ───── -->
@@ -315,14 +315,14 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                     </label>
                   </td>
                   <td class="ax-table__td" style="font-weight:var(--ax-weight-medium);color:var(--ax-text-strong);">
-                    <a href="{{ url('admin-role/' . $value['id']) }}">{{ $value['name'] }}</a>
+                    <a href="{{ url('company-pool/' . $value['id']) }}">{{ $value['name'] }}</a>
                   </td>
                   <td class="ax-table__td"><span class="ax-badge ax-badge--soft ax-badge--success ax-badge--pill"><span
                         class="ax-badge__dot"></span>{{ $value['status_name'] }}</span></td>
                   <td class="ax-table__td">
                     <div class="ax-cluster" style="gap:6px;flex-wrap:nowrap;">
 
-                      <a class="ax-btn ax-btn--secondary ax-btn--sm ax-btn--icon" href="{{ url('admin-role/' . $value['id']) }}" aria-label="Email">
+                      <a class="ax-btn ax-btn--secondary ax-btn--sm ax-btn--icon" href="{{ url('company-pool/' . $value['id']) }}" aria-label="Email">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                           stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
                           class="icon icon-tabler icons-tabler-outline icon-tabler-eye">

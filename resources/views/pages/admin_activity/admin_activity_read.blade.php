@@ -333,7 +333,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                   </td>
                     
                   <td class="ax-table__td">
-                      {{ $value['target_name'] }}
+                      <a href="{{ url('admin-activity/' . $value['id']) }}">{{ $value['target_name'] }}</a>
                   </td>
                   <td class="ax-table__td">
                     <strong>{{ $value['action'] }}</strong><br>
@@ -346,7 +346,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                   <td class="ax-table__td">
                     <div class="ax-cluster" style="gap:6px;flex-wrap:nowrap;">
 
-                      <a class="ax-btn ax-btn--secondary ax-btn--sm ax-btn--icon" href="#" aria-label="Email">
+                      <a class="ax-btn ax-btn--secondary ax-btn--sm ax-btn--icon" href="{{ url('admin-activity/' . $value['id']) }}" aria-label="Email">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                           stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
                           class="icon icon-tabler icons-tabler-outline icon-tabler-eye">

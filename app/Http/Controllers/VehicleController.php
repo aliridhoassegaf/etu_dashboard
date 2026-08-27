@@ -7,6 +7,29 @@ use App\Helpers\ApiHelper;
 
 class VehicleController extends Controller
 {
+    public function view($id)
+    {
+        if (!session()->has('token')) {
+            return redirect('/');
+        }
+
+        $permissions = session('permissions', []);
+        if (!in_array('vehicle.read', $permissions)) {
+            abort(404);
+        }
+
+        $response = ApiHelper::get('/vehicle/' . $id);
+        if (!$response['status']) {
+            abort(404);
+        }
+
+        $data = $response['data'];
+
+        return view('pages.vehicle.vehicle_view', [
+            'title' => 'View Vehicle',
+            'result' => $data
+        ]);
+    }
     public function read(Request $request)
     {
         if (!session()->has('token')) {

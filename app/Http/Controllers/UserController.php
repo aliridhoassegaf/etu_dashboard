@@ -7,6 +7,29 @@ use App\Helpers\ApiHelper;
 
 class UserController extends Controller
 {
+    public function view($id)
+    {
+        if (!session()->has('token')) {
+            return redirect('/');
+        }
+
+        $permissions = session('permissions', []);
+        if (!in_array('user.read', $permissions)) {
+            abort(404);
+        }
+
+        $response = ApiHelper::get('/user/' . $id);
+        if (!$response['status']) {
+            abort(404);
+        }
+
+        $data = $response['data'];
+
+        return view('pages.user.user_view', [
+            'title' => 'View User',
+            'result' => $data
+        ]);
+    }
     public function read(Request $request)
     {
         if (!session()->has('token')) {

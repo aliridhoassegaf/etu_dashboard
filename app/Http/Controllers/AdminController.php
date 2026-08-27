@@ -7,6 +7,51 @@ use App\Helpers\ApiHelper;
 
 class AdminController extends Controller
 {
+    public function view($id)
+    {
+        if (!session()->has('token')) {
+            return redirect('/');
+        }
+
+        $permissions = session('permissions', []);
+        if (!in_array('admin.read', $permissions)) {
+            abort(404);
+        }
+
+        $response = ApiHelper::get('/admin/' . $id);
+        if (!$response['status']) {
+            abort(404);
+        }
+
+        $data = $response['data'];
+
+        return view('pages.admin.admin_view', [
+            'title' => 'View Admin',
+            'result' => $data
+        ]);
+    }
+
+    public function profile()
+    {
+        if (!session()->has('token')) {
+            return redirect('/');
+        }
+        $id=session('admin')['id'];
+
+        $response = ApiHelper::get('/admin/' . $id);
+
+        if (!$response['status']) {
+            abort(404);
+        }
+
+        $data = $response['data'];
+        
+        return view('pages.admin.admin_profile', [
+            'title' => 'Admin Profile',
+            'result' => $data
+        ]);
+    }
+
     public function login()
     {
         return view('pages.admin.admin_login', [
