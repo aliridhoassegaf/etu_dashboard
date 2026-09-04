@@ -27,6 +27,7 @@ class VehicleBrandController extends Controller
 
         return view('pages.vehicle_brand.vehicle_brand_view', [
             'title' => 'View Vehicle Brand',
+            'route' => 'vehicle-brand/view',
             'result' => $data
         ]);
     }

@@ -5,6 +5,32 @@
 <head>
   @include('partials.head')
   @yield('head_custom')
+  <style>
+    .custom-driver-panel[hidden] {
+        display: none !important;
+    }
+
+    .custom-driver-panel {
+        display: block;
+    }
+    .box-photo-container {
+        width: 100%;
+        height: 300px;
+        background: #F1F1F1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border-radius: 8px;
+    }
+
+    .box-photo {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+    }
+  </style>
 </head>
 <body>
   @include('partials.loader')
@@ -28,5 +54,35 @@
        Vite module bundle (resources/js/app.js) which boots Alpine + vireo.js. --}}
   @stack('scripts')
   @yield('foot_custom')
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+
+        document.querySelectorAll('[data-driver-menu]').forEach(function (menu) {
+
+            const button = menu.querySelector('[data-driver-toggle]');
+            const panel = menu.querySelector('[data-driver-panel]');
+
+            if (!button || !panel) {
+                return;
+            }
+
+            button.addEventListener('click', function (event) {
+
+                event.preventDefault();
+                event.stopImmediatePropagation();
+
+                panel.hidden = !panel.hidden;
+
+                button.setAttribute(
+                    'aria-expanded',
+                    panel.hidden ? 'false' : 'true'
+                );
+
+            }, true);
+
+        });
+
+    });
+  </script>
 </body>
 </html>

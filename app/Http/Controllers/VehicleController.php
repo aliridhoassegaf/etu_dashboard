@@ -27,6 +27,7 @@ class VehicleController extends Controller
 
         return view('pages.vehicle.vehicle_view', [
             'title' => 'View Vehicle',
+            'route' => 'vehicle/view',
             'result' => $data
         ]);
     }
@@ -48,9 +49,16 @@ class VehicleController extends Controller
         $vehicleModel = ApiHelper::get('/vehicle-model');
         $vehicleBrand = ApiHelper::get('/vehicle-brand');
         $vehicleSupplier = ApiHelper::get('/vehicle-supplier');
+        $vehicleColor = ApiHelper::get('/vehicle-color',[
+            "with_sort"=>1
+        ]);
         $vehicleStatus = ApiHelper::get('/vehicle-status',[
             "with_sort"=>1
         ]);
+        $vehicleType = ApiHelper::get('/vehicle-type',[
+            "with_sort"=>1
+        ]);
+        $companyPool = ApiHelper::get('/company-pool');
 
         return view('pages.vehicle.vehicle_read', [
             'title' => 'Vehicle',
@@ -61,7 +69,10 @@ class VehicleController extends Controller
             'vehicleModel' => $vehicleModel['data'] ?? [],
             'vehicleBrand' => $vehicleBrand['data'] ?? [],
             'vehicleSupplier' => $vehicleSupplier['data'] ?? [],
+            'vehicleColor' => $vehicleColor['data'] ?? [],
             'vehicleStatus' => $vehicleStatus['data'] ?? [],
+            'vehicleType' => $vehicleType['data'] ?? [],
+            'companyPool' => $companyPool['data'] ?? [],
         ]);
 
     }

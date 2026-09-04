@@ -33,7 +33,7 @@
     <p class="ax-sidebar__section" role="presentation">Main Menu</p>
 
     <!-- Single-link leaf (Widgets) -->
-    <a class="ax-nav__item" role="treeitem" aria-level="1" href="/src/html/widgets.html" tabindex="-1">
+    <a class="ax-nav__item" role="treeitem" aria-level="1" href="#" tabindex="-1">
       <span class="ax-nav__bar" aria-hidden="true"></span>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
         stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
@@ -49,33 +49,201 @@
       <span class="ax-nav__label">Overview</span>
     </a>
 
-    <div class="ax-nav__group" data-ax-collapse>
-      <button type="button" class="ax-nav__item ax-nav__item--parent" role="treeitem" aria-level="1"
-        aria-expanded="true" data-ax-group="drivers" @click="toggle('drivers')" tabindex="0">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-          class="icon icon-tabler icons-tabler-outline icon-tabler-users">
-          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-          <path d="M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
-          <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-          <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
-        </svg>
-        <span class="ax-nav__label">Drivers</span>
-        <svg class="ax-nav__caret ax-icon--directional" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true">
-          <path d="M9 6l6 6l-6 6" />
-        </svg>
-      </button>
-      <div class="ax-nav__children" role="group" data-ax-collapse-panel>
-        <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="2" href="{{ url("user") }}"
-          tabindex="-1">
-          <span class="ax-nav__bar" aria-hidden="true"></span><span class="ax-nav__label">Leads</span>
-        </a>
-      </div>
+    @php
+        $isDriverActive = request()->is('user', 'user/*');
+    @endphp
+
+    <div class="custom-driver-menu" data-driver-menu>
+
+        <button
+            type="button"
+            class="ax-nav__item ax-nav__item--parent {{ $isDriverActive ? 'ax-nav__item--trail' : '' }}"
+            data-driver-toggle
+            aria-expanded="{{ $isDriverActive ? 'true' : 'false' }}"
+            tabindex="0"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/>
+                <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                <path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/>
+            </svg>
+
+            <span class="ax-nav__label">Drivers</span>
+
+            <svg
+                class="ax-nav__caret ax-icon--directional"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                width="24"
+                height="24"
+            >
+                <path d="M9 6l6 6l-6 6"/>
+            </svg>
+        </button>
+
+        {{-- Child --}}
+        <div
+            class="ax-nav__children custom-driver-panel"
+            data-driver-panel
+            {{ $isDriverActive ? '' : 'hidden' }}
+        >
+
+            <a
+                class="ax-nav__item ax-nav__item--child {{ $isDriverActive ? 'ax-nav__item--active is-active' : '' }}"
+                role="treeitem"
+                aria-level="2"
+                href="{{ url('user') }}"
+                tabindex="{{ $isDriverActive ? '0' : '-1' }}"
+                {{ $isDriverActive ? 'aria-current="page"' : '' }}
+            >
+                <span class="ax-nav__bar" aria-hidden="true"></span>
+                <span class="ax-nav__label">Leads</span>
+            </a>
+
+        </div>
+
     </div>
 
-    <div class="ax-nav__group" data-ax-collapse>
+    @php
+        $isVehicleActive = request()->is('vehicle', 'vehicle/*');
+        $isVehicleModelActive = request()->is('vehicle-model', 'vehicle-model/*');
+        $isVehicleBrandActive = request()->is('vehicle-brand', 'vehicle-brand/*');
+        $isVehicleSupplierActive = request()->is('vehicle-supplier', 'vehicle-supplier/*');
+
+        $isVehicleMenuOpen =
+            $isVehicleActive ||
+            $isVehicleModelActive ||
+            $isVehicleBrandActive ||
+            $isVehicleSupplierActive;
+    @endphp
+
+    <div class="custom-driver-menu" data-driver-menu>
+
+        <button
+            type="button"
+            class="ax-nav__item ax-nav__item--parent {{ $isVehicleMenuOpen ? 'ax-nav__item--trail' : '' }}"
+            data-driver-toggle
+            aria-expanded="{{ $isVehicleMenuOpen ? 'true' : 'false' }}"
+            tabindex="0"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-car">
+
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                <path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                <path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5" />
+            </svg>
+
+            <span class="ax-nav__label">Vehicles</span>
+
+            <svg
+                class="ax-nav__caret ax-icon--directional"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                width="24"
+                height="24"
+            >
+                <path d="M9 6l6 6l-6 6"/>
+            </svg>
+        </button>
+
+
+        {{-- Child --}}
+        <div
+            class="ax-nav__children custom-driver-panel"
+            data-driver-panel
+            {{ $isVehicleMenuOpen ? '' : 'hidden' }}
+        >
+
+            {{-- Vehicles --}}
+            <a
+                class="ax-nav__item ax-nav__item--child {{ $isVehicleActive ? 'ax-nav__item--active is-active' : '' }}"
+                role="treeitem"
+                aria-level="2"
+                href="{{ url('vehicle') }}"
+                tabindex="{{ $isVehicleActive ? '0' : '-1' }}"
+                {{ $isVehicleActive ? 'aria-current="page"' : '' }}
+            >
+                <span class="ax-nav__bar" aria-hidden="true"></span>
+                <span class="ax-nav__label">Vehicles</span>
+            </a>
+
+
+            {{-- Vehicle Models --}}
+            <a
+                class="ax-nav__item ax-nav__item--child {{ $isVehicleModelActive ? 'ax-nav__item--active is-active' : '' }}"
+                role="treeitem"
+                aria-level="2"
+                href="{{ url('vehicle-model') }}"
+                tabindex="{{ $isVehicleModelActive ? '0' : '-1' }}"
+                {{ $isVehicleModelActive ? 'aria-current="page"' : '' }}
+            >
+                <span class="ax-nav__bar" aria-hidden="true"></span>
+                <span class="ax-nav__label">Vehicle Models</span>
+            </a>
+
+
+            {{-- Vehicle Brands --}}
+            <a
+                class="ax-nav__item ax-nav__item--child {{ $isVehicleBrandActive ? 'ax-nav__item--active is-active' : '' }}"
+                role="treeitem"
+                aria-level="2"
+                href="{{ url('vehicle-brand') }}"
+                tabindex="{{ $isVehicleBrandActive ? '0' : '-1' }}"
+                {{ $isVehicleBrandActive ? 'aria-current="page"' : '' }}
+            >
+                <span class="ax-nav__bar" aria-hidden="true"></span>
+                <span class="ax-nav__label">Vehicle Brands</span>
+            </a>
+
+
+            {{-- Vehicle Suppliers --}}
+            <a
+                class="ax-nav__item ax-nav__item--child {{ $isVehicleSupplierActive ? 'ax-nav__item--active is-active' : '' }}"
+                role="treeitem"
+                aria-level="2"
+                href="{{ url('vehicle-supplier') }}"
+                tabindex="{{ $isVehicleSupplierActive ? '0' : '-1' }}"
+                {{ $isVehicleSupplierActive ? 'aria-current="page"' : '' }}
+            >
+                <span class="ax-nav__bar" aria-hidden="true"></span>
+                <span class="ax-nav__label">Vehicle Suppliers</span>
+            </a>
+
+        </div>
+
+    </div>
+
+    {{-- <div class="ax-nav__group" data-ax-collapse>
       <button type="button" class="ax-nav__item ax-nav__item--parent" role="treeitem" aria-level="1"
         aria-expanded="true" data-ax-group="vehicles" @click="toggle('vehicles')" tabindex="0">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -110,29 +278,23 @@
           <span class="ax-nav__bar" aria-hidden="true"></span><span class="ax-nav__label">Vehicle Suppliers</span>
         </a>
       </div>
-    </div>
+    </div> --}}
 
-    <div class="ax-nav__group" data-ax-collapse>
-      <button type="button" class="ax-nav__item ax-nav__item--parent" role="treeitem" aria-level="1"
-        aria-expanded="true" data-ax-group="assignments" @click="toggle('assignments')" tabindex="0">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-          class="icon icon-tabler icons-tabler-outline icon-tabler-user-key">
-          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-          <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-          <path d="M6 21v-2a4 4 0 0 1 4 -4h5" />
-          <path d="M18.5 18.5l-3.5 3.5l-1.5 -1.5" />
-          <path d="M18.554 18.414a2 2 0 1 1 2.828 -2.828a2 2 0 0 1 -2.828 2.828" />
-          <path d="M16 19l1 1" />
-        </svg>
-        <span class="ax-nav__label">Assignments</span>
-        <svg class="ax-nav__caret ax-icon--directional" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true">
-          <path d="M9 6l6 6l-6 6" />
-        </svg>
-      </button>
-    </div>
-
+    <a class="ax-nav__item" role="treeitem" aria-level="1" href="{{ url('assignment') }}" tabindex="-1">
+      <span class="ax-nav__bar" aria-hidden="true"></span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+        class="icon icon-tabler icons-tabler-outline icon-tabler-user-key">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+        <path d="M6 21v-2a4 4 0 0 1 4 -4h5" />
+        <path d="M18.5 18.5l-3.5 3.5l-1.5 -1.5" />
+        <path d="M18.554 18.414a2 2 0 1 1 2.828 -2.828a2 2 0 0 1 -2.828 2.828" />
+        <path d="M16 19l1 1" />
+      </svg>
+      <span class="ax-nav__label">Assignment</span>
+    </a>
+    
     <div class="ax-nav__group" data-ax-collapse>
       <button type="button" class="ax-nav__item ax-nav__item--parent" role="treeitem" aria-level="1"
         aria-expanded="true" data-ax-group="payments" @click="toggle('payments')" tabindex="0">
@@ -198,6 +360,130 @@
       </button>
     </div>
 
+    <!-- Authentication (nested 2 levels) -->
+    <div class="ax-nav__group" data-ax-collapse>
+      <button type="button" class="ax-nav__item ax-nav__item--parent" role="treeitem" aria-level="1"
+        aria-expanded="false" data-ax-group="website" @click="toggle('website')" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+          class="icon icon-tabler icons-tabler-outline icon-tabler-world-www">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M19.5 7a9 9 0 0 0 -7.5 -4a8.991 8.991 0 0 0 -7.484 4" />
+          <path d="M11.5 3a16.989 16.989 0 0 0 -1.826 4" />
+          <path d="M12.5 3a16.989 16.989 0 0 1 1.828 4" />
+          <path d="M19.5 17a9 9 0 0 1 -7.5 4a8.991 8.991 0 0 1 -7.484 -4" />
+          <path d="M11.5 21a16.989 16.989 0 0 1 -1.826 -4" />
+          <path d="M12.5 21a16.989 16.989 0 0 0 1.828 -4" />
+          <path d="M2 10l1 4l1.5 -4l1.5 4l1 -4" />
+          <path d="M17 10l1 4l1.5 -4l1.5 4l1 -4" />
+          <path d="M9.5 10l1 4l1.5 -4l1.5 4l1 -4" />
+        </svg>
+        <span class="ax-nav__label">Website</span>
+        <svg class="ax-nav__caret ax-icon--directional" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true">
+          <path d="M9 6l6 6l-6 6" />
+        </svg>
+      </button>
+      <div class="ax-nav__children" role="group" data-ax-collapse-panel hidden>
+        <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="2" href="{{ url("website-home") }}"
+          tabindex="-1">
+          <span class="ax-nav__bar" aria-hidden="true"></span><span class="ax-nav__label">Home</span>
+        </a>
+        <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="2" href="#"
+          tabindex="-1">
+          <span class="ax-nav__bar" aria-hidden="true"></span><span class="ax-nav__label">About</span>
+        </a>
+        <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="2" href="#"
+          tabindex="-1">
+          <span class="ax-nav__bar" aria-hidden="true"></span><span class="ax-nav__label">Services</span>
+        </a>
+        <!-- L2 collapsible sub-groups -->
+        <div class="ax-nav__group" data-ax-collapse>
+          <button type="button" class="ax-nav__item ax-nav__item--parent ax-nav__item--child" role="treeitem"
+            aria-level="2" aria-expanded="false" data-ax-group="governance" @click="toggle('governance')"
+            tabindex="-1">
+            <span class="ax-nav__label">Governance</span>
+            <svg class="ax-nav__caret ax-icon--directional" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"
+              aria-hidden="true">
+              <path d="M9 6l6 6l-6 6" />
+            </svg>
+          </button>
+          <div class="ax-nav__children" role="group" data-ax-collapse-panel hidden>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="/src/html/auth/sign-in-basic.html" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">Corporate Governance</span></a>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="/src/html/auth/sign-in-cover.html" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">GCG Structure</span></a>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="/src/html/auth/sign-in-cover.html" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">Code of Ethics</span></a>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="/src/html/auth/sign-in-cover.html" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">Risk Management</span></a>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="/src/html/auth/sign-in-cover.html" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">Articles of Association</span></a>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="/src/html/auth/sign-in-cover.html" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">Whistleblowing System</span></a>
+          </div>
+        </div>
+        <!-- L2 collapsible sub-groups -->
+        <div class="ax-nav__group" data-ax-collapse>
+          <button type="button" class="ax-nav__item ax-nav__item--parent ax-nav__item--child" role="treeitem"
+            aria-level="2" aria-expanded="false" data-ax-group="investor_relations" @click="toggle('investor_relations')"
+            tabindex="-1">
+            <span class="ax-nav__label">Investor Relations</span>
+            <svg class="ax-nav__caret ax-icon--directional" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"
+              aria-hidden="true">
+              <path d="M9 6l6 6l-6 6" />
+            </svg>
+          </button>
+          <div class="ax-nav__children" role="group" data-ax-collapse-panel hidden>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="/src/html/auth/sign-in-basic.html" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">Annual & Sustainability Reports</span></a>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="/src/html/auth/sign-in-cover.html" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">Financial Statements</span></a>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="/src/html/auth/sign-in-cover.html" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">Shareholder Information</span></a>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="/src/html/auth/sign-in-cover.html" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">General Meeting of Shareholders</span></a>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="/src/html/auth/sign-in-cover.html" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">Events & Presentations</span></a>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="/src/html/auth/sign-in-cover.html" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">Disclosure of Information</span></a>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="/src/html/auth/sign-in-cover.html" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">Capital Market Supporting Professionals</span></a>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="/src/html/auth/sign-in-cover.html" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">Prospectus</span></a>
+          </div>
+        </div>
+        <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="2" href="#"
+          tabindex="-1">
+          <span class="ax-nav__bar" aria-hidden="true"></span><span class="ax-nav__label">Media & Information</span>
+        </a>
+        <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="2" href="#"
+          tabindex="-1">
+          <span class="ax-nav__bar" aria-hidden="true"></span><span class="ax-nav__label">Career</span>
+        </a>
+        <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="2" href="#"
+          tabindex="-1">
+          <span class="ax-nav__bar" aria-hidden="true"></span><span class="ax-nav__label">Contact Us</span>
+        </a>
+      </div>
+    </div>
+
     <p class="ax-sidebar__section" role="presentation">Configuration</p>
 
     <div class="ax-nav__group" data-ax-collapse>
@@ -245,46 +531,114 @@
         </svg>
       </button>
       <div class="ax-nav__children" role="group" data-ax-collapse-panel>
-        <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="2" href="{{ url("company-pool") }}"
-          tabindex="-1">
-          <span class="ax-nav__bar" aria-hidden="true"></span><span class="ax-nav__label">Company Pool</span>
-        </a>
+        <!-- L2 collapsible sub-groups -->
+        <div class="ax-nav__group" data-ax-collapse>
+          <button type="button" class="ax-nav__item ax-nav__item--parent ax-nav__item--child" role="treeitem"
+            aria-level="2" aria-expanded="false" data-ax-group="system_data_company" @click="toggle('system_data_company')"
+            tabindex="-1">
+            <span class="ax-nav__label">Company</span>
+            <svg class="ax-nav__caret ax-icon--directional" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"
+              aria-hidden="true">
+              <path d="M9 6l6 6l-6 6" />
+            </svg>
+          </button>
+          <div class="ax-nav__children" role="group" data-ax-collapse-panel hidden>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="{{ url("company-pool") }}" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">Company Pool</span></a>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="{{ url("company-vehicle-rental-period") }}" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">Vehicle Rental Period</span></a>
+          </div>
+        </div>
+        <!-- L2 collapsible sub-groups -->
+        <div class="ax-nav__group" data-ax-collapse>
+          <button type="button" class="ax-nav__item ax-nav__item--parent ax-nav__item--child" role="treeitem"
+            aria-level="2" aria-expanded="false" data-ax-group="system_data_vehicle" @click="toggle('system_data_vehicle')"
+            tabindex="-1">
+            <span class="ax-nav__label">Vehicle</span>
+            <svg class="ax-nav__caret ax-icon--directional" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"
+              aria-hidden="true">
+              <path d="M9 6l6 6l-6 6" />
+            </svg>
+          </button>
+          <div class="ax-nav__children" role="group" data-ax-collapse-panel hidden>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="{{ url("vehicle-color") }}" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">Vehicle Color</span></a>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="{{ url("vehicle-catalog") }}" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">Vehicle Catalog</span></a>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="{{ url("vehicle-type") }}" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">Vehicle Type</span></a>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="{{ url("vehicle-fuel") }}" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">Vehicle Fuel</span></a>
+          </div>
+        </div>
+        <!-- L2 collapsible sub-groups -->
+        <div class="ax-nav__group" data-ax-collapse>
+          <button type="button" class="ax-nav__item ax-nav__item--parent ax-nav__item--child" role="treeitem"
+            aria-level="2" aria-expanded="false" data-ax-group="system_data_driver" @click="toggle('system_data_driver')"
+            tabindex="-1">
+            <span class="ax-nav__label">Driver</span>
+            <svg class="ax-nav__caret ax-icon--directional" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"
+              aria-hidden="true">
+              <path d="M9 6l6 6l-6 6" />
+            </svg>
+          </button>
+          <div class="ax-nav__children" role="group" data-ax-collapse-panel hidden>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="{{ url("user-education") }}" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">Education</span></a>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="{{ url("user-sim-type") }}" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">SIM Type</span></a>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="{{ url("user-lead-source") }}" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">Lead Source</span></a>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="{{ url("user-length-of-stay") }}" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">Length of Stay</span></a>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="{{ url("user-work-experience") }}" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">Work Experience</span></a>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="{{ url("user-online-application") }}" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">Online Application</span></a>
+          </div>
+        </div>
       </div>
+      
     </div>
 
-    <div class="ax-nav__group" data-ax-collapse>
-      <button type="button" class="ax-nav__item ax-nav__item--parent" role="treeitem" aria-level="1"
-        aria-expanded="true" data-ax-group="integrations" @click="toggle('integrations')" tabindex="0">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-          class="icon icon-tabler icons-tabler-outline icon-tabler-ai-gateway">
-          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-          <path d="M4 6.5a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" />
-          <path d="M15 6.5a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" />
-          <path d="M15 17.5a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" />
-          <path d="M4 17.5a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" />
-          <path d="M8.5 15.5l7 -7" />
-        </svg>
-        <span class="ax-nav__label">Integrations</span>
-        <svg class="ax-nav__caret ax-icon--directional" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true">
-          <path d="M9 6l6 6l-6 6" />
-        </svg>
-      </button>
-    </div>
+    <a class="ax-nav__item" role="treeitem" aria-level="1" href="{{ url("integration") }}" tabindex="-1">
+      <span class="ax-nav__bar" aria-hidden="true"></span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+        class="icon icon-tabler icons-tabler-outline icon-tabler-ai-gateway">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M4 6.5a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" />
+        <path d="M15 6.5a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" />
+        <path d="M15 17.5a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" />
+        <path d="M4 17.5a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0" />
+        <path d="M8.5 15.5l7 -7" />
+      </svg>
+      <span class="ax-nav__label">Integrations</span>
+    </a>
 
     <div class="ax-nav__group" data-ax-collapse>
       <button type="button" class="ax-nav__item ax-nav__item--parent" role="treeitem" aria-level="1"
         aria-expanded="true" data-ax-group="admins" @click="toggle('admins')" tabindex="0">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-          class="icon icon-tabler icons-tabler-outline icon-tabler-user-key">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-user-check">
           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
           <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-          <path d="M6 21v-2a4 4 0 0 1 4 -4h5" />
-          <path d="M18.5 18.5l-3.5 3.5l-1.5 -1.5" />
-          <path d="M18.554 18.414a2 2 0 1 1 2.828 -2.828a2 2 0 0 1 -2.828 2.828" />
-          <path d="M16 19l1 1" />
+          <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+          <path d="M15 19l2 2l4 -4" />
         </svg>
         <span class="ax-nav__label">Admins</span>
         <svg class="ax-nav__caret ax-icon--directional" viewBox="0 0 24 24" fill="none" stroke="currentColor"

@@ -27,7 +27,8 @@ class VehicleModelController extends Controller
 
         return view('pages.vehicle_model.vehicle_model_view', [
             'title' => 'View Vehicle Model',
-            'result' => $data
+            'route' => 'vehicle-model/view',
+            'result' => $data,
         ]);
     }
     public function read(Request $request)
@@ -45,12 +46,17 @@ class VehicleModelController extends Controller
 
         $data = ApiHelper::get('/vehicle-model', $params);
 
+        $vehicleBrand = ApiHelper::get('/vehicle-brand');
+        $vehicleFuel = ApiHelper::get('/vehicle-fuel');
+
         return view('pages.vehicle_model.vehicle_model_read', [
             'title' => 'Vehicle Models',
             'route' => 'vehicle-model/read',
             'result' => $data['data'] ?? [],
             'data_state' => $data['data_state'],
             'pagination' => $data['pagination'] ?? [],
+            'vehicleBrand' => $vehicleBrand['data'] ?? [],
+            'vehicleFuel' => $vehicleFuel['data'] ?? [],
         ]);
 
     }

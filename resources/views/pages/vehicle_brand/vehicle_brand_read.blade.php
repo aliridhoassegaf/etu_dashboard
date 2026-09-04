@@ -55,7 +55,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
       <div class="ax-card__header">
         <div class="ax-card__titles">
           <h2 class="ax-card__title">{{ $title }}</h2>
-          <p class="ax-card__subtitle">Define administrator roles and manage their access permissions.</p>
+          <p class="ax-card__subtitle">Manage and monitor vehicle brands and manufacturers.</p>
         </div>
         @if($data_state === 'has_data' || $data_state === 'filtered_empty')
           <div class="ax-card__actions">

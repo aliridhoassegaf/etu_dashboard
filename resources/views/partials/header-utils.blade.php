@@ -133,7 +133,7 @@
           style="background:color-mix(in oklab,var(--ax-accent) 16%,transparent);color:var(--ax-accent);"><span
             class="ax-avatar__initials">AR</span>
       </button>
-      <span class="ax-profile__card-meta"><b>{{ session('admin')['fullname'] }}</b><small>{{ session('admin')['email'] }}</small></span>
+      <span class="ax-profile__card-meta"><b>{{ session('admin')['full_name'] }}</b><small>{{ session('admin')['email'] }}</small></span>
     </div>
     <a class="ax-dropdown__item" role="menuitem" href="{{ url("admin-profile") }}"><svg
         class="ax-icon ax-dropdown__lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"

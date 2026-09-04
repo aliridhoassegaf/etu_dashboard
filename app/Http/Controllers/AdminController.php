@@ -72,7 +72,7 @@ class AdminController extends Controller
         $data = $response['data'];
         
         return view('pages.admin.admin_profile', [
-            'title' => 'Admin Profile',
+            'title' => 'My Profile',
             'result' => $data
         ]);
     }

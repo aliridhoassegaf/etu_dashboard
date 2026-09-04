@@ -178,13 +178,6 @@
                     <label class="ax-float__label" for="si-team">Team</label>
                   </div>
                 </div>
-                <div class="ax-cluster" style="justify-content:space-between;margin-top:var(--ax-space-5);">
-                  <label class="ax-check" style="display:flex;gap:var(--ax-space-2);align-items:center;min-height:auto;">
-                    <input type="checkbox" class="ax-checkbox" checked>
-                    <span style="font-size:var(--ax-text-sm);color:var(--ax-text);">Keep me signed in</span>
-                  </label>
-                  <button type="submit" class="ax-btn ax-btn--primary"><span class="ax-btn__label">Sign in</span></button>
-                </div>
               </form>
             </div>
           </section>

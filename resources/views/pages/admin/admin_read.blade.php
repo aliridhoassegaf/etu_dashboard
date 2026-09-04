@@ -109,7 +109,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                       <div class="ax-modal__body" style="display:flex;flex-direction:column;gap:var(--ax-space-5);">
                         <div class="ax-field">
                           <label class="ax-label" for="fe-name">Search</label>
-                          <input id="fe-name" type="text" name="search" class="ax-input" placeholder="Search fullname, email, phone" value="{{ request('search') }}">
+                          <input id="fe-name" type="text" name="search" class="ax-input" placeholder="Search full_name, email, phone" value="{{ request('search') }}">
                         </div>
 
                         <div class="ax-field">
@@ -355,7 +355,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                     <input type="checkbox" class="ax-checkbox" id="checkAll">
                   </label>
                 </th>
-                <th class="ax-table__th" scope="col">Fullname</th>
+                <th class="ax-table__th" scope="col">Full Name</th>
                 <th class="ax-table__th" scope="col">Email</th>
                 <th class="ax-table__th" scope="col">Phone</th>
                 <th class="ax-table__th" scope="col">Role Access</th>
@@ -373,7 +373,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                     </label>
                   </td>
                   <td class="ax-table__td" style="font-weight:var(--ax-weight-medium);color:var(--ax-text-strong);">
-                    <a href="{{ url('admin/' . $value['id']) }}">{{ $value['fullname'] }}</a>
+                    <a href="{{ url('admin/' . $value['id']) }}">{{ $value['full_name'] }}</a>
                   </td>
                   <td class="ax-table__td" style="color:var(--ax-text-muted);">{{ $value['email'] }}</td>
                   <td class="ax-table__td" style="color:var(--ax-text-muted);">{{ $value['phone'] }}</td>

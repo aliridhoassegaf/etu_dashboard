@@ -9,8 +9,6 @@
     "sections": ["MAIN", "APPLICATIONS", "MODULES", "PAGES", "UI & FORMS", "DOCS"]
   },
   "nodes": [
-    { "id": "grp.dashboards", "title": "Dashboards", "slug": "dashboards/sales", "icon": "layout-dashboard", "parent": null, "section": "MAIN", "order": 1, "badge": null, "keywords": ["dashboard", "home", "overview", "kpi", "stats"], "inMenu": true, "alias": null },
-    { "id": "dashboards.sales", "title": "Sales", "slug": "dashboards/sales", "icon": "chart-arcs", "parent": "grp.dashboards", "section": null, "order": 1, "badge": null, "keywords": ["sales", "revenue", "default", "home", "landing"], "inMenu": true, "alias": null },
     { "id": "dashboards.analytics", "title": "Analytics", "slug": "dashboards/analytics", "icon": "chart-line", "parent": "grp.dashboards", "section": null, "order": 2, "badge": null, "keywords": ["analytics", "sessions", "bounce", "audience", "traffic", "funnel"], "inMenu": true, "alias": null },
     { "id": "dashboards.ecommerce", "title": "eCommerce", "slug": "dashboards/ecommerce", "icon": "shopping-cart", "parent": "grp.dashboards", "section": null, "order": 3, "badge": null, "keywords": ["shop", "store", "sales", "orders", "retail"], "inMenu": true, "alias": null },
     { "id": "dashboards.crm", "title": "CRM", "slug": "dashboards/crm", "icon": "users-group", "parent": "grp.dashboards", "section": null, "order": 4, "badge": null, "keywords": ["crm", "pipeline", "leads", "deals", "sales"], "inMenu": true, "alias": null },

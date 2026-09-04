@@ -27,6 +27,7 @@ class VehicleSupplierController extends Controller
 
         return view('pages.vehicle_supplier.vehicle_supplier_view', [
             'title' => 'View Vehicle Supplier',
+            'route' => 'vehicle-supplier/view',
             'result' => $data
         ]);
     }

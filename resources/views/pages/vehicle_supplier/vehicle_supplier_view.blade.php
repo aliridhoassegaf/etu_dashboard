@@ -60,36 +60,35 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
     <section class="ax-card ax-col--12" role="region" aria-label="Default table">
       <div class="ax-card__header">
         <div class="ax-card__titles">
-          <h3 class="ax-card__title">{{ $title }}</h3>
+          <h2 class="ax-card__title">{{ $title }}</h2>
           <p class="ax-card__subtitle">Viewing detail for <strong>{{ $result['name'] ?? '-' }}</strong></p>
         </div>
       </div>
-      <div class="ax-card__body pt-0!" style="display:flex;flex-direction:column;gap:var(--ax-space-5);">
-        <div class="ax-field">
-          <label class="ax-label" for="fe-name">Name</label>
-          <input class="ax-input" value="{{ $result['name'] ?? '-' }}" disabled style="color:var(--ax-text-muted);">
-        </div>
+      <div class="ax-card__body"
+        style="padding-top:20px;padding-bottom:30px;display:flex;flex-direction:column;gap:var(--ax-space-4);">
         
-        <div class="ax-field">
-          <label class="ax-label" for="fe-name">Description</label>
-          <input class="ax-input" value="{{ $result['description'] ?? '-' }}" disabled style="color:var(--ax-text-muted);">
-        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--ax-space-4);" class="ax-ci-2col">
+          <div class="ax-field">
+            <label class="ax-label" for="fe-name">Name</label>
+            <input class="ax-input" value="{{ $result['name'] ?? '-' }}" disabled style="color:var(--ax-text-muted);background:white;">
+          </div>
+          
+          <div class="ax-field">
+            <label class="ax-label" for="fe-name">Description</label>
+            <input class="ax-input" value="{{ $result['description'] ?? '-' }}" disabled style="color:var(--ax-text-muted);background:white;">
+          </div>
 
-        <div class="ax-field">
-          <label class="ax-label" for="fe-name">Status</label>
-          <input class="ax-input" value="{{ $result['status_name'] ?? '-' }}" disabled style="color:var(--ax-text-muted);">
-        </div>
+          <div class="ax-field">
+            <label class="ax-label" for="fe-name">Status</label>
+            <input class="ax-input" value="{{ $result['status_name'] ?? '-' }}" disabled style="color:var(--ax-text-muted);background:white;">
+          </div>
 
-        <div class="ax-field">
-          <label class="ax-label" for="fe-name">Created Date</label>
-          <input class="ax-input" value="{{ $result['created_at'] ?? '-' }}" disabled style="color:var(--ax-text-muted);">
-        </div>
+          <div class="ax-field">
+            <label class="ax-label" for="fe-name">Created Date</label>
+            <input class="ax-input" value="{{ $result['created_at'] ?? '-' }}" disabled style="color:var(--ax-text-muted);background:white;">
+          </div>
 
-        <div class="ax-field">
-          <label class="ax-label" for="fe-name">Update Date</label>
-          <input class="ax-input" value="{{ $result['updated_at'] ?? '-' }}" disabled style="color:var(--ax-text-muted);">
         </div>
-
       </div>
     </section>
 

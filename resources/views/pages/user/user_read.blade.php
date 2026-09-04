@@ -41,13 +41,13 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
             aria-hidden="true">
             <path d="M9 6l6 6l-6 6"></path>
           </svg></li>
-        <li class="ax-breadcrumb__item" aria-current="page">Users</li>
+        <li class="ax-breadcrumb__item" aria-current="page">Drivers</li>
         <li class="ax-breadcrumb__sep" aria-hidden="true"><svg class="ax-icon ax-icon--directional" viewBox="0 0 24 24"
             fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
             aria-hidden="true">
             <path d="M9 6l6 6l-6 6"></path>
           </svg></li>
-        <li class="ax-breadcrumb__item" aria-current="page">User Users</li>
+        <li class="ax-breadcrumb__item" aria-current="page">{{ $title }}</li>
       </ol>
     </nav>
     <!-- ───── DEFAULT TABLE ───── -->
@@ -55,14 +55,13 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
       <div class="ax-card__header">
         <div class="ax-card__titles">
           <h2 class="ax-card__title">{{ $title }}</h2>
-          <p class="ax-card__subtitle">Manage driver accounts and their access.</p>
+          <p class="ax-card__subtitle">Manage and monitor centralized driver data.</p>
         </div>
         @if($data_state === 'has_data' || $data_state === 'filtered_empty')
           <div class="ax-card__actions">
             @php
                 $filterCount = collect([
                     request()->filled('search'),
-                    request()->filled('user_role_id'),
                     request()->filled('status')
                 ])->filter()->count();
             @endphp
@@ -109,43 +108,9 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                       <div class="ax-modal__body" style="display:flex;flex-direction:column;gap:var(--ax-space-5);">
                         <div class="ax-field">
                           <label class="ax-label" for="fe-name">Search</label>
-                          <input id="fe-name" type="text" name="search" class="ax-input" placeholder="Search fullname, email, phone" value="{{ request('search') }}">
+                          <input id="fe-name" type="text" name="search" class="ax-input" placeholder="Search full_name, NIK, email, phone" value="{{ request('search') }}">
                         </div>
 
-                        <div class="ax-field">
-                          <label class="ax-label" for="fe-name">Role Access</label>
-                          <select id="fe-country" class="ax-select" name="user_role_id">
-                            <option value="">--All--</option>
-
-                            @forelse ($userRoles as $value_select)
-                              <option
-                                  value="{{ $value_select['id'] }}"
-                                  {{ request('user_role_id') == $value_select['id'] ? 'selected' : '' }}
-                              >
-                                  {{ $value_select['name'] }}
-                              </option>
-                            @empty
-                              <option value="" disabled>No data available</option>
-                            @endforelse
-                          </select>
-                        </div>
-
-                        <div class="ax-field">
-                          <label class="ax-label" for="fe-name">Status</label>
-                          <select id="fe-country" class="ax-select" name="status">
-                            <option value="">--All--</option>
-                            @forelse ($userStatus as $value_select2)
-                              <option
-                                  value="{{ $value_select2['id'] }}"
-                                  {{ request('status') == $value_select2['id'] ? 'selected' : '' }}
-                              >
-                                  {{ $value_select2['name'] }}
-                              </option>
-                            @empty
-                              <option value="" disabled>No data available</option>
-                            @endforelse
-                          </select>
-                        </div>
                       </div>
                       <div class="ax-modal__footer">
                           <button
@@ -229,7 +194,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
           </div>
         </div>
       @endif
-      @if(request('search') || request('user_role_id') || request('status'))
+      @if(request('search') || request('status'))
         <div class="ax-card__body pt-0!">
 
           <div style="display:flex;flex-wrap:wrap;gap:var(--ax-space-2);min-height:24px;">
@@ -262,39 +227,6 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
               @endif
 
 
-              {{-- Role Filter --}}
-              @if(request('user_role_id'))
-                  @php
-                      $selectedRole = collect($userRoles)
-                          ->firstWhere('id', request('user_role_id'));
-                  @endphp
-
-                  @if($selectedRole)
-                      <span class="ax-badge ax-badge--soft ax-badge--accent ax-badge--chip">
-                          <span>Role Access : {{ $selectedRole['name'] }}</span>
-
-                          <button
-                              type="button"
-                              class="ax-badge__remove"
-                              aria-label="Remove Role Access"
-                              onclick="removeFilter('user_role_id')"
-                          >
-                              <svg
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  stroke-width="2.4"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  aria-hidden="true"
-                              >
-                                  <path d="M18 6l-12 12" />
-                                  <path d="M6 6l12 12" />
-                              </svg>
-                          </button>
-                      </span>
-                  @endif
-              @endif
 
 
               {{-- Status Filter --}}
@@ -333,7 +265,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
 
 
           {{-- Reset All Filters --}}
-          @if(request('search') || request('user_role_id') || request('status'))
+          @if(request('search') || request('status'))
 
               <button
                   type="button"
@@ -363,10 +295,10 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                     <input type="checkbox" class="ax-checkbox" id="checkAll">
                   </label>
                 </th>
-                <th class="ax-table__th" scope="col">Fullname</th>
+                <th class="ax-table__th" scope="col" style="min-width: 150px;">Create Date</th>
+                <th class="ax-table__th" scope="col">Full Name</th>
                 <th class="ax-table__th" scope="col">Email</th>
                 <th class="ax-table__th" scope="col">Phone</th>
-                <th class="ax-table__th" scope="col">Role Access</th>
                 <th class="ax-table__th" scope="col">Status</th>
                 <th class="ax-table__th" scope="col"></th>
               </tr>
@@ -380,12 +312,26 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                       <input type="checkbox" class="ax-checkbox row-checkbox" value="{{ $value['id'] }}">
                     </label>
                   </td>
+                  <td class="ax-table__td" style="color:var(--ax-text-muted);">
+                      @php
+                          [$date, $time] = strrpos($value['created_at'], ' ') !== false
+                              ? [substr($value['created_at'], 0, strrpos($value['created_at'], ' ')), substr($value['created_at'], strrpos($value['created_at'], ' ') + 1)]
+                              : [$value['created_at'], null];
+                      @endphp
+
+                      {{ $date }}
+                      @if($time)
+                          <br>
+                          <small style="color:var(--ax-text-muted);">{{ $time }}</small>
+                      @endif
+                  </td>
                   <td class="ax-table__td" style="font-weight:var(--ax-weight-medium);color:var(--ax-text-strong);">
-                    <a href="{{ url('user/' . $value['id']) }}">{{ $value['fullname'] }}</a>
+                    <a href="{{ url('user/' . $value['id']) }}" style="font-weight: 700">{{ $value['full_name'] }} <br>
+                      <small style="color:var(--ax-text-muted);font-weight: normal;">{{ $value['nik'] }}</small>
+                    </a>
                   </td>
                   <td class="ax-table__td" style="color:var(--ax-text-muted);">{{ $value['email'] }}</td>
                   <td class="ax-table__td" style="color:var(--ax-text-muted);">{{ $value['phone'] }}</td>
-                  <td class="ax-table__td" style="color:var(--ax-text-muted);">{{ $value['user_role_name'] }}</td>
                   <td class="ax-table__td"><span class="ax-badge ax-badge--soft ax-badge--success ax-badge--pill"><span
                         class="ax-badge__dot"></span>{{ $value['status_name'] }}</span></td>
                   <td class="ax-table__td">
@@ -1045,7 +991,6 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
         const url = new URL(window.location.href);
 
         url.searchParams.delete('search');
-        url.searchParams.delete('user_role_id');
         url.searchParams.delete('status');
         url.searchParams.delete('page');
 

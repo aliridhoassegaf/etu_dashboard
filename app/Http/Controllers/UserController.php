@@ -26,7 +26,8 @@ class UserController extends Controller
         $data = $response['data'];
 
         return view('pages.user.user_view', [
-            'title' => 'View User',
+            'title' => 'View Driver',
+            'route' => 'user/view',
             'result' => $data
         ]);
     }
@@ -45,7 +46,6 @@ class UserController extends Controller
 
         $data = ApiHelper::get('/user', $params);
 
-        $userRoles = ApiHelper::get('/user-role');
         $userStatus = ApiHelper::get('/user-status',[
             "with_sort"=>1
         ]);
@@ -56,7 +56,6 @@ class UserController extends Controller
             'result' => $data['data'] ?? [],
             'data_state' => $data['data_state'],
             'pagination' => $data['pagination'] ?? [],
-            'userRoles' => $userRoles['data'] ?? [],
             'userStatus' => $userStatus['data'] ?? [],
         ]);
 

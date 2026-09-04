@@ -163,7 +163,7 @@ function separator() {
 }
 
 function syncTitle(node) {
-  if (node) document.title = `${node.title} · Vireo`;
+  // if (node) document.title = `${node.title} · Vireo`;
 }
 
 /* ---- slug/href helpers (relative .html links ↔ manifest slugs) ---- */

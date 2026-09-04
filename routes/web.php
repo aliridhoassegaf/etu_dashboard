@@ -13,6 +13,22 @@ use App\Http\Controllers\VehicleSupplierController;
 use App\Http\Controllers\VehicleBrandController;
 use App\Http\Controllers\VehicleModelController;
 use App\Http\Controllers\CompanyPoolController;
+use App\Http\Controllers\IntegrationController;
+use App\Http\Controllers\WebsiteHomeController;
+use App\Http\Controllers\WebsiteHomeSliderController;
+use App\Http\Controllers\FormController;
+use App\Http\Controllers\VehicleColorController;
+use App\Http\Controllers\VehicleCatalogController;
+use App\Http\Controllers\VehicleTypeController;
+use App\Http\Controllers\VehicleFuelController;
+use App\Http\Controllers\UserEducationController;
+use App\Http\Controllers\UserSimTypeController;
+use App\Http\Controllers\UserLeadSourceController;
+use App\Http\Controllers\UserWorkExperienceController;
+use App\Http\Controllers\UserOnlineApplicationController;
+use App\Http\Controllers\UserLengthOfStayController;
+use App\Http\Controllers\CompanyVehicleRentalPeriodController;
+use App\Http\Controllers\AssignmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +38,8 @@ use App\Http\Controllers\CompanyPoolController;
 | Each view receives title (<title>) + route (nav-manifest slug for the
 | active-trail + breadcrumb). See CONVENTIONS.md.
 */
+Route::get('/assignment', [AssignmentController::class, 'read'])
+    ->name('assignment.read');
 
 Route::get('/', [AdminController::class, 'login'])
     ->name('admin.login');
@@ -75,6 +93,57 @@ Route::get('/company-pool', [CompanyPoolController::class, 'read'])
 Route::get('/company-pool/{id}', [CompanyPoolController::class, 'view'])
     ->name('company_pool.view');
 
+Route::get('/integration', [IntegrationController::class, 'read'])
+    ->name('integration.read');    
+
+Route::get('/website-home', [WebsiteHomeController::class, 'view'])
+    ->name('website_home.view');
+
+Route::get('/website-home-slider', [WebsiteHomeSliderController::class, 'read'])
+    ->name('website-home-slider.read');
+Route::get('/website-home-slider/{id}', [WebsiteHomeSliderController::class, 'view'])
+    ->name('website-home-slider.view');
+
+Route::get('/form', [FormController::class, 'read'])
+    ->name('form.read');
+Route::get('/form/{id}', [FormController::class, 'view'])
+    ->name('form.view');
+
+Route::get('/vehicle-color', [VehicleColorController::class, 'read'])
+    ->name('vehicle_color.read');
+
+Route::get('/vehicle-type', [VehicleTypeController::class, 'read'])
+    ->name('vehicle_type.read');
+
+Route::get('/vehicle-catalog', [VehicleCatalogController::class, 'read'])
+    ->name('vehicle_catalog.read');
+Route::get('/vehicle-catalog/{id}', [VehicleCatalogController::class, 'view'])
+    ->name('vehicle_catalog.view');
+
+Route::get('/vehicle-fuel', [VehicleFuelController::class, 'read'])
+    ->name('vehicle_fuel.read');
+
+Route::get('/user-education', [UserEducationController::class, 'read'])
+    ->name('user_education.read');
+
+Route::get('/company-vehicle-rental-period', [CompanyVehicleRentalPeriodController::class, 'read'])
+    ->name('company_vehicle_rental_period.read');
+
+Route::get('/user-sim-type', [UserSimTypeController::class, 'read'])
+    ->name('user_sim-type.read');
+
+Route::get('/user-lead-source', [UserLeadSourceController::class, 'read'])
+    ->name('user_lead_source.read');
+
+Route::get('/user-work-experience', [UserWorkExperienceController::class, 'read'])
+    ->name('user_work_experience.read');
+
+Route::get('/user-online-application', [UserOnlineApplicationController::class, 'read'])
+    ->name('user_online_application.read');
+
+Route::get('/user-length-of-stay', [UserLengthOfStayController::class, 'read'])
+    ->name('user_length_of_stay.read');
+    
 // Default route — Sales dashboard (index)
 // Route::get('/', fn () => view('pages.dashboards.sales', [
 //     'title' => 'Sales',

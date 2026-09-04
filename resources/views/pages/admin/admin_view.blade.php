@@ -66,8 +66,8 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
       </div>
       <div class="ax-card__body pt-0!" style="display:flex;flex-direction:column;gap:var(--ax-space-5);">
         <div class="ax-field">
-          <label class="ax-label" for="fe-name">Fullname</label>
-          <input class="ax-input" value="{{ $result['fullname'] ?? '-' }}" disabled style="color:var(--ax-text-muted);">
+          <label class="ax-label" for="fe-name">Full Name</label>
+          <input class="ax-input" value="{{ $result['full_name'] ?? '-' }}" disabled style="color:var(--ax-text-muted);">
         </div>
 
         <div class="ax-field">

@@ -55,13 +55,18 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
       <div class="ax-card__header">
         <div class="ax-card__titles">
           <h2 class="ax-card__title">{{ $title }}</h2>
-          <p class="ax-card__subtitle">Define administrator roles and manage their access permissions.</p>
+          <p class="ax-card__subtitle">Manage and monitor vehicle data and information.</p>
         </div>
         @if($data_state === 'has_data' || $data_state === 'filtered_empty')
           <div class="ax-card__actions">
             @php
                 $filterCount = collect([
                     request()->filled('search'),
+                    request()->filled('vehicle_model_id'),
+                    request()->filled('vehicle_brand_id'),
+                    request()->filled('vehicle_supplier_id'),
+                    request()->filled('vehicle_color_id'),
+                    request()->filled('vehicle_type_id'),
                     request()->filled('status')
                 ])->filter()->count();
             @endphp
@@ -166,16 +171,52 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                         </div>
 
                         <div class="ax-field">
-                          <label class="ax-label" for="fe-name">Status</label>
-                          <select id="fe-country" class="ax-select" name="status">
+                          <label class="ax-label" for="fe-name">Color</label>
+                          <select id="fe-country" class="ax-select" name="color">
                             <option value="">--All--</option>
 
-                            @forelse ($vehicleStatus as $value_select3)
+                            @forelse ($vehicleColor as $value_select3)
                               <option
                                   value="{{ $value_select3['id'] }}"
-                                  {{ request('status') == $value_select3['id'] ? 'selected' : '' }}
+                                  {{ request('color') == $value_select3['id'] ? 'selected' : '' }}
                               >
                                   {{ $value_select3['name'] }}
+                              </option>
+                            @empty
+                              <option value="" disabled>No data available</option>
+                            @endforelse
+                          </select>
+                        </div>
+
+                        <div class="ax-field">
+                          <label class="ax-label" for="fe-name">Company Pool</label>
+                          <select id="fe-country" class="ax-select" name="color">
+                            <option value="">--All--</option>
+
+                            @forelse ($companyPool as $value_select4)
+                              <option
+                                  value="{{ $value_select4['id'] }}"
+                                  {{ request('color') == $value_select4['id'] ? 'selected' : '' }}
+                              >
+                                  {{ $value_select4['name'] }}
+                              </option>
+                            @empty
+                              <option value="" disabled>No data available</option>
+                            @endforelse
+                          </select>
+                        </div>
+
+                        <div class="ax-field">
+                          <label class="ax-label" for="fe-name">Type</label>
+                          <select id="fe-country" class="ax-select" name="color">
+                            <option value="">--All--</option>
+
+                            @forelse ($vehicleType as $value_select5)
+                              <option
+                                  value="{{ $value_select5['id'] }}"
+                                  {{ request('color') == $value_select5['id'] ? 'selected' : '' }}
+                              >
+                                  {{ $value_select5['name'] }}
                               </option>
                             @empty
                               <option value="" disabled>No data available</option>
@@ -187,10 +228,20 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                           <label class="ax-label" for="fe-name">Status</label>
                           <select id="fe-country" class="ax-select" name="status">
                             <option value="">--All--</option>
-                            <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Active</option>
-                            <option value="2" {{ request('status') == '2' ? 'selected' : '' }}>Not Active</option>
+
+                            @forelse ($vehicleStatus as $value_select6)
+                              <option
+                                  value="{{ $value_select6['id'] }}"
+                                  {{ request('status') == $value_select6['id'] ? 'selected' : '' }}
+                              >
+                                  {{ $value_select6['name'] }}
+                              </option>
+                            @empty
+                              <option value="" disabled>No data available</option>
+                            @endforelse
                           </select>
                         </div>
+
                       </div>
                       <div class="ax-modal__footer">
                           <button
@@ -274,7 +325,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
           </div>
         </div>
       @endif
-      @if(request('search') || request('status'))
+      @if(request('search') || request('vehicle_model_id') || request('vehicle_brand_id') || request('vehicle_supplier_id') || request('vehicle_color_id') || request('vehicle_type_id') || request('status'))
         <div class="ax-card__body pt-0!">
 
           <div style="display:flex;flex-wrap:wrap;gap:var(--ax-space-2);min-height:24px;">
@@ -372,9 +423,10 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                     <input type="checkbox" class="ax-checkbox" id="checkAll">
                   </label>
                 </th>
-                <th class="ax-table__th" scope="col">Created Date</th>
-                <th class="ax-table__th" scope="col">Vehicle</th>
-                <th class="ax-table__th" scope="col">Supplier</th>
+                <th class="ax-table__th" scope="col" style="min-width: 150px;">Create Date</th>
+                <th class="ax-table__th" scope="col" style="min-width: 130px;">Vehicle</th>
+                <th class="ax-table__th" scope="col">Plat Number</th>
+                <th class="ax-table__th" scope="col" style="min-width: 150px;">Supplier</th>
                 <th class="ax-table__th" scope="col">Status</th>
                 <th class="ax-table__th" scope="col"></th>
               </tr>
@@ -388,11 +440,28 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                       <input type="checkbox" class="ax-checkbox row-checkbox" value="{{ $value['id'] }}">
                     </label>
                   </td>
-                  <td class="ax-table__td">
-                    {{ $value['created_at'] }}
+                  <td class="ax-table__td" style="color:var(--ax-text-muted);">
+                      @php
+                          [$date, $time] = strrpos($value['created_at'], ' ') !== false
+                              ? [substr($value['created_at'], 0, strrpos($value['created_at'], ' ')), substr($value['created_at'], strrpos($value['created_at'], ' ') + 1)]
+                              : [$value['created_at'], null];
+                      @endphp
+
+                      {{ $date }}
+                      @if($time)
+                          <br>
+                          <small style="color:var(--ax-text-muted);">{{ $time }}</small>
+                      @endif
+                  </td>
+                  <td class="ax-table__td" style="font-weight:var(--ax-weight-medium);color:var(--ax-text-strong);">
+                    <a href="{{ url('vehicle/' . $value['id']) }}" style="font-weight: 700">
+                      {{ $value['vehicle_brand_name'] }} <br>
+                      <small style="color:var(--ax-text-muted);font-weight: normal;">{{ $value['vehicle_model_name'] }} - {{ $value['year'] }} <br>{{ $value['vehicle_color_name'] }}</small>
+                    </a>
                   </td>
                   <td class="ax-table__td">
-                    <a href="{{ url('vehicle/' . $value['id']) }}">{{ $value['vehicle_brand_name'] }} - {{ $value['vehicle_model_name'] }}</a>
+                    {{ $value['plat_number'] }} <br>
+                      <small style="color:var(--ax-text-muted);font-weight: normal;">{{ $value['vehicle_type_name'] }}</small>
                   </td>
                   <td class="ax-table__td">
                     {{ $value['vehicle_supplier_name'] }}

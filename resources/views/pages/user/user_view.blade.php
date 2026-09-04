@@ -3,23 +3,6 @@
 {{-- Basic Tables — faithful re-expression of src/html/tables/basic.html.
 Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
 @section('head_custom')
-<style>
-    #selectionAlert {
-        overflow: hidden;
-    }
-
-    @media (max-width: 767px) {
-
-        .ax-pagination__page,
-        .ax-pagination__prev,
-        .ax-pagination__next {
-        min-width: 25px;
-        height: 25px;
-        padding-inline: 0;
-        font-size: var(--ax-text-sm);
-        }
-    }
-</style>
 @endsection
 
 @section('content')
@@ -56,290 +39,226 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
         <li class="ax-breadcrumb__item" aria-current="page">{{ $result['email'] ?? '-' }}</li>
       </ol>
     </nav>
-    <!-- ───── DEFAULT TABLE ───── -->
-    <section class="ax-card ax-col--12" role="region" aria-label="Default table">
+    <section class="ax-card ax-col--12">
       <div class="ax-card__header">
         <div class="ax-card__titles">
-          <h3 class="ax-card__title">{{ $title }}</h3>
+          <h2 class="ax-card__title">{{ $title }}</h2>
           <p class="ax-card__subtitle">Viewing detail for <strong>{{ $result['email'] ?? '-' }}</strong></p>
         </div>
       </div>
-      <div class="ax-card__body pt-0!" style="display:flex;flex-direction:column;gap:var(--ax-space-5);">
-        <div class="ax-field">
-          <label class="ax-label" for="fe-name">Fullname</label>
-          <input class="ax-input" value="{{ $result['fullname'] ?? '-' }}" disabled style="color:var(--ax-text-muted);">
-        </div>
+      <div class="ax-card__body"
+        style="padding-top:20px;padding-bottom:30px;display:flex;flex-direction:column;gap:var(--ax-space-4);">
+        <h6 class="ax-card__eyebrow" style="color:(--ax-text-muted);font-weight:bold">Main Data</h6>
 
-        <div class="ax-field">
-          <label class="ax-label" for="fe-name">Email</label>
-          <input class="ax-input" value="{{ $result['email'] ?? '-' }}" disabled style="color:var(--ax-text-muted);">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--ax-space-4);" class="ax-ci-2col">
+          <div class="ax-field">
+            <label class="ax-label" for="ci-name">Full Name</label>
+            <input class="ax-input" value="{{ $result['full_name'] ?? '-' }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Identity Number (NIK)</label>
+            <input class="ax-input" value="{{ $result['nik'] ?? '-' }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Email</label>
+            <input class="ax-input" value="{{ $result['email'] ?? '-' }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Phone</label>
+            <input class="ax-input" value="{{ $result['phone'] ?? '-' }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Vehicle Catalog</label>
+            <input class="ax-input" value="{{ $result['phone'] ?? '-' }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Created At</label>
+            <input class="ax-input" value="{{ $result['created_at'] ?? '-' }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
         </div>
-
-        <div class="ax-field">
-          <label class="ax-label" for="fe-name">Phone</label>
-          <input class="ax-input" value="{{ $result['phone'] ?? '-' }}" disabled style="color:var(--ax-text-muted);">
-        </div>
-
-        <div class="ax-field">
-          <label class="ax-label" for="fe-name">Role Access</label>
-          <input class="ax-input" value="{{ $result['admin_role_name'] ?? '-' }}" disabled style="color:var(--ax-text-muted);">
-        </div>
-
-        <div class="ax-field">
-          <label class="ax-label" for="fe-name">Status</label>
-          <input class="ax-input" value="{{ $result['status_name'] ?? '-' }}" disabled style="color:var(--ax-text-muted);">
-        </div>
-
-        <div class="ax-field">
-          <label class="ax-label" for="fe-name">Created Date</label>
-          <input class="ax-input" value="{{ $result['created_at'] ?? '-' }}" disabled style="color:var(--ax-text-muted);">
-        </div>
-
-        <div class="ax-field">
-          <label class="ax-label" for="fe-name">Update Date</label>
-          <input class="ax-input" value="{{ $result['updated_at'] ?? '-' }}" disabled style="color:var(--ax-text-muted);">
-        </div>
-
       </div>
     </section>
+    <section class="ax-card ax-col--12">
+      <div class="ax-card__body"
+        style="padding-top:30px;padding-bottom:30px;display:flex;flex-direction:column;gap:var(--ax-space-4);">
+        <h6 class="ax-card__eyebrow" style="color:(--ax-text-muted);font-weight:bold">Personal Data</h6>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--ax-space-4);" class="ax-ci-2col">
+          <div class="ax-field">
+            <label class="ax-label" for="ci-name">Date of Birth</label>
+            <input class="ax-input" value="{{ $result['dob_format'] ?? '-' }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Highest Education Level</label>
+            <input class="ax-input" value="{{ $result['user_education_name'] ?? '-' }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">SIM Type</label>
+            <input class="ax-input" value="{{ $result['user_sim_type_name'] }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">SIM Number</label>
+            <input class="ax-input" value="{{ $result['sim_number'] }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Province</label>
+            <input class="ax-input" value="{{ $result['province_name'] }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">City</label>
+            <input class="ax-input" value="{{ $result['city_name'] }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">District</label>
+            <input class="ax-input" value="{{ $result['district_name'] }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Village</label>
+            <input class="ax-input" value="{{ $result['village_name'] }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+        </div>
+        <div class="ax-field">
+          <label class="ax-label" for="ci-client">Full Address</label>
+          <input class="ax-input" value="{{ $result['full_address'] ?? '-' }}" disabled
+            style="color:var(--ax-text-muted);background:white">
+        </div>
 
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--ax-space-4);" class="ax-ci-2col">
+          <div class="ax-field">
+            <label class="ax-label" for="ci-name">Selfie Photo</label>
+            <div class="box-photo-container">
+              <img src="{{ $result['selfie_photo'] ?? '' }}" alt="Selfie Photo" class="box-photo">
+            </div>
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-name">ID Card Photo</label>
+            <div class="box-photo-container">
+              <img src="{{ $result['id_card_photo'] ?? '' }}" alt="ID Card Photo" class="box-photo">
+            </div>
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-name">Family Card Photo</label>
+            <div class="box-photo-container">
+              <img src="{{ $result['family_card_photo'] ?? '' }}" alt="Family Card Photo" class="box-photo">
+            </div>
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-name">SIM Photo</label>
+            <div class="box-photo-container">
+              <img src="{{ $result['sim_photo'] ?? '' }}" alt="SIM Photo" class="box-photo">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="ax-card ax-col--12">
+      <div class="ax-card__body"
+        style="padding-top:30px;padding-bottom:30px;display:flex;flex-direction:column;gap:var(--ax-space-4);">
+        <h6 class="ax-card__eyebrow" style="color:(--ax-text-muted);font-weight:bold">Residence Data</h6>
+        
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--ax-space-4);" class="ax-ci-2col">
+          <div class="ax-field">
+            <label class="ax-label" for="ci-name">Residential Address</label>
+            <input class="ax-input" value="{{ $result['dob_format'] ?? '-' }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Length of Residence</label>
+            <input class="ax-input" value="{{ $result['user_length_of_stay_name'] }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Province (Residence)</label>
+            <input class="ax-input" value="{{ $result['user_sim_type_name'] }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">City (Residence)</label>
+            <input class="ax-input" value="{{ $result['sim_number'] }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">District (Residence)</label>
+            <input class="ax-input" value="{{ $result['province_name'] }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Village (Residence)</label>
+            <input class="ax-input" value="{{ $result['city_name'] }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+        </div>
+        <div class="ax-field">
+          <label class="ax-label" for="ci-email">Full Address (Residence)</label>
+          <input class="ax-input" value="{{ $result['district_name'] }}" disabled
+            style="color:var(--ax-text-muted);background:white">
+        </div>
+          
+          <div class="ax-field">
+            <label class="ax-label" for="ci-name">Certificate of Residence</label>
+            <div class="box-photo-container">
+              <img src="{{ $result['sim_photo'] ?? '' }}" alt="SIM Photo" class="box-photo">
+            </div>
+          </div>
+      </div>
+    </section>
+    <section class="ax-card ax-col--12">
+      <div class="ax-card__body"
+        style="padding-top:30px;padding-bottom:30px;display:flex;flex-direction:column;gap:var(--ax-space-4);">
+        <h6 class="ax-card__eyebrow" style="color:(--ax-text-muted);font-weight:bold">Supporting Data</h6>
+        
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--ax-space-4);" class="ax-ci-2col">
+          <div class="ax-field">
+            <label class="ax-label" for="ci-name">Work Experience</label>
+            <input class="ax-input" value="{{ $result['user_work_experience_name'] ?? '-' }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Online Application</label>
+            <input class="ax-input" value="{{ $result['user_online_application_name'] }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Emergency Contact Name</label>
+            <input class="ax-input" value="{{ $result['user_sim_type_name'] }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Emergency Contact Phone</label>
+            <input class="ax-input" value="{{ $result['sim_number'] }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Relationship to Emergency Contact</label>
+            <input class="ax-input" value="{{ $result['sim_number'] }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Information Source</label>
+            <input class="ax-input" value="{{ $result['user_lead_source_name'] }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+        </div>
+          
+      </div>
+    </section>
+    
 
   </div>
 @endsection
 
 @section('foot_custom')
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script>
-    function changePerPage(perPage) {
-        const url = new URL(window.location.href);
-
-        // Ubah jumlah data per halaman
-        url.searchParams.set('per_page', perPage);
-
-        // Kembali ke halaman pertama
-        url.searchParams.set('page', 1);
-
-        window.location.href = url.toString();
-    }
-  </script>
-  <script>
-    $(document).ready(function () {
-
-      let hasFocusedAlert = false;
-
-      $('#dismissSelection').on('click', function () {
-
-        // Uncheck semua checkbox
-        $('.row-checkbox').prop('checked', false);
-
-        // Uncheck Check All
-        $('#checkAll')
-          .prop('checked', false)
-          .prop('indeterminate', false);
-
-        // Tutup warning
-        $('#selectionAlert')
-          .stop(true, true)
-          .slideUp(250);
-
-        // Reset agar centang berikutnya dianggap selection pertama
-        hasFocusedAlert = false;
-
-      });
-
-      function focusSelectionAlert() {
-
-        const $alert = $('#selectionAlert');
-
-        if (!$alert.length) {
-          return;
-        }
-
-        setTimeout(function () {
-
-          const alertElement = $alert[0];
-
-          // Cari header sticky
-          const $stickyHeader = $('header:visible').filter(function () {
-            const position = $(this).css('position');
-            return position === 'sticky' || position === 'fixed';
-          }).first();
-
-          let headerHeight = 0;
-
-          if ($stickyHeader.length) {
-            headerHeight = $stickyHeader.outerHeight();
-          }
-
-          // Tambahkan jarak agar alert tidak menempel ke header
-          const spacing = 20;
-
-          const rect = alertElement.getBoundingClientRect();
-
-          const currentScroll =
-            window.pageYOffset ||
-            document.documentElement.scrollTop;
-
-          const targetScroll =
-            currentScroll +
-            rect.top -
-            headerHeight -
-            spacing;
-
-          window.scrollTo({
-            top: Math.max(0, targetScroll),
-            behavior: 'smooth'
-          });
-
-        }, 100);
-      }
-
-
-      function updateSelection() {
-
-        const $rowCheckboxes = $('.row-checkbox');
-        const total = $rowCheckboxes.length;
-        const selected = $rowCheckboxes.filter(':checked').length;
-
-
-        // ==========================================
-        // UPDATE CHECK ALL
-        // ==========================================
-
-        $('#checkAll').prop(
-          'checked',
-          total > 0 && selected === total
-        );
-
-        $('#checkAll').prop(
-          'indeterminate',
-          selected > 0 && selected < total
-        );
-
-
-        // ==========================================
-        // TIDAK ADA YANG DIPILIH
-        // ==========================================
-
-        if (selected === 0) {
-
-          $('#selectionAlert')
-            .stop(true, true)
-            .slideUp(250);
-
-          hasFocusedAlert = false;
-
-          return;
-        }
-
-
-        // ==========================================
-        // UPDATE JUMLAH SELECTED
-        // ==========================================
-
-        $('#selectionTitle').text(
-          selected + ' Data Selected'
-        );
-
-        $('#selectionMessage').text(
-          'You have selected ' +
-          selected +
-          ' data. Please choose an action to continue.'
-        );
-
-
-        // ==========================================
-        // TAMPILKAN ALERT
-        // ==========================================
-
-        if (!$('#selectionAlert').is(':visible')) {
-
-          $('#selectionAlert')
-            .stop(true, true)
-            .slideDown(250, function () {
-
-              // Fokus hanya pada centang pertama
-              if (!hasFocusedAlert) {
-
-                hasFocusedAlert = true;
-
-                focusSelectionAlert();
-
-              }
-
-            });
-
-        }
-      }
-
-
-      // ==========================================
-      // CHECK ALL
-      // ==========================================
-
-      $('#checkAll').on('change', function () {
-
-        const checked = $(this).is(':checked');
-
-        $('.row-checkbox').prop(
-          'checked',
-          checked
-        );
-
-        updateSelection();
-
-      });
-
-
-      // ==========================================
-      // CHECK SATU PER SATU
-      // ==========================================
-
-      $(document).on('change', '.row-checkbox', function () {
-
-        updateSelection();
-
-      });
-
-
-      // ==========================================
-      // DISMISS
-      // ==========================================
-
-      $('#dismissSelection').on('click', function () {
-
-        $('#selectionAlert')
-          .stop(true, true)
-          .slideUp(250);
-
-        hasFocusedAlert = false;
-
-      });
-
-    });
-</script>
-
-<script>
-    function removeFilter(filter) {
-        const url = new URL(window.location.href);
-
-        url.searchParams.delete(filter);
-
-        // Reset pagination ketika filter berubah
-        url.searchParams.delete('page');
-
-        window.location.href = url.toString();
-    }
-
-    function resetFilters() {
-        const url = new URL(window.location.href);
-
-        url.searchParams.delete('search');
-        url.searchParams.delete('admin_role_id');
-        url.searchParams.delete('status');
-        url.searchParams.delete('page');
-
-        window.location.href = url.toString();
-    }
-</script>
 @endsection

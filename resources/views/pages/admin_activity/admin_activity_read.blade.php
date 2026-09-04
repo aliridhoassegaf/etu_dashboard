@@ -121,7 +121,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                                   value="{{ $value_select['id'] }}"
                                   {{ request('admin_id') == $value_select['id'] ? 'selected' : '' }}
                               >
-                                  {{ $value_select['fullname'] }}
+                                  {{ $value_select['full_name'] }}
                               </option>
                             @empty
                               <option value="" disabled>No data available</option>
@@ -253,7 +253,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
 
                 @if($selectedAdmin)
                     <span class="ax-badge ax-badge--soft ax-badge--accent ax-badge--chip">
-                        <span>Admin : {{ $selectedAdmin['fullname'] }}</span>
+                        <span>Admin : {{ $selectedAdmin['full_name'] }}</span>
 
                         <button
                             type="button"
@@ -341,7 +341,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                     <strong>IP Address : </strong>{{ $value['ip'] }}
                   </td>
                   <td class="ax-table__td">
-                    {{ $value['admin_fullname'] }}
+                    {{ $value['admin_full_name'] }}
                   </td>
                   <td class="ax-table__td">
                     <div class="ax-cluster" style="gap:6px;flex-wrap:nowrap;">

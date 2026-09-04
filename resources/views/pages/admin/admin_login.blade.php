@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-ax-route="auth/sign-in-basic">
+<html lang="en">
 
 <head>
   @include('partials.head')
@@ -89,7 +89,7 @@
               <div class="ax-cluster" style="justify-content:space-between;">
                 <label class="ax-label" for="si-pass">Password</label>
 
-                <a class="ax-link" href="/src/html/auth/reset-password-basic.html" style="font-size:var(--ax-text-xs);">
+                <a class="ax-link" href="#" style="font-size:var(--ax-text-xs);">
                   Forgot password?
                 </a>
               </div>
@@ -140,49 +140,11 @@
       </section>
 
       <p style="text-align:center;margin:0;font-size:var(--ax-text-2xs);color:var(--ax-text-subtle);">
-        Need support? <a class="ax-link" href="/src/html/pages/terms.html">Help Center</a>
+        Need support? <a class="ax-link" href="#">Help Center</a>
       </p>
     </div>
   </main>
 
-  <script>
-    function axOffappTools() {
-      return {
-        theme: document.documentElement.getAttribute('data-ax-theme') || 'light',
-        locale: (localStorage.getItem('ax:lang') || 'EN').toUpperCase(),
-        toggleTheme() {
-          this.theme = this.theme === 'dark' ? 'light' : 'dark';
-          document.documentElement.setAttribute('data-ax-theme', this.theme);
-          try { localStorage.setItem('ax:theme', this.theme); } catch (e) { }
-        },
-        cycleLocale() {
-          const order = ['EN', 'FR', 'DE', 'ES', 'AR'];
-          this.locale = order[(order.indexOf(this.locale) + 1) % order.length];
-          try { localStorage.setItem('ax:lang', this.locale); } catch (e) { }
-        },
-      };
-    }
-    function axAuthForm() {
-      return {
-        email: '', password: '', remember: false, reveal: false,
-        emailErr: '', passErr: '', error: false, loading: false,
-        validate() {
-          this.emailErr = !this.email.trim()
-            ? 'Enter your email or username.'
-            : (this.email.includes('@') && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(this.email.trim()) ? 'Enter a valid email address.' : '');
-          this.passErr = !this.password ? 'Enter your password.' : '';
-          return !this.emailErr && !this.passErr;
-        },
-        submit() {
-          this.error = false;
-          if (!this.validate()) return;
-          this.loading = true;
-          // Demo only — never hits the network. Simulates a wrong-credential response.
-          setTimeout(() => { this.loading = false; this.error = true; }, 900);
-        },
-      };
-    }
-  </script>
   @include('partials.foot-auth-custom')
   @include('partials.validation-auth-custom')
 </body>
