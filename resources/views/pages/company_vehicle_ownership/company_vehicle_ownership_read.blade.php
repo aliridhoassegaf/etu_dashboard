@@ -47,7 +47,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
             aria-hidden="true">
             <path d="M9 6l6 6l-6 6"></path>
           </svg></li>
-        <li class="ax-breadcrumb__item" aria-current="page">Vehicle</li>
+        <li class="ax-breadcrumb__item" aria-current="page">{{ $title }}</li>
       </ol>
     </nav>
     <!-- ───── DEFAULT TABLE ───── -->
@@ -55,18 +55,13 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
       <div class="ax-card__header">
         <div class="ax-card__titles">
           <h2 class="ax-card__title">{{ $title }}</h2>
-          <p class="ax-card__subtitle">Manage and monitor vehicle data and information.</p>
+          <p class="ax-card__subtitle">Define administrator roles and manage their access permissions.</p>
         </div>
         @if($data_state === 'has_data' || $data_state === 'filtered_empty')
           <div class="ax-card__actions">
             @php
                 $filterCount = collect([
-                    request()->filled('vehicle_model_id'),
-                    request()->filled('vehicle_brand_id'),
-                    request()->filled('vehicle_supplier_id'),
-                    request()->filled('vehicle_color_id'),
-                    request()->filled('company_pool_id'),
-                    request()->filled('vehicle_type_id'),
+                    request()->filled('search'),
                     request()->filled('status')
                 ])->filter()->count();
             @endphp
@@ -99,8 +94,8 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                 <div class="ax-modal ax-modal--centered" x-show="open" x-cloak @keydown.escape.window="hide()" role="dialog"
                   aria-modal="true" aria-labelledby="m-md-title">
                   <div class="ax-modal__backdrop" x-show="open" x-transition.opacity @click="hide()"></div>
-                  <div class="ax-modal__dialog ax-modal__dialog--scrollable" x-show="open" x-transition x-trap.inert.noscroll="open" style="max-height:calc(100vh - var(--ax-space-16));">
-                    
+                  <div class="ax-modal__dialog" x-show="open" x-transition x-trap.inert.noscroll="open">
+                    <form method="GET">
                       <div class="ax-modal__header">
                         <h2 class="ax-modal__title" id="m-md-title">Filter</h2>
                         <button type="button" class="ax-modal__close" @click="hide()" aria-label="Close dialog"><svg
@@ -110,152 +105,47 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                             <path d="M6 6l12 12" />
                           </svg></button>
                       </div>
-                      <form method="GET" style="display:contents;">
-                        <div class="ax-modal__body" style="display:flex;flex-direction:column;gap:var(--ax-space-5);">
-
-                          <div class="ax-field">
-                            <label class="ax-label" for="fe-name">Model</label>
-                            <select id="fe-country" class="ax-select" name="vehicle_model_id">
-                              <option value="">--All--</option>
-
-                              @forelse ($vehicleModel as $value_select)
-                                <option
-                                    value="{{ $value_select['id'] }}"
-                                    {{ request('vehicle_model_id') == $value_select['id'] ? 'selected' : '' }}
-                                >
-                                    {{ $value_select['name'] }}
-                                </option>
-                              @empty
-                                <option value="" disabled>No data available</option>
-                              @endforelse
-                            </select>
-                          </div>
-
-                          <div class="ax-field">
-                            <label class="ax-label" for="fe-name">Brand</label>
-                            <select id="fe-country" class="ax-select" name="vehicle_brand_id">
-                              <option value="">--All--</option>
-
-                              @forelse ($vehicleBrand as $value_select2)
-                                <option
-                                    value="{{ $value_select2['id'] }}"
-                                    {{ request('vehicle_brand_id') == $value_select2['id'] ? 'selected' : '' }}
-                                >
-                                    {{ $value_select2['name'] }}
-                                </option>
-                              @empty
-                                <option value="" disabled>No data available</option>
-                              @endforelse
-                            </select>
-                          </div>
-
-                          <div class="ax-field">
-                            <label class="ax-label" for="fe-name">Supplier</label>
-                            <select id="fe-country" class="ax-select" name="vehicle_supplier_id">
-                              <option value="">--All--</option>
-
-                              @forelse ($vehicleSupplier as $value_select4)
-                                <option
-                                    value="{{ $value_select4['id'] }}"
-                                    {{ request('vehicle_supplier_id') == $value_select4['id'] ? 'selected' : '' }}
-                                >
-                                    {{ $value_select4['name'] }}
-                                </option>
-                              @empty
-                                <option value="" disabled>No data available</option>
-                              @endforelse
-                            </select>
-                          </div>
-
-                          <div class="ax-field">
-                            <label class="ax-label" for="fe-name">Color</label>
-                            <select id="fe-country" class="ax-select" name="vehicle_color_id">
-                              <option value="">--All--</option>
-
-                              @forelse ($vehicleColor as $value_select5)
-                                <option
-                                    value="{{ $value_select5['id'] }}"
-                                    {{ request('vehicle_color_id') == $value_select5['id'] ? 'selected' : '' }}
-                                >
-                                    {{ $value_select5['name'] }}
-                                </option>
-                              @empty
-                                <option value="" disabled>No data available</option>
-                              @endforelse
-                            </select>
-                          </div>
-
-                          <div class="ax-field">
-                            <label class="ax-label" for="fe-name">Company Pool</label>
-                            <select id="fe-country" class="ax-select" name="company_pool_id">
-                              <option value="">--All--</option>
-
-                              @forelse ($companyPool as $value_select6)
-                                <option
-                                    value="{{ $value_select6['id'] }}"
-                                    {{ request('company_pool_id') == $value_select6['id'] ? 'selected' : '' }}
-                                >
-                                    {{ $value_select6['name'] }}
-                                </option>
-                              @empty
-                                <option value="" disabled>No data available</option>
-                              @endforelse
-                            </select>
-                          </div>
-
-                          <div class="ax-field">
-                            <label class="ax-label" for="fe-name">Type</label>
-                            <select id="fe-country" class="ax-select" name="vehicle_type_id">
-                              <option value="">--All--</option>
-
-                              @forelse ($vehicleType as $value_select7)
-                                <option
-                                    value="{{ $value_select7['id'] }}"
-                                    {{ request('vehicle_type_id') == $value_select7['id'] ? 'selected' : '' }}
-                                >
-                                    {{ $value_select7['name'] }}
-                                </option>
-                              @empty
-                                <option value="" disabled>No data available</option>
-                              @endforelse
-                            </select>
-                          </div>
-
-                          <div class="ax-field">
-                            <label class="ax-label" for="fe-name">Status</label>
-                            <select id="fe-country" class="ax-select" name="status">
-                              <option value="">--All--</option>
-
-                              @forelse ($vehicleStatus as $value_select8)
-                                <option
-                                    value="{{ $value_select8['id'] }}"
-                                    {{ request('status') == $value_select8['id'] ? 'selected' : '' }}
-                                >
-                                    {{ $value_select8['name'] }}
-                                </option>
-                              @empty
-                                <option value="" disabled>No data available</option>
-                              @endforelse
-                            </select>
-                          </div>
-
+                      <div class="ax-modal__body" style="display:flex;flex-direction:column;gap:var(--ax-space-5);">
+                        <div class="ax-field">
+                          <label class="ax-label" for="fe-name">Search</label>
+                          <input id="fe-name" type="text" name="search" class="ax-input" placeholder="Search name" value="{{ request('search') }}">
                         </div>
-                        <div class="ax-modal__footer">
-                            <button
-                                type="button"
-                                class="ax-btn ax-btn--ghost"
-                                @click="window.location.href = window.location.pathname"
-                            >
-                                Reset
-                            </button>
 
-                            <button class="ax-btn ax-btn--primary"
-                            @click="hide()">Filter Now</button></div>
-                      </form>
+                        <div class="ax-field">
+                          <label class="ax-label" for="fe-name">Status</label>
+                          <select id="fe-country" class="ax-select" name="status">
+                            <option value="">--All--</option>
+                            <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Active</option>
+                            <option value="2" {{ request('status') == '2' ? 'selected' : '' }}>Not Active</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="ax-modal__footer">
+                          <button
+                              type="button"
+                              class="ax-btn ax-btn--ghost"
+                              @click="window.location.href = window.location.pathname"
+                          >
+                              Reset
+                          </button>
+
+                          <button class="ax-btn ax-btn--primary"
+                          @click="hide()">Filter Now</button></div>
+                    </form>
                   </div>
                 </div>
               </template>
             </div>
+            <button type="button" class="ax-btn ax-btn--secondary ax-btn--icon" aria-label="Export">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-download">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
+                <path d="M7 11l5 5l5 -5" />
+                <path d="M12 4l0 12" />
+              </svg>
+            </button>
             <button type="button" class="ax-btn ax-btn--primary">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
@@ -312,247 +202,75 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
           </div>
         </div>
       @endif
-      @if(request('vehicle_model_id') || request('vehicle_brand_id') || request('vehicle_supplier_id') || request('vehicle_color_id') || request('company_pool_id') || request('vehicle_type_id') || request('status'))
+      @if(request('search') || request('status'))
         <div class="ax-card__body pt-0!">
 
           <div style="display:flex;flex-wrap:wrap;gap:var(--ax-space-2);min-height:24px;">
 
-              @if(request('vehicle_model_id'))
-                  @php
-                      $selectedVehicleModel = collect($vehicleModel)
-                          ->firstWhere('id', request('vehicle_model_id'));
-                  @endphp
+              {{-- Search Filter --}}
+              @if(request('search'))
+                  <span class="ax-badge ax-badge--soft ax-badge--accent ax-badge--chip">
+                      <span>Search : {{ request('search') }}</span>
 
-                  @if($selectedVehicleModel)
-                      <span class="ax-badge ax-badge--soft ax-badge--accent ax-badge--chip">
-                          <span>Model : {{ $selectedVehicleModel['name'] }}</span>
-
-                          <button
-                              type="button"
-                              class="ax-badge__remove"
-                              aria-label="Remove Model"
-                              onclick="removeFilter('vehicle_model_id')"
+                      <button
+                          type="button"
+                          class="ax-badge__remove"
+                          aria-label="Remove Search"
+                          onclick="removeFilter('search')"
+                      >
+                          <svg
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2.4"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              aria-hidden="true"
                           >
-                              <svg
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  stroke-width="2.4"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  aria-hidden="true"
-                              >
-                                  <path d="M18 6l-12 12" />
-                                  <path d="M6 6l12 12" />
-                              </svg>
-                          </button>
-                      </span>
-                  @endif
+                              <path d="M18 6l-12 12" />
+                              <path d="M6 6l12 12" />
+                          </svg>
+                      </button>
+                  </span>
               @endif
 
-              @if(request('vehicle_brand_id'))
-                  @php
-                      $selectedVehicleBrand = collect($vehicleBrand)
-                          ->firstWhere('id', request('vehicle_brand_id'));
-                  @endphp
-
-                  @if($selectedVehicleBrand)
-                      <span class="ax-badge ax-badge--soft ax-badge--accent ax-badge--chip">
-                          <span>Brand : {{ $selectedVehicleBrand['name'] }}</span>
-
-                          <button
-                              type="button"
-                              class="ax-badge__remove"
-                              aria-label="Remove Model"
-                              onclick="removeFilter('vehicle_brand_id')"
-                          >
-                              <svg
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  stroke-width="2.4"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  aria-hidden="true"
-                              >
-                                  <path d="M18 6l-12 12" />
-                                  <path d="M6 6l12 12" />
-                              </svg>
-                          </button>
-                      </span>
-                  @endif
-              @endif
-
-              @if(request('vehicle_supplier_id'))
-                  @php
-                      $selectedVehicleSupplier = collect($vehicleSupplier)
-                          ->firstWhere('id', request('vehicle_supplier_id'));
-                  @endphp
-
-                  @if($selectedVehicleSupplier)
-                      <span class="ax-badge ax-badge--soft ax-badge--accent ax-badge--chip">
-                          <span>Supplier : {{ $selectedVehicleSupplier['name'] }}</span>
-
-                          <button
-                              type="button"
-                              class="ax-badge__remove"
-                              aria-label="Remove Model"
-                              onclick="removeFilter('vehicle_supplier_id')"
-                          >
-                              <svg
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  stroke-width="2.4"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  aria-hidden="true"
-                              >
-                                  <path d="M18 6l-12 12" />
-                                  <path d="M6 6l12 12" />
-                              </svg>
-                          </button>
-                      </span>
-                  @endif
-              @endif
-
-              @if(request('vehicle_color_id'))
-                  @php
-                      $selectedVehicleColor = collect($vehicleColor)
-                          ->firstWhere('id', request('vehicle_color_id'));
-                  @endphp
-
-                  @if($selectedVehicleColor)
-                      <span class="ax-badge ax-badge--soft ax-badge--accent ax-badge--chip">
-                          <span>Color : {{ $selectedVehicleColor['name'] }}</span>
-
-                          <button
-                              type="button"
-                              class="ax-badge__remove"
-                              aria-label="Remove Model"
-                              onclick="removeFilter('vehicle_color_id')"
-                          >
-                              <svg
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  stroke-width="2.4"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  aria-hidden="true"
-                              >
-                                  <path d="M18 6l-12 12" />
-                                  <path d="M6 6l12 12" />
-                              </svg>
-                          </button>
-                      </span>
-                  @endif
-              @endif
-
-              @if(request('company_pool_id'))
-                  @php
-                      $selectedCompanyPool = collect($companyPool)
-                          ->firstWhere('id', request('company_pool_id'));
-                  @endphp
-
-                  @if($selectedCompanyPool)
-                      <span class="ax-badge ax-badge--soft ax-badge--accent ax-badge--chip">
-                          <span>Company Pool : {{ $selectedCompanyPool['name'] }}</span>
-
-                          <button
-                              type="button"
-                              class="ax-badge__remove"
-                              aria-label="Remove Model"
-                              onclick="removeFilter('company_pool_id')"
-                          >
-                              <svg
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  stroke-width="2.4"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  aria-hidden="true"
-                              >
-                                  <path d="M18 6l-12 12" />
-                                  <path d="M6 6l12 12" />
-                              </svg>
-                          </button>
-                      </span>
-                  @endif
-              @endif
-
-              @if(request('vehicle_type_id'))
-                  @php
-                      $selectedVehicleType = collect($vehicleType)
-                          ->firstWhere('id', request('vehicle_type_id'));
-                  @endphp
-
-                  @if($selectedVehicleType)
-                      <span class="ax-badge ax-badge--soft ax-badge--accent ax-badge--chip">
-                          <span>Type : {{ $selectedVehicleType['name'] }}</span>
-
-                          <button
-                              type="button"
-                              class="ax-badge__remove"
-                              aria-label="Remove Model"
-                              onclick="removeFilter('vehicle_type_id')"
-                          >
-                              <svg
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  stroke-width="2.4"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  aria-hidden="true"
-                              >
-                                  <path d="M18 6l-12 12" />
-                                  <path d="M6 6l12 12" />
-                              </svg>
-                          </button>
-                      </span>
-                  @endif
-              @endif
-
+              {{-- Status Filter --}}
               @if(request('status'))
-                  @php
-                      $selectedVehicleStatus = collect($vehicleStatus)
-                          ->firstWhere('id', request('status'));
-                  @endphp
+                  <span class="ax-badge ax-badge--soft ax-badge--accent ax-badge--chip">
 
-                  @if($selectedVehicleStatus)
-                      <span class="ax-badge ax-badge--soft ax-badge--accent ax-badge--chip">
-                          <span>Status : {{ $selectedVehicleStatus['name'] }}</span>
-
-                          <button
-                              type="button"
-                              class="ax-badge__remove"
-                              aria-label="Remove Model"
-                              onclick="removeFilter('status')"
-                          >
-                              <svg
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  stroke-width="2.4"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  aria-hidden="true"
-                              >
-                                  <path d="M18 6l-12 12" />
-                                  <path d="M6 6l12 12" />
-                              </svg>
-                          </button>
+                      <span>
+                          Status :
+                          {{ request('status') == '1' ? 'Active' : 'Not Active' }}
                       </span>
-                  @endif
+
+                      <button
+                          type="button"
+                          class="ax-badge__remove"
+                          aria-label="Remove Status"
+                          onclick="removeFilter('status')"
+                      >
+                          <svg
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2.4"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              aria-hidden="true"
+                          >
+                              <path d="M18 6l-12 12" />
+                              <path d="M6 6l12 12" />
+                          </svg>
+                      </button>
+
+                  </span>
               @endif
 
           </div>
 
 
           {{-- Reset All Filters --}}
-          @if(request('vehicle_model_id') || request('vehicle_brand_id') || request('vehicle_supplier_id') || request('vehicle_color_id') || request('company_pool_id') || request('vehicle_type_id') || request('status'))
+          @if(request('search') || request('status'))
 
               <button
                   type="button"
@@ -582,10 +300,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                     <input type="checkbox" class="ax-checkbox" id="checkAll">
                   </label>
                 </th>
-                <th class="ax-table__th" scope="col" style="min-width: 150px;">Create Date</th>
-                <th class="ax-table__th" scope="col" style="min-width: 130px;">Vehicle</th>
-                <th class="ax-table__th" scope="col">Plat Number</th>
-                <th class="ax-table__th" scope="col" style="min-width: 150px;">Supplier</th>
+                <th class="ax-table__th" scope="col">Name</th>
                 <th class="ax-table__th" scope="col">Status</th>
                 <th class="ax-table__th" scope="col"></th>
               </tr>
@@ -599,38 +314,15 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                       <input type="checkbox" class="ax-checkbox row-checkbox" value="{{ $value['id'] }}">
                     </label>
                   </td>
-                  <td class="ax-table__td" style="color:var(--ax-text-muted);">
-                      @php
-                          [$date, $time] = strrpos($value['created_at'], ' ') !== false
-                              ? [substr($value['created_at'], 0, strrpos($value['created_at'], ' ')), substr($value['created_at'], strrpos($value['created_at'], ' ') + 1)]
-                              : [$value['created_at'], null];
-                      @endphp
-
-                      {{ $date }}
-                      @if($time)
-                          <br>
-                          <small style="color:var(--ax-text-muted);">{{ $time }}</small>
-                      @endif
-                  </td>
                   <td class="ax-table__td" style="font-weight:var(--ax-weight-medium);color:var(--ax-text-strong);">
-                    <a href="{{ url('vehicle/' . $value['id']) }}" style="font-weight: 700">
-                      {{ $value['vehicle_brand_name'] }} <br>
-                      <small style="color:var(--ax-text-muted);font-weight: normal;">{{ $value['vehicle_model_name'] }} - {{ $value['year'] }} <br>{{ $value['vehicle_color_name'] }}</small>
-                    </a>
-                  </td>
-                  <td class="ax-table__td">
-                    {{ $value['plat_number'] }} <br>
-                      <small style="color:var(--ax-text-muted);font-weight: normal;">{{ $value['vehicle_type_name'] }}</small>
-                  </td>
-                  <td class="ax-table__td">
-                    {{ $value['vehicle_supplier_name'] }}
+                    <a href="{{ url('company-vehicle-ownership/' . $value['id']) }}">{{ $value['name'] }}</a>
                   </td>
                   <td class="ax-table__td"><span class="ax-badge ax-badge--soft ax-badge--success ax-badge--pill"><span
                         class="ax-badge__dot"></span>{{ $value['status_name'] }}</span></td>
                   <td class="ax-table__td">
                     <div class="ax-cluster" style="gap:6px;flex-wrap:nowrap;">
 
-                      <a class="ax-btn ax-btn--secondary ax-btn--sm ax-btn--icon" href="{{ url('vehicle/' . $value['id']) }}" aria-label="Email">
+                      <a class="ax-btn ax-btn--secondary ax-btn--sm ax-btn--icon" href="{{ url('company-vehicle-ownership/' . $value['id']) }}" aria-label="Email">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                           stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
                           class="icon icon-tabler icons-tabler-outline icon-tabler-eye">
@@ -1283,12 +975,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
     function resetFilters() {
         const url = new URL(window.location.href);
 
-        url.searchParams.delete('vehicle_model_id');
-        url.searchParams.delete('vehicle_brand_id');
-        url.searchParams.delete('vehicle_supplier_id');
-        url.searchParams.delete('vehicle_color_id');
-        url.searchParams.delete('vehicle_type_id');
-        url.searchParams.delete('company_pool_id');
+        url.searchParams.delete('search');
         url.searchParams.delete('status');
         url.searchParams.delete('page');
 

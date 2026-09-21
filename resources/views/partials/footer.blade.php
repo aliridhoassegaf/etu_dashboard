@@ -5,6 +5,6 @@
     <span class="ax-footer__version">{{ env("APP_NAME") }}</span>
   </div>
   <nav class="ax-footer__links" aria-label="Footer">
-    <a class="ax-footer__link" href="/pages/landing">Help Center</a>
+    {{-- <a class="ax-footer__link" href="/pages/landing">Help Center</a> --}}
   </nav>
 </footer>

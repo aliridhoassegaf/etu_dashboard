@@ -206,13 +206,12 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
           <input class="ax-input" value="{{ $result['district_name'] }}" disabled
             style="color:var(--ax-text-muted);background:white">
         </div>
-          
-          <div class="ax-field">
-            <label class="ax-label" for="ci-name">Certificate of Residence</label>
-            <div class="box-photo-container">
-              <img src="{{ $result['sim_photo'] ?? '' }}" alt="SIM Photo" class="box-photo">
-            </div>
+        <div class="ax-field">
+          <label class="ax-label" for="ci-name">Certificate of Residence</label>
+          <div class="box-photo-container">
+            <img src="{{ $result['sim_photo'] ?? '' }}" alt="SIM Photo" class="box-photo">
           </div>
+        </div>
       </div>
     </section>
     <section class="ax-card ax-col--12">

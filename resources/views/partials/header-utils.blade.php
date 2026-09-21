@@ -122,7 +122,8 @@
     aria-controls="ax-profile-menu" aria-label="Account menu">
     <span class="ax-avatar ax-avatar__initials"
       style="background:color-mix(in oklab,var(--ax-accent) 16%,transparent);color:var(--ax-accent);"><span
-        class="ax-avatar__initials">AR</span>
+        class="ax-avatar__initials">{{ $adminInitials }}</span>
+      </span>
   </button>
   <div id="ax-profile-menu" class="ax-dropdown ax-profile__menu" role="menu" x-show="open"
     x-transition.opacity.duration.150ms x-cloak>
@@ -131,7 +132,7 @@
         aria-controls="ax-profile-menu" aria-label="Account menu">
         <span class="ax-avatar ax-avatar__initials"
           style="background:color-mix(in oklab,var(--ax-accent) 16%,transparent);color:var(--ax-accent);"><span
-            class="ax-avatar__initials">AR</span>
+            class="ax-avatar__initials">{{ $adminInitials }}</span>
       </button>
       <span class="ax-profile__card-meta"><b>{{ session('admin')['full_name'] }}</b><small>{{ session('admin')['email'] }}</small></span>
     </div>
@@ -141,7 +142,7 @@
         <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
         <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
       </svg>My Profile</a>
-    <a class="ax-dropdown__item" role="menuitem" href="/pages/profile-settings"><svg class="ax-icon ax-dropdown__lead"
+    <a class="ax-dropdown__item" role="menuitem" href="{{ url("admin-account-setting") }}"><svg class="ax-icon ax-dropdown__lead"
         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
         stroke-linejoin="round" width="24" height="24" aria-hidden="true">
         <path

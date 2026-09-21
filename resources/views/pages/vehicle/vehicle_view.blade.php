@@ -3,23 +3,6 @@
 {{-- Basic Tables — faithful re-expression of src/html/tables/basic.html.
 Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
 @section('head_custom')
-<style>
-    #selectionAlert {
-        overflow: hidden;
-    }
-
-    @media (max-width: 767px) {
-
-        .ax-pagination__page,
-        .ax-pagination__prev,
-        .ax-pagination__next {
-        min-width: 25px;
-        height: 25px;
-        padding-inline: 0;
-        font-size: var(--ax-text-sm);
-        }
-    }
-</style>
 @endsection
 
 @section('content')
@@ -41,55 +24,142 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
             aria-hidden="true">
             <path d="M9 6l6 6l-6 6"></path>
           </svg></li>
-        <li class="ax-breadcrumb__item" aria-current="page">Vehicle</li>
+        <li class="ax-breadcrumb__item" aria-current="page">Vehicles</li>
         <li class="ax-breadcrumb__sep" aria-hidden="true"><svg class="ax-icon ax-icon--directional" viewBox="0 0 24 24"
             fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
             aria-hidden="true">
             <path d="M9 6l6 6l-6 6"></path>
           </svg></li>
-        <li class="ax-breadcrumb__item"><a href="{{ url("vehicle") }}">Vehicle</a></li>
+        <li class="ax-breadcrumb__item"><a href="{{ url("user") }}">Vehicle</a></li>
         <li class="ax-breadcrumb__sep" aria-hidden="true"><svg class="ax-icon ax-icon--directional" viewBox="0 0 24 24"
             fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
             aria-hidden="true">
             <path d="M9 6l6 6l-6 6"></path>
           </svg></li>
-        <li class="ax-breadcrumb__item" aria-current="page">{{ $result['vehicle_brand_name'] ?? '-' }} - {{ $result['vehicle_model_name'] ?? '-' }}</li>
+        <li class="ax-breadcrumb__item" aria-current="page">{{ $result['plat_number'] ?? '-' }}</li>
       </ol>
     </nav>
-    <!-- ───── DEFAULT TABLE ───── -->
-    <section class="ax-card ax-col--12" role="region" aria-label="Default table">
+    <section class="ax-card ax-col--12">
       <div class="ax-card__header">
         <div class="ax-card__titles">
-          <h3 class="ax-card__title">{{ $title }}</h3>
-          <p class="ax-card__subtitle">Viewing detail for <strong>{{ $result['vehicle_brand_name'] ?? '-' }} - {{ $result['vehicle_model_name'] ?? '-' }}</strong></p>
+          <h2 class="ax-card__title">{{ $title }}</h2>
+          <p class="ax-card__subtitle">Viewing detail for <strong>{{ $result['plat_number'] ?? '-' }}</strong></p>
         </div>
       </div>
-      <div class="ax-card__body pt-0!" style="display:flex;flex-direction:column;gap:var(--ax-space-5);">
-        <div class="ax-field">
-          <label class="ax-label" for="fe-name">Vehicle</label>
-          <input class="ax-input" value="{{ $result['vehicle_brand_name'] ?? '-' }} - {{ $result['vehicle_model_name'] ?? '-' }}" disabled style="color:var(--ax-text-muted);">
-        </div>
-                
-        <div class="ax-field">
-          <label class="ax-label" for="fe-name">Supplier</label>
-          <input class="ax-input" value="{{ $result['vehicle_supplier_name'] ?? '-' }}" disabled style="color:var(--ax-text-muted);">
+      <div class="ax-card__body"
+        style="padding-top:20px;padding-bottom:30px;display:flex;flex-direction:column;gap:var(--ax-space-4);">
+        <h6 class="ax-card__eyebrow" style="color:(--ax-text-muted);font-weight:bold">Main Data</h6>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--ax-space-4);" class="ax-ci-2col">
+          <div class="ax-field">
+            <label class="ax-label" for="ci-name">Brand</label>
+            <input class="ax-input" value="{{ $result['vehicle_brand_name'] ?? '-' }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Model</label>
+            <input class="ax-input" value="{{ $result['vehicle_model_name'] ?? '-' }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Year</label>
+            <input class="ax-input" value="{{ $result['year'] ?? '-' }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-name">Plat Number</label>
+            <input class="ax-input" value="{{ $result['plat_number'] ?? '-' }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Type</label>
+            <input class="ax-input" value="{{ $result['vehicle_type_name'] ?? '-' }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Rental Option</label>
+            <input class="ax-input" value="{{ $result['company_vehicle_rental_option_name'] }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Engine Number</label>
+            <input class="ax-input" value="{{ $result['engine_number'] }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Frame Number</label>
+            <input class="ax-input" value="{{ $result['frame_number'] }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">STNK Expire Date</label>
+            <input class="ax-input" value="{{ $result['stnk_expire_date_format'] }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">STNK Expire Date 5 Year</label>
+            <input class="ax-input" value="{{ $result['stnk_expire_date_5_year_format'] }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-name">Color</label>
+            <input class="ax-input" value="{{ $result['vehicle_color_name'] ?? '-' }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Vehicle Ownership</label>
+            <input class="ax-input" value="{{ $result['company_vehicle_ownership_name'] }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Supplier</label>
+            <input class="ax-input" value="{{ $result['vehicle_supplier_name'] }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Pool</label>
+            <input class="ax-input" value="{{ $result['company_pool_name'] }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Status</label>
+            <input class="ax-input" value="{{ $result['status_name'] }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-email">Created At</label>
+            <input class="ax-input" value="{{ $result['created_at'] ?? '-' }}" disabled
+              style="color:var(--ax-text-muted);background:white">
+          </div>
         </div>
 
-        <div class="ax-field">
-          <label class="ax-label" for="fe-name">Status</label>
-          <input class="ax-input" value="{{ $result['status_name'] ?? '-' }}" disabled style="color:var(--ax-text-muted);">
-        </div>
+      </div>
+    </section>
+    <section class="ax-card ax-col--12">
+      <div class="ax-card__body"
+        style="padding-top:30px;padding-bottom:30px;display:flex;flex-direction:column;gap:var(--ax-space-4);">
+        <h6 class="ax-card__eyebrow" style="color:(--ax-text-muted);font-weight:bold">Document</h6>
 
-        <div class="ax-field">
-          <label class="ax-label" for="fe-name">Created Date</label>
-          <input class="ax-input" value="{{ $result['created_at'] ?? '-' }}" disabled style="color:var(--ax-text-muted);">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--ax-space-4);" class="ax-ci-2col">
+          <div class="ax-field">
+            <label class="ax-label" for="ci-name">STNK</label>
+            <div class="box-photo-container">
+              <img src="{{ $result['document_stnk'] ?? '' }}" alt="STNK" class="box-photo">
+            </div>
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-name">Photo</label>
+            <div class="box-photo-container">
+              <img src="{{ $result['document_photo'] ?? '' }}" alt="Photo" class="box-photo">
+            </div>
+          </div>
+          <div class="ax-field">
+            <label class="ax-label" for="ci-name">BBM Barcode</label>
+            <div class="box-photo-container">
+              <img src="{{ $result['document_bbm_barcode'] ?? '' }}" alt="BBM Barcode" class="box-photo">
+            </div>
+          </div>
         </div>
-
-        <div class="ax-field">
-          <label class="ax-label" for="fe-name">Update Date</label>
-          <input class="ax-input" value="{{ $result['updated_at'] ?? '-' }}" disabled style="color:var(--ax-text-muted);">
-        </div>
-
       </div>
     </section>
 
@@ -98,238 +168,4 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
 @endsection
 
 @section('foot_custom')
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script>
-    function changePerPage(perPage) {
-        const url = new URL(window.location.href);
-
-        // Ubah jumlah data per halaman
-        url.searchParams.set('per_page', perPage);
-
-        // Kembali ke halaman pertama
-        url.searchParams.set('page', 1);
-
-        window.location.href = url.toString();
-    }
-  </script>
-  <script>
-    $(document).ready(function () {
-
-      let hasFocusedAlert = false;
-
-      $('#dismissSelection').on('click', function () {
-
-        // Uncheck semua checkbox
-        $('.row-checkbox').prop('checked', false);
-
-        // Uncheck Check All
-        $('#checkAll')
-          .prop('checked', false)
-          .prop('indeterminate', false);
-
-        // Tutup warning
-        $('#selectionAlert')
-          .stop(true, true)
-          .slideUp(250);
-
-        // Reset agar centang berikutnya dianggap selection pertama
-        hasFocusedAlert = false;
-
-      });
-
-      function focusSelectionAlert() {
-
-        const $alert = $('#selectionAlert');
-
-        if (!$alert.length) {
-          return;
-        }
-
-        setTimeout(function () {
-
-          const alertElement = $alert[0];
-
-          // Cari header sticky
-          const $stickyHeader = $('header:visible').filter(function () {
-            const position = $(this).css('position');
-            return position === 'sticky' || position === 'fixed';
-          }).first();
-
-          let headerHeight = 0;
-
-          if ($stickyHeader.length) {
-            headerHeight = $stickyHeader.outerHeight();
-          }
-
-          // Tambahkan jarak agar alert tidak menempel ke header
-          const spacing = 20;
-
-          const rect = alertElement.getBoundingClientRect();
-
-          const currentScroll =
-            window.pageYOffset ||
-            document.documentElement.scrollTop;
-
-          const targetScroll =
-            currentScroll +
-            rect.top -
-            headerHeight -
-            spacing;
-
-          window.scrollTo({
-            top: Math.max(0, targetScroll),
-            behavior: 'smooth'
-          });
-
-        }, 100);
-      }
-
-
-      function updateSelection() {
-
-        const $rowCheckboxes = $('.row-checkbox');
-        const total = $rowCheckboxes.length;
-        const selected = $rowCheckboxes.filter(':checked').length;
-
-
-        // ==========================================
-        // UPDATE CHECK ALL
-        // ==========================================
-
-        $('#checkAll').prop(
-          'checked',
-          total > 0 && selected === total
-        );
-
-        $('#checkAll').prop(
-          'indeterminate',
-          selected > 0 && selected < total
-        );
-
-
-        // ==========================================
-        // TIDAK ADA YANG DIPILIH
-        // ==========================================
-
-        if (selected === 0) {
-
-          $('#selectionAlert')
-            .stop(true, true)
-            .slideUp(250);
-
-          hasFocusedAlert = false;
-
-          return;
-        }
-
-
-        // ==========================================
-        // UPDATE JUMLAH SELECTED
-        // ==========================================
-
-        $('#selectionTitle').text(
-          selected + ' Data Selected'
-        );
-
-        $('#selectionMessage').text(
-          'You have selected ' +
-          selected +
-          ' data. Please choose an action to continue.'
-        );
-
-
-        // ==========================================
-        // TAMPILKAN ALERT
-        // ==========================================
-
-        if (!$('#selectionAlert').is(':visible')) {
-
-          $('#selectionAlert')
-            .stop(true, true)
-            .slideDown(250, function () {
-
-              // Fokus hanya pada centang pertama
-              if (!hasFocusedAlert) {
-
-                hasFocusedAlert = true;
-
-                focusSelectionAlert();
-
-              }
-
-            });
-
-        }
-      }
-
-
-      // ==========================================
-      // CHECK ALL
-      // ==========================================
-
-      $('#checkAll').on('change', function () {
-
-        const checked = $(this).is(':checked');
-
-        $('.row-checkbox').prop(
-          'checked',
-          checked
-        );
-
-        updateSelection();
-
-      });
-
-
-      // ==========================================
-      // CHECK SATU PER SATU
-      // ==========================================
-
-      $(document).on('change', '.row-checkbox', function () {
-
-        updateSelection();
-
-      });
-
-
-      // ==========================================
-      // DISMISS
-      // ==========================================
-
-      $('#dismissSelection').on('click', function () {
-
-        $('#selectionAlert')
-          .stop(true, true)
-          .slideUp(250);
-
-        hasFocusedAlert = false;
-
-      });
-
-    });
-</script>
-
-<script>
-    function removeFilter(filter) {
-        const url = new URL(window.location.href);
-
-        url.searchParams.delete(filter);
-
-        // Reset pagination ketika filter berubah
-        url.searchParams.delete('page');
-
-        window.location.href = url.toString();
-    }
-
-    function resetFilters() {
-        const url = new URL(window.location.href);
-
-        url.searchParams.delete('search');
-        url.searchParams.delete('admin_role_id');
-        url.searchParams.delete('status');
-        url.searchParams.delete('page');
-
-        window.location.href = url.toString();
-    }
-</script>
 @endsection

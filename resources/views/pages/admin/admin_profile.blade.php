@@ -30,7 +30,6 @@
           </ol>
         </nav>
         <h1 class="ax-page-head__title">{{ $title }}</h1>
-        <p class="ax-page-head__subtitle">Manage your account, security, notifications and billing.</p>
       </div>
       <div class="ax-page-head__actions">
         <span x-show="dirty" x-cloak class="ax-cluster"
@@ -52,10 +51,10 @@
       <!-- ░░░ ACCOUNT ░░░ -->
       <div role="tabpanel" aria-label="Account settings" class="ax-stack" style="--ax-gap:var(--ax-space-6);">
 
-        <section class="ax-card" role="region" aria-label="Personal information">
+        <section class="ax-card" role="region" aria-label="Personal Information">
           <div class="ax-card__header">
             <div class="ax-card__titles">
-              <h2 class="ax-card__title">Personal information</h2>
+              <h2 class="ax-card__title">Personal Information</h2>
             </div>
           </div>
           <div class="ax-card__body"

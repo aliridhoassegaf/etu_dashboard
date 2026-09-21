@@ -1,3 +1,7 @@
+@php
+    $admin = session('admin');
+    $adminInitials = \App\Helpers\GlobalHelper::initials($admin['full_name'] ?? '');
+@endphp
 <!doctype html>
 {{-- lang + dir are set by the anti-flash IIFE in partials.head before first paint;
      the @route attr seeds nav.js active-trail / breadcrumb (manifest slug). --}}

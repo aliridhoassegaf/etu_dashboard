@@ -5,8 +5,9 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use App\Helpers\ApiHelper;
 
-class UserController extends Controller
+class CompanyVehicleOwnershipController extends Controller
 {
+
     public function view($id)
     {
         if (!session()->has('token')) {
@@ -14,20 +15,19 @@ class UserController extends Controller
         }
 
         $permissions = session('permissions', []);
-        if (!in_array('user.read', $permissions)) {
+        if (!in_array('company_vehicle_ownership.read', $permissions)) {
             abort(404);
         }
 
-        $response = ApiHelper::get('/user/' . $id);
+        $response = ApiHelper::get('/company-vehicle-ownership/' . $id);
         if (!$response['status']) {
             abort(404);
         }
 
         $data = $response['data'];
 
-        return view('pages.user.user_view', [
-            'title' => 'View Driver',
-            'route' => 'user/view',
+        return view('pages.company_vehicle_ownership.company_vehicle_ownership_view', [
+            'title' => 'View Company Vehicle Ownership',
             'result' => $data
         ]);
     }
@@ -37,26 +37,21 @@ class UserController extends Controller
             return redirect('/');
         }
         $permissions = session('permissions', []);
-        if (!in_array('user.read', $permissions)) {
+        if (!in_array('company_vehicle_ownership.read', $permissions)) {
             abort(404);
         }
 
         $params = $request->all();
         // $params['per_page'] = $request->per_page ?? 1;
 
-        $data = ApiHelper::get('/user', $params);
+        $data = ApiHelper::get('/company-vehicle-ownership', $params);
 
-        $userStatusStep = ApiHelper::get('/user-status-step',[
-            "with_sort"=>1
-        ]);
-
-        return view('pages.user.user_read', [
-            'title' => 'Driver Leads',
-            'route' => 'user/read',
+        return view('pages.company_vehicle_ownership.company_vehicle_ownership_read', [
+            'title' => 'Vehicle Ownership',
+            'route' => 'company-vehicle-ownership/read',
             'result' => $data['data'] ?? [],
             'data_state' => $data['data_state'],
             'pagination' => $data['pagination'] ?? [],
-            'userStatusStep' => $userStatusStep['data'] ?? [],
         ]);
 
     }

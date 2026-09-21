@@ -27,6 +27,7 @@ class AdminActivityController extends Controller
 
         return view('pages.admin_activity.admin_activity_view', [
             'title' => 'View Admin Activity',
+            'route' => 'admin-activity/view',
             'result' => $data
         ]);
     }

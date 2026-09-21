@@ -108,9 +108,26 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                       <div class="ax-modal__body" style="display:flex;flex-direction:column;gap:var(--ax-space-5);">
                         <div class="ax-field">
                           <label class="ax-label" for="fe-name">Search</label>
-                          <input id="fe-name" type="text" name="search" class="ax-input" placeholder="Search full_name, NIK, email, phone" value="{{ request('search') }}">
+                          <input id="fe-name" type="text" name="search" class="ax-input" placeholder="Search full name, NIK, email, phone" value="{{ request('search') }}">
                         </div>
 
+                        <div class="ax-field">
+                          <label class="ax-label" for="fe-name">Status Recruitment</label>
+                          <select id="fe-country" class="ax-select" name="status_step">
+                            <option value="">--All--</option>
+
+                            @forelse ($userStatusStep as $value_select2)
+                              <option
+                                  value="{{ $value_select2['id'] }}"
+                                  {{ request('status_step') == $value_select2['id'] ? 'selected' : '' }}
+                              >
+                                  {{ $value_select2['name'] }}
+                              </option>
+                            @empty
+                              <option value="" disabled>No data available</option>
+                            @endforelse
+                          </select>
+                        </div>
                       </div>
                       <div class="ax-modal__footer">
                           <button
@@ -128,16 +145,6 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                 </div>
               </template>
             </div>
-            <button type="button" class="ax-btn ax-btn--secondary ax-btn--icon" aria-label="Export">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                class="icon icon-tabler icons-tabler-outline icon-tabler-download">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
-                <path d="M7 11l5 5l5 -5" />
-                <path d="M12 4l0 12" />
-              </svg>
-            </button>
             <button type="button" class="ax-btn ax-btn--primary">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
@@ -194,7 +201,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
           </div>
         </div>
       @endif
-      @if(request('search') || request('status'))
+      @if(request('search') || request('status_step'))
         <div class="ax-card__body pt-0!">
 
           <div style="display:flex;flex-wrap:wrap;gap:var(--ax-space-2);min-height:24px;">
@@ -229,43 +236,44 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
 
 
 
-              {{-- Status Filter --}}
-              @if(request('status'))
-                  <span class="ax-badge ax-badge--soft ax-badge--accent ax-badge--chip">
+              @if(request('status_step'))
+                  @php
+                      $selectedUserStatusStep = collect($userStatusStep)
+                          ->firstWhere('id', request('status_step'));
+                  @endphp
 
-                      <span>
-                          Status :
-                          {{ request('status') == '1' ? 'Active' : 'Not Active' }}
-                      </span>
+                  @if($selectedUserStatusStep)
+                      <span class="ax-badge ax-badge--soft ax-badge--accent ax-badge--chip">
+                          <span>Status : {{ $selectedUserStatusStep['name'] }}</span>
 
-                      <button
-                          type="button"
-                          class="ax-badge__remove"
-                          aria-label="Remove Status"
-                          onclick="removeFilter('status')"
-                      >
-                          <svg
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              stroke-width="2.4"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              aria-hidden="true"
+                          <button
+                              type="button"
+                              class="ax-badge__remove"
+                              aria-label="Remove Model"
+                              onclick="removeFilter('status_step')"
                           >
-                              <path d="M18 6l-12 12" />
-                              <path d="M6 6l12 12" />
-                          </svg>
-                      </button>
-
-                  </span>
+                              <svg
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  stroke-width="2.4"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  aria-hidden="true"
+                              >
+                                  <path d="M18 6l-12 12" />
+                                  <path d="M6 6l12 12" />
+                              </svg>
+                          </button>
+                      </span>
+                  @endif
               @endif
 
           </div>
 
 
           {{-- Reset All Filters --}}
-          @if(request('search') || request('status'))
+          @if(request('search') || request('status_step'))
 
               <button
                   type="button"
@@ -333,7 +341,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                   <td class="ax-table__td" style="color:var(--ax-text-muted);">{{ $value['email'] }}</td>
                   <td class="ax-table__td" style="color:var(--ax-text-muted);">{{ $value['phone'] }}</td>
                   <td class="ax-table__td"><span class="ax-badge ax-badge--soft ax-badge--success ax-badge--pill"><span
-                        class="ax-badge__dot"></span>{{ $value['status_name'] }}</span></td>
+                        class="ax-badge__dot"></span>{{ $value['status_step_name'] }}</span></td>
                   <td class="ax-table__td">
                     <div class="ax-cluster" style="gap:6px;flex-wrap:nowrap;">
 

@@ -4,13 +4,6 @@
     <svg class="ax-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" /></svg>
   </button>
 
-  <!-- 2 · COMMAND SEARCH (⌘K trigger) -->
-  <button type="button" class="ax-search" @click="$dispatch('ax-command-open')" aria-haspopup="dialog" aria-controls="ax-command" aria-label="Search or jump to">
-    <svg class="ax-icon ax-search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true"><path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
-    <span class="ax-search__placeholder">Search or jump to…</span>
-    <kbd class="ax-search__keycap">⌘K</kbd>
-  </button>
-
   <span class="ax-header__spacer"></span>
 
   {{-- ===== RIGHT UTILITY CLUSTER =====

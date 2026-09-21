@@ -58,6 +58,8 @@ class VehicleController extends Controller
         $vehicleType = ApiHelper::get('/vehicle-type',[
             "with_sort"=>1
         ]);
+        $companyVehicleOwnership = ApiHelper::get('/company-vehicle-ownership');
+        
         $companyPool = ApiHelper::get('/company-pool');
 
         return view('pages.vehicle.vehicle_read', [
@@ -73,6 +75,7 @@ class VehicleController extends Controller
             'vehicleStatus' => $vehicleStatus['data'] ?? [],
             'vehicleType' => $vehicleType['data'] ?? [],
             'companyPool' => $companyPool['data'] ?? [],
+            'companyVehicleOwnership' => $companyVehicleOwnership['data'] ?? [],
         ]);
 
     }

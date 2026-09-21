@@ -13,7 +13,7 @@
     <div style="inline-size:100%;display:flex;flex-direction:column;gap:var(--ax-space-5);">
 
       <!-- ════ AUTH CARD ════ -->
-      <section class="ax-card" role="region" aria-label="Sign in" x-data="axAuthForm()"
+      <section class="ax-card" role="region" aria-label="Sign in"
         style="border-radius:var(--ax-radius-xl);">
         <div class="ax-card__body"
           style="padding:var(--ax-space-8);display:flex;flex-direction:column;gap:var(--ax-space-5);">
@@ -25,13 +25,13 @@
               <img src="{{ asset('assets/img') }}/logo-express.png" style="max-width:200px;">
             </div>
 
-            <p style="margin:0;font-size:var(--ax-text-sm);color:var(--ax-text-muted);">Welcome back — sign in to your
-              workspace.</p>
+            <p style="margin:0;font-size:var(--ax-text-sm);color:var(--ax-text-muted);">Welcome back — login to your
+              dashboard.</p>
           </header>
 
           <!-- global error -->
           @if(session('success'))
-          <div role="alert" x-cloak x-transition class="ax-alert ax-alert--success"
+          <div role="alert" class="ax-alert ax-alert--success"
             style="padding:var(--ax-space-3) var(--ax-space-4);">
             <svg class="ax-alert__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -46,7 +46,7 @@
           @endif
 
           @if(session('error'))
-          <div role="alert" x-cloak x-transition class="ax-alert ax-alert--danger"
+          <div role="alert" class="ax-alert ax-alert--danger"
             style="padding:var(--ax-space-3) var(--ax-space-4);">
             <svg class="ax-alert__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -61,15 +61,14 @@
           @endif
 
           <!-- form -->
-          <form method="POST" id="form_login" action="{{ route('admin.login.process') }}" class="ax-stack" style="display:flex;flex-direction:column;gap:var(--ax-space-4);"
-            novalidate>
+          <form class="ax-stack" method="POST" id="form_login" action="{{ url('admin-login') }}" style="display:flex;flex-direction:column;gap:var(--ax-space-4);" novalidate>
             @csrf
             <div class="ax-field">
-              <label class="ax-label" for="si-email">Email</label>
+              <label class="ax-label" for="email">Email</label>
 
               <div class="ax-field__control">
-                <input id="si-email" value="aliridho@expressgroup.co.id" name="email" type="text" class="ax-input ax-input--with-trailing"
-                  placeholder="you@website.com" aria-describedby="si-email-error">
+                <input id="email" value="aliridho@expressgroup.co.id" name="email" type="text" class="ax-input ax-input--with-trailing"
+                  placeholder="you@website.com">
 
                 <span class="ax-field__affix ax-field__affix--trailing" aria-hidden="true"
                   style="color:var(--ax-danger-500);display:none;">
@@ -84,69 +83,50 @@
             </div>
 
 
-            <div class="ax-field">
-
-              <div class="ax-cluster" style="justify-content:space-between;">
-                <label class="ax-label" for="si-pass">Password</label>
-
-                <a class="ax-link" href="#" style="font-size:var(--ax-text-xs);">
-                  Forgot password?
-                </a>
-              </div>
-
+            <div class="ax-field" x-data="{ show:false }">
+              <label class="ax-label" for="password">Password</label>
               <div class="ax-field__control">
-
-                <input id="si-pass" value="Password123!" name="password" class="ax-input ax-input--with-trailing"
-                  autocomplete="current-password" placeholder="••••••••••" :type="reveal ? 'text' : 'password'"
-                  aria-describedby="si-pass-error">
-
-                <!-- Show / Hide Password -->
-                <button type="button" class="ax-field__affix ax-field__affix--trailing ax-field__affix--button"
-                  @click="reveal = !reveal" :aria-pressed="reveal"
-                  :aria-label="reveal ? 'Hide password' : 'Show password'">
-
-                  <!-- Eye -->
-                  <svg x-show="!reveal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
-                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                    <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
-                  </svg>
-
-                  <!-- Eye Off -->
-                  <svg x-show="reveal" x-cloak viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
-                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" />
-
-                    <path
-                      d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 -9 6c-.666 1.11 -1.379 2.067 -2.138 2.87" />
-
-                    <path d="M3 3l18 18" />
-                  </svg>
-
+                <input :type="show ? 'text' : 'password'" class="ax-input ax-input--with-trailing" id="password" name="password" autocomplete="off" value="Password123!">
+                <button type="button" class="ax-field__affix ax-field__affix--trailing ax-field__affix--button" @click="show=!show" :aria-label="show ? 'Hide password' : 'Show password'">
+                  <svg x-show="!show" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/></svg>
+                  <svg x-show="show" x-cloak viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.585 10.587a2 2 0 0 0 2.829 2.828"/><path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87"/><path d="M3 3l18 18"/></svg>
                 </button>
-
               </div>
-
             </div>
 
-            <button type="submit" class="ax-btn ax-btn--primary ax-btn--lg ax-btn--block"
-              :class="loading && 'is-loading'" :aria-busy="loading">
+            <button type="submit" class="ax-btn ax-btn--primary ax-btn--lg ax-btn--block">
               <span class="ax-btn__spinner" aria-hidden="true"></span>
-              <span class="ax-btn__label">Sign in</span>
+              <span class="ax-btn__label">Login</span>
             </button>
           </form>
 
         </div>
       </section>
 
-      <p style="text-align:center;margin:0;font-size:var(--ax-text-2xs);color:var(--ax-text-subtle);">
-        Need support? <a class="ax-link" href="#">Help Center</a>
-      </p>
     </div>
   </main>
-
-  @include('partials.foot-auth-custom')
-  @include('partials.validation-auth-custom')
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.21.0/dist/jquery.validate.min.js"></script>
+  <script src="{{ asset('assets') }}/js/validation-custom.js"></script>
+  <script>
+    function axOffappTools() {
+      return {
+        theme: document.documentElement.getAttribute('data-ax-theme') || 'light',
+        locale: (localStorage.getItem('ax:lang') || 'EN').toUpperCase(),
+        toggleTheme() {
+          this.theme = this.theme === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-ax-theme', this.theme);
+          try { localStorage.setItem('ax:theme', this.theme); } catch (e) {}
+        },
+        cycleLocale() {
+          const order = ['EN', 'FR', 'DE', 'ES', 'AR'];
+          this.locale = order[(order.indexOf(this.locale) + 1) % order.length];
+          try { localStorage.setItem('ax:lang', this.locale); } catch (e) {}
+        },
+      };
+    }
+    
+  </script>
 </body>
 
 </html>

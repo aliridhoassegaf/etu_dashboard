@@ -7,6 +7,62 @@ use App\Helpers\ApiHelper;
 
 class AdminController extends Controller
 {
+    public function account_setting()
+    {
+        if (!session()->has('token')) {
+            return redirect('/');
+        }
+        return view('pages.admin.admin_account_setting', [
+            'title' => 'Account Settings',
+            'route' => 'admin-account-setting',
+        ]);
+    }
+
+    public function update_password_process(Request $request)
+    {
+        try {
+
+            if (!session()->has('token')) {
+                return redirect('/');
+            }
+
+            $response = Http::timeout(10)
+                ->withHeaders([
+                    'Authorization' => 'Bearer ' . session('token'),
+                    'Accept' => 'application/json'
+                ])
+                ->asForm()
+                ->put(env('API_URL') . '/admin-update-password', [
+                    'current_password' => $request->current_password,
+                    'new_password' => $request->new_password,
+                    'confirm_new_password' => $request->confirm_new_password
+                ]);
+
+            if ($response->status() == 401) {
+                session()->flush();
+                return redirect('/')->with('error', 'Your session has expired. Please log in again');
+            }
+
+            $result = $response->json();
+
+            if (!$result['status']) {
+                return back()->with('error', $result['message']);
+            }
+
+            session()->forget(['token', 'admin', 'permissions']);
+
+            return redirect('/')->with('success', $result['message']);
+
+        } catch (\Exception $e) {
+
+            \Log::error('Update Password Error', [
+                'message' => $e->getMessage(),
+            ]);
+
+            return back()->with('error', 'Unable to connect to the API server');
+        }
+    }
+
     public function logout(Request $request)
     {
         try {
@@ -52,6 +108,7 @@ class AdminController extends Controller
 
         return view('pages.admin.admin_view', [
             'title' => 'View Admin',
+            'route' => 'admin/read',
             'result' => $data
         ]);
     }
@@ -73,6 +130,7 @@ class AdminController extends Controller
         
         return view('pages.admin.admin_profile', [
             'title' => 'My Profile',
+            'route' => 'admin-profile',
             'result' => $data
         ]);
     }
@@ -85,7 +143,7 @@ class AdminController extends Controller
         ]);
     }
 
-    public function loginProcess(Request $request)
+    public function login_process(Request $request)
     {
         $result = ApiHelper::post('/admin-login', [
             'email' => $request->email,
@@ -109,8 +167,8 @@ class AdminController extends Controller
             'permissions' => $permissions
         ]);
 
-        if (in_array('admin.read', $permissions)) {
-            return redirect('/admin');
+        if (in_array('overview_driver.read', $permissions)) {
+            return redirect('/overview-driver');
         }
 
         return back();

@@ -29,6 +29,8 @@ use App\Http\Controllers\UserOnlineApplicationController;
 use App\Http\Controllers\UserLengthOfStayController;
 use App\Http\Controllers\CompanyVehicleRentalPeriodController;
 use App\Http\Controllers\AssignmentController;
+use App\Http\Controllers\CompanyVehicleOwnershipController;
+use App\Http\Controllers\OverviewDriverController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,13 +40,26 @@ use App\Http\Controllers\AssignmentController;
 | Each view receives title (<title>) + route (nav-manifest slug for the
 | active-trail + breadcrumb). See CONVENTIONS.md.
 */
+Route::get('/overview-driver', [OverviewDriverController::class, 'read'])
+    ->name('overview_driver.read');
+
+Route::get('/overview-driver/assignment-status', [OverviewDriverController::class, 'assignmentStatus'])
+    ->name('overview-driver.assignment-status');
+
+Route::get('/overview-driver/user-register', [OverviewDriverController::class, 'userRegister'])
+    ->name('overview-driver.user-register');
+
 Route::get('/assignment', [AssignmentController::class, 'read'])
     ->name('assignment.read');
+Route::get('/assignment/{id}', [AssignmentController::class, 'view'])
+    ->name('assignment.view');
+Route::get('/assignment-create', [AssignmentController::class, 'create'])
+    ->name('assignment.create');
+
 
 Route::get('/', [AdminController::class, 'login'])
     ->name('admin.login');
-Route::post('/admin-login', [AdminController::class, 'loginProcess'])
-    ->name('admin.login.process');
+Route::post('/admin-login', [AdminController::class, 'login_process']);
 Route::get('/admin', [AdminController::class, 'read'])
     ->name('admin.read');
 Route::get('/admin/{id}', [AdminController::class, 'view'])
@@ -52,6 +67,8 @@ Route::get('/admin/{id}', [AdminController::class, 'view'])
 Route::get('/admin-profile', [AdminController::class, 'profile'])
     ->name('admin.profile');
 Route::get('/admin-logout', [AdminController::class, 'logout']);
+Route::get('/admin-account-setting', [AdminController::class, 'account_setting']);
+Route::post('/admin-update-password', [AdminController::class, 'update_password_process']);
 
 Route::get('/admin-role', [AdminRoleController::class, 'read'])
     ->name('admin_role.read');
@@ -72,6 +89,9 @@ Route::get('/vehicle', [VehicleController::class, 'read'])
     ->name('vehicle.read');
 Route::get('/vehicle/{id}', [VehicleController::class, 'view'])
     ->name('vehicle.view');
+
+Route::get('/vehicle-log', [VehicleController::class, 'read'])
+    ->name('vehicle.log');
 
 Route::get('/vehicle-supplier', [VehicleSupplierController::class, 'read'])
     ->name('vehicle_supplier.read');
@@ -128,6 +148,9 @@ Route::get('/user-education', [UserEducationController::class, 'read'])
 
 Route::get('/company-vehicle-rental-period', [CompanyVehicleRentalPeriodController::class, 'read'])
     ->name('company_vehicle_rental_period.read');
+
+Route::get('/company-vehicle-ownership', [CompanyVehicleOwnershipController::class, 'read'])
+    ->name('company_vehicle_ownership.read');
 
 Route::get('/user-sim-type', [UserSimTypeController::class, 'read'])
     ->name('user_sim-type.read');

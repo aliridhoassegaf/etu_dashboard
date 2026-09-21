@@ -64,6 +64,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                     request()->filled('search'),
                     request()->filled('vehicle_brand_id'),
                     request()->filled('vehicle_fuel_id'),
+                    request()->filled('wheel_type'),
                     request()->filled('status')
                 ])->filter()->count();
             @endphp
@@ -96,8 +97,8 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                 <div class="ax-modal ax-modal--centered" x-show="open" x-cloak @keydown.escape.window="hide()" role="dialog"
                   aria-modal="true" aria-labelledby="m-md-title">
                   <div class="ax-modal__backdrop" x-show="open" x-transition.opacity @click="hide()"></div>
-                  <div class="ax-modal__dialog" x-show="open" x-transition x-trap.inert.noscroll="open">
-                    <form method="GET">
+                  <div class="ax-modal__dialog ax-modal__dialog--scrollable" x-show="open" x-transition x-trap.inert.noscroll="open" style="max-height:calc(100vh - var(--ax-space-16));">
+                    
                       <div class="ax-modal__header">
                         <h2 class="ax-modal__title" id="m-md-title">Filter</h2>
                         <button type="button" class="ax-modal__close" @click="hide()" aria-label="Close dialog"><svg
@@ -107,58 +108,69 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                             <path d="M6 6l12 12" />
                           </svg></button>
                       </div>
-                      <div class="ax-modal__body" style="display:flex;flex-direction:column;gap:var(--ax-space-5);">
-                        <div class="ax-field">
-                          <label class="ax-label" for="fe-name">Search</label>
-                          <input id="fe-name" type="text" name="search" class="ax-input" placeholder="Search name" value="{{ request('search') }}">
+                      <form method="GET" style="display:contents;">
+                        <div class="ax-modal__body" style="display:flex;flex-direction:column;gap:var(--ax-space-5);">
+                          <div class="ax-field">
+                            <label class="ax-label" for="fe-name">Search</label>
+                            <input id="fe-name" type="text" name="search" class="ax-input" placeholder="Search name" value="{{ request('search') }}">
+                          </div>
+
+                          <div class="ax-field">
+                            <label class="ax-label" for="fe-name">Brand</label>
+                            <select id="fe-country" class="ax-select" name="vehicle_brand_id">
+                              <option value="">--All--</option>
+
+                              @forelse ($vehicleBrand as $value_select2)
+                                <option
+                                    value="{{ $value_select2['id'] }}"
+                                    {{ request('vehicle_brand_id') == $value_select2['id'] ? 'selected' : '' }}
+                                >
+                                    {{ $value_select2['name'] }}
+                                </option>
+                              @empty
+                                <option value="" disabled>No data available</option>
+                              @endforelse
+                            </select>
+                          </div>
+
+                          <div class="ax-field">
+                            <label class="ax-label" for="fe-name">Fuel</label>
+                            <select id="fe-country" class="ax-select" name="vehicle_fuel_id">
+                              <option value="">--All--</option>
+
+                              @forelse ($vehicleFuel as $value_select3)
+                                <option
+                                    value="{{ $value_select3['id'] }}"
+                                    {{ request('vehicle_fuel_id') == $value_select3['id'] ? 'selected' : '' }}
+                                >
+                                    {{ $value_select3['name'] }}
+                                </option>
+                              @empty
+                                <option value="" disabled>No data available</option>
+                              @endforelse
+                            </select>
+                          </div>
+
+                          <div class="ax-field">
+                            <label class="ax-label" for="fe-name">Wheel Type</label>
+                            <select id="fe-country" class="ax-select" name="wheel_type">
+                              <option value="">--All--</option>
+                              <option value="1" {{ request('wheel_type') == '1' ? 'selected' : '' }}>4 Wheeler</option>
+                              <option value="2" {{ request('wheel_type') == '2' ? 'selected' : '' }}>2 Wheeler</option>
+                            </select>
+                          </div>
+
+                          <div class="ax-field">
+                            <label class="ax-label" for="fe-name">Status</label>
+                            <select id="fe-country" class="ax-select" name="status">
+                              <option value="">--All--</option>
+                              <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Active</option>
+                              <option value="2" {{ request('status') == '2' ? 'selected' : '' }}>Not Active</option>
+                            </select>
+                          </div>
+
                         </div>
-
-                        <div class="ax-field">
-                          <label class="ax-label" for="fe-name">Brand</label>
-                          <select id="fe-country" class="ax-select" name="vehicle_brand_id">
-                            <option value="">--All--</option>
-
-                            @forelse ($vehicleBrand as $value_select2)
-                              <option
-                                  value="{{ $value_select2['id'] }}"
-                                  {{ request('vehicle_brand_id') == $value_select2['id'] ? 'selected' : '' }}
-                              >
-                                  {{ $value_select2['name'] }}
-                              </option>
-                            @empty
-                              <option value="" disabled>No data available</option>
-                            @endforelse
-                          </select>
-                        </div>
-
-                        <div class="ax-field">
-                          <label class="ax-label" for="fe-name">Fuel</label>
-                          <select id="fe-country" class="ax-select" name="vehicle_fuel_id">
-                            <option value="">--All--</option>
-
-                            @forelse ($vehicleFuel as $value_select3)
-                              <option
-                                  value="{{ $value_select3['id'] }}"
-                                  {{ request('vehicle_fuel_id') == $value_select3['id'] ? 'selected' : '' }}
-                              >
-                                  {{ $value_select3['name'] }}
-                              </option>
-                            @empty
-                              <option value="" disabled>No data available</option>
-                            @endforelse
-                          </select>
-                        </div>
-
-                        <div class="ax-field">
-                          <label class="ax-label" for="fe-name">Status</label>
-                          <select id="fe-country" class="ax-select" name="status">
-                            <option value="">--All--</option>
-                            <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Active</option>
-                            <option value="2" {{ request('status') == '2' ? 'selected' : '' }}>Not Active</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="ax-modal__footer">
+                        <div class="ax-modal__footer">
                           <button
                               type="button"
                               class="ax-btn ax-btn--ghost"
@@ -169,12 +181,12 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
 
                           <button class="ax-btn ax-btn--primary"
                           @click="hide()">Filter Now</button></div>
-                    </form>
+                      </form>
                   </div>
                 </div>
               </template>
             </div>
-            <button type="button" class="ax-btn ax-btn--secondary ax-btn--icon" aria-label="Export">
+            {{-- <button type="button" class="ax-btn ax-btn--secondary ax-btn--icon" aria-label="Export">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
                 class="icon icon-tabler icons-tabler-outline icon-tabler-download">
@@ -183,7 +195,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                 <path d="M7 11l5 5l5 -5" />
                 <path d="M12 4l0 12" />
               </svg>
-            </button>
+            </button> --}}
             <button type="button" class="ax-btn ax-btn--primary">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
@@ -240,7 +252,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
           </div>
         </div>
       @endif
-      @if(request('search') || request('vehicle_brand_id') || request('vehicle_fuel_id') || request('status'))
+      @if(request('search') || request('vehicle_brand_id') || request('vehicle_fuel_id') || request('wheel_type') || request('status'))
         <div class="ax-card__body pt-0!">
 
           <div style="display:flex;flex-wrap:wrap;gap:var(--ax-space-2);min-height:24px;">
@@ -338,6 +350,37 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                   @endif
               @endif
 
+              @if(request('wheel_type'))
+                  <span class="ax-badge ax-badge--soft ax-badge--accent ax-badge--chip">
+
+                      <span>
+                          Wheel Type :
+                          {{ request('wheel_type') == '1' ? '4 Wheeler' : '2 Wheeler' }}
+                      </span>
+
+                      <button
+                          type="button"
+                          class="ax-badge__remove"
+                          aria-label="Remove Status"
+                          onclick="removeFilter('wheel_type')"
+                      >
+                          <svg
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2.4"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              aria-hidden="true"
+                          >
+                              <path d="M18 6l-12 12" />
+                              <path d="M6 6l12 12" />
+                          </svg>
+                      </button>
+
+                  </span>
+              @endif
+
               {{-- Status Filter --}}
               @if(request('status'))
                   <span class="ax-badge ax-badge--soft ax-badge--accent ax-badge--chip">
@@ -374,7 +417,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
 
 
           {{-- Reset All Filters --}}
-          @if(request('search') || request('vehicle_brand_id') || request('vehicle_fuel_id') ||request('status'))
+          @if(request('search') || request('vehicle_brand_id') || request('vehicle_fuel_id') || request('wheel_type') || request('status'))
 
               <button
                   type="button"
@@ -1089,6 +1132,9 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
         const url = new URL(window.location.href);
 
         url.searchParams.delete('search');
+        url.searchParams.delete('vehicle_brand_id');
+        url.searchParams.delete('vehicle_fuel_id');
+        url.searchParams.delete('wheel_type');
         url.searchParams.delete('status');
         url.searchParams.delete('page');
 

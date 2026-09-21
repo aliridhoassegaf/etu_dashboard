@@ -27,6 +27,7 @@ class AdminRoleController extends Controller
 
         return view('pages.admin_role.admin_role_view', [
             'title' => 'View Admin Role',
+            'route' => 'admin-role/view',
             'result' => $data
         ]);
     }

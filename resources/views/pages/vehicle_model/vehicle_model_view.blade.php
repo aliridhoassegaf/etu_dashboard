@@ -79,6 +79,11 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
           </div>
 
           <div class="ax-field">
+            <label class="ax-label" for="fe-name">Cylinder/Battery Capacity</label>
+            <input class="ax-input" value="{{ $result['cylinder_battery_capacity'] ?? '-' }}" disabled style="color:var(--ax-text-muted);background:white">
+          </div>
+
+          <div class="ax-field">
             <label class="ax-label" for="fe-name">Transmission</label>
             <input class="ax-input" value="{{ $result['transmission_name'] ?? '-' }}" disabled style="color:var(--ax-text-muted);background:white">
           </div>

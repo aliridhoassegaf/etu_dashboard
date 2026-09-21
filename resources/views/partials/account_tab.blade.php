@@ -15,9 +15,9 @@
                 <span class="ax-btn__label">My Profile</span>
             </a>
 
-            <a href="{{ url('account-setting') }}" role="tab"
-                class="ax-btn ax-btn--ghost ax-btn--block {{ ($title ?? '') === 'Account Setting' ? 'is-selected' : '' }}"
-                style="justify-content:flex-start; {{ ($title ?? '') === 'Account Setting' ? 'background: var(--ax-fill-hover);' : '' }}">
+            <a href="{{ url('admin-account-setting') }}" role="tab"
+                class="ax-btn ax-btn--ghost ax-btn--block {{ ($title ?? '') === 'Account Settings' ? 'is-selected' : '' }}"
+                style="justify-content:flex-start; {{ ($title ?? '') === 'Account Settings' ? 'background: var(--ax-fill-hover);' : '' }}">
                 <svg class="ax-icon ax-dropdown__lead" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"
                     aria-hidden="true">

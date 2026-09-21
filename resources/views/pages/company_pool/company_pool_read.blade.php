@@ -47,7 +47,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
             aria-hidden="true">
             <path d="M9 6l6 6l-6 6"></path>
           </svg></li>
-        <li class="ax-breadcrumb__item" aria-current="page">Company Pool</li>
+        <li class="ax-breadcrumb__item" aria-current="page">{{ $title }}</li>
       </ol>
     </nav>
     <!-- ───── DEFAULT TABLE ───── -->

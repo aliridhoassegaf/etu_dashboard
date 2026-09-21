@@ -32,22 +32,93 @@
 
     <p class="ax-sidebar__section" role="presentation">Main Menu</p>
 
-    <!-- Single-link leaf (Widgets) -->
-    <a class="ax-nav__item" role="treeitem" aria-level="1" href="#" tabindex="-1">
-      <span class="ax-nav__bar" aria-hidden="true"></span>
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-        class="icon icon-tabler icons-tabler-outline icon-tabler-chart-histogram">
-        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-        <path d="M3 3v18h18" />
-        <path d="M20 18v3" />
-        <path d="M16 16v5" />
-        <path d="M12 13v8" />
-        <path d="M8 16v5" />
-        <path d="M3 11c6 0 5 -5 9 -5s3 5 9 5" />
-      </svg>
-      <span class="ax-nav__label">Overview</span>
-    </a>
+    @php
+        $isOverviewDriverActive = request()->is('overview-driver', 'overview-driver/*');
+    @endphp
+
+    <div class="custom-driver-menu" data-driver-menu>
+
+        <button
+            type="button"
+            class="ax-nav__item ax-nav__item--parent {{ $isOverviewDriverActive ? 'ax-nav__item--trail' : '' }}"
+            data-driver-toggle
+            aria-expanded="{{ $isOverviewDriverActive ? 'true' : 'false' }}"
+            tabindex="0"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-chart-histogram">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M3 3v18h18" />
+              <path d="M20 18v3" />
+              <path d="M16 16v5" />
+              <path d="M12 13v8" />
+              <path d="M8 16v5" />
+              <path d="M3 11c6 0 5 -5 9 -5s3 5 9 5" />
+            </svg>
+
+            <span class="ax-nav__label">Overviews</span>
+
+            <svg
+                class="ax-nav__caret ax-icon--directional"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                width="24"
+                height="24"
+            >
+                <path d="M9 6l6 6l-6 6"/>
+            </svg>
+        </button>
+
+        {{-- Child --}}
+        <div
+            class="ax-nav__children custom-driver-panel"
+            data-driver-panel
+            {{ $isOverviewDriverActive ? '' : 'hidden' }}
+        >
+
+            <a
+                class="ax-nav__item ax-nav__item--child {{ $isOverviewDriverActive ? 'ax-nav__item--active is-active' : '' }}"
+                role="treeitem"
+                aria-level="2"
+                href="{{ url('overview-driver') }}"
+                tabindex="{{ $isOverviewDriverActive ? '0' : '-1' }}"
+                {{ $isOverviewDriverActive ? 'aria-current="page"' : '' }}
+            >
+                <span class="ax-nav__bar" aria-hidden="true"></span>
+                <span class="ax-nav__label">Overview Drivers</span>
+            </a>
+
+            <a
+                class="ax-nav__item ax-nav__item--child"
+                role="treeitem"
+                aria-level="2"
+                href="#"
+                tabindex=""
+            >
+                <span class="ax-nav__bar" aria-hidden="true"></span>
+                <span class="ax-nav__label">Overview Vehicles</span>
+            </a>
+
+            <a
+                class="ax-nav__item ax-nav__item--child"
+                role="treeitem"
+                aria-level="2"
+                href="#"
+                tabindex=""
+            >
+                <span class="ax-nav__bar" aria-hidden="true"></span>
+                <span class="ax-nav__label">Overview Payments</span>
+            </a>
+
+        </div>
+
+    </div>
+    
 
     @php
         $isDriverActive = request()->is('user', 'user/*');
@@ -115,6 +186,78 @@
                 <span class="ax-nav__bar" aria-hidden="true"></span>
                 <span class="ax-nav__label">Leads</span>
             </a>
+
+            <div class="ax-nav__group" data-ax-collapse>
+              <button type="button" class="ax-nav__item ax-nav__item--parent ax-nav__item--child" role="treeitem"
+                aria-level="2" aria-expanded="false" data-ax-group="driver_registration" @click="toggle('driver_registration')"
+                tabindex="-1">
+                <span class="ax-nav__label">Registration</span>
+                <svg class="ax-nav__caret ax-icon--directional" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"
+                  aria-hidden="true">
+                  <path d="M9 6l6 6l-6 6" />
+                </svg>
+              </button>
+              <div class="ax-nav__children" role="group" data-ax-collapse-panel hidden>
+                <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+                  href="#" tabindex="-1"><span class="ax-nav__bar"
+                    aria-hidden="true"></span><span class="ax-nav__label">Pra Registration</span></a>
+                <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+                  href="#" tabindex="-1"><span class="ax-nav__bar"
+                    aria-hidden="true"></span><span class="ax-nav__label">Pool Registration</span></a>
+                <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+                  href="#" tabindex="-1"><span class="ax-nav__bar"
+                    aria-hidden="true"></span><span class="ax-nav__label">Registration Pending</span></a>
+              </div>
+            </div>
+
+            <div class="ax-nav__group" data-ax-collapse>
+              <button type="button" class="ax-nav__item ax-nav__item--parent ax-nav__item--child" role="treeitem"
+                aria-level="2" aria-expanded="false" data-ax-group="driver_interview" @click="toggle('driver_interview')"
+                tabindex="-1">
+                <span class="ax-nav__label">Interview</span>
+                <svg class="ax-nav__caret ax-icon--directional" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"
+                  aria-hidden="true">
+                  <path d="M9 6l6 6l-6 6" />
+                </svg>
+              </button>
+              <div class="ax-nav__children" role="group" data-ax-collapse-panel hidden>
+                <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+                  href="#" tabindex="-1"><span class="ax-nav__bar"
+                    aria-hidden="true"></span><span class="ax-nav__label">Interview in Progress</span></a>
+                <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+                  href="#" tabindex="-1"><span class="ax-nav__bar"
+                    aria-hidden="true"></span><span class="ax-nav__label">Interview Pending</span></a>
+                <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+                  href="#" tabindex="-1"><span class="ax-nav__bar"
+                    aria-hidden="true"></span><span class="ax-nav__label">Interview Rejected</span></a>
+              </div>
+            </div>
+
+            <div class="ax-nav__group" data-ax-collapse>
+              <button type="button" class="ax-nav__item ax-nav__item--parent ax-nav__item--child" role="treeitem"
+                aria-level="2" aria-expanded="false" data-ax-group="driver_approval" @click="toggle('driver_approval')"
+                tabindex="-1">
+                <span class="ax-nav__label">Approval</span>
+                <svg class="ax-nav__caret ax-icon--directional" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"
+                  aria-hidden="true">
+                  <path d="M9 6l6 6l-6 6" />
+                </svg>
+              </button>
+              <div class="ax-nav__children" role="group" data-ax-collapse-panel hidden>
+                <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+                  href="#" tabindex="-1"><span class="ax-nav__bar"
+                    aria-hidden="true"></span><span class="ax-nav__label">Waiting for Approval</span></a>
+                <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+                  href="#" tabindex="-1"><span class="ax-nav__bar"
+                    aria-hidden="true"></span><span class="ax-nav__label">Approved</span></a>
+                <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+                  href="#" tabindex="-1"><span class="ax-nav__bar"
+                    aria-hidden="true"></span><span class="ax-nav__label">Rejected</span></a>
+              </div>
+            </div>
 
         </div>
 
@@ -280,19 +423,41 @@
       </div>
     </div> --}}
 
-    <a class="ax-nav__item" role="treeitem" aria-level="1" href="{{ url('assignment') }}" tabindex="-1">
-      <span class="ax-nav__bar" aria-hidden="true"></span>
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-        class="icon icon-tabler icons-tabler-outline icon-tabler-user-key">
-        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-        <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-        <path d="M6 21v-2a4 4 0 0 1 4 -4h5" />
-        <path d="M18.5 18.5l-3.5 3.5l-1.5 -1.5" />
-        <path d="M18.554 18.414a2 2 0 1 1 2.828 -2.828a2 2 0 0 1 -2.828 2.828" />
-        <path d="M16 19l1 1" />
-      </svg>
-      <span class="ax-nav__label">Assignment</span>
+    @php
+        $isAssignmentActive = request()->is('assignment', 'assignment/*', 'assignment-*');
+    @endphp
+
+    <a
+        class="ax-nav__item {{ $isAssignmentActive ? 'ax-nav__item--active is-active' : '' }}"
+        role="treeitem"
+        aria-level="1"
+        href="{{ url('assignment') }}"
+        tabindex="{{ $isAssignmentActive ? '0' : '-1' }}"
+        {{ $isAssignmentActive ? 'aria-current="page"' : '' }}
+    >
+        <span class="ax-nav__bar" aria-hidden="true"></span>
+
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon icon-tabler icons-tabler-outline icon-tabler-user-key"
+        >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+            <path d="M6 21v-2a4 4 0 0 1 4 -4h5" />
+            <path d="M18.5 18.5l-3.5 3.5l-1.5 -1.5" />
+            <path d="M18.554 18.414a2 2 0 1 1 2.828 -2.828a2 2 0 0 1 -2.828 2.828" />
+            <path d="M16 19l1 1" />
+        </svg>
+
+        <span class="ax-nav__label">Assignment</span>
     </a>
     
     <div class="ax-nav__group" data-ax-collapse>
@@ -550,6 +715,9 @@
             <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
               href="{{ url("company-vehicle-rental-period") }}" tabindex="-1"><span class="ax-nav__bar"
                 aria-hidden="true"></span><span class="ax-nav__label">Vehicle Rental Period</span></a>
+            <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="3"
+              href="{{ url("company-vehicle-ownership") }}" tabindex="-1"><span class="ax-nav__bar"
+                aria-hidden="true"></span><span class="ax-nav__label">Vehicle Ownership</span></a>
           </div>
         </div>
         <!-- L2 collapsible sub-groups -->
@@ -631,33 +799,101 @@
       <span class="ax-nav__label">Integrations</span>
     </a>
 
-    <div class="ax-nav__group" data-ax-collapse>
-      <button type="button" class="ax-nav__item ax-nav__item--parent" role="treeitem" aria-level="1"
-        aria-expanded="true" data-ax-group="admins" @click="toggle('admins')" tabindex="0">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-user-check">
-          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-          <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-          <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
-          <path d="M15 19l2 2l4 -4" />
-        </svg>
-        <span class="ax-nav__label">Admins</span>
-        <svg class="ax-nav__caret ax-icon--directional" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true">
-          <path d="M9 6l6 6l-6 6" />
-        </svg>
-      </button>
-      <div class="ax-nav__children" role="group" data-ax-collapse-panel>
-        <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="2" href="{{ url("admin") }}"
-          tabindex="-1">
-          <span class="ax-nav__bar" aria-hidden="true"></span><span class="ax-nav__label">Admin Users</span>
-        </a>
-        <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="2" href="{{ url("admin-role") }}"
-          tabindex="-1"><span class="ax-nav__bar" aria-hidden="true"></span><span class="ax-nav__label">Admin
-            Roles</span></a>
-        <a class="ax-nav__item ax-nav__item--child" role="treeitem" aria-level="2" href="{{ url("admin-activity") }}"
-          tabindex="-1"><span class="ax-nav__bar" aria-hidden="true"></span><span class="ax-nav__label">Admin
-            Activities</span></a>
-      </div>
+    @php
+        $isAdminUserActive = request()->is('admin', 'admin/*');
+        $isAdminRoleActive = request()->is('admin-role', 'admin-role/*');
+        $isAdminActivityActive = request()->is('admin-activity', 'admin-activity/*');
+
+        $isAdminMenuOpen =
+            $isAdminUserActive ||
+            $isAdminRoleActive ||
+            $isAdminActivityActive
+    @endphp
+
+    <div class="custom-driver-menu" data-driver-menu>
+
+        <button
+            type="button"
+            class="ax-nav__item ax-nav__item--parent {{ $isAdminMenuOpen ? 'ax-nav__item--trail' : '' }}"
+            data-driver-toggle
+            aria-expanded="{{ $isAdminMenuOpen ? 'true' : 'false' }}"
+            tabindex="0"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-user-check">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+              <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+              <path d="M15 19l2 2l4 -4" />
+            </svg>
+
+            <span class="ax-nav__label">Admins</span>
+
+            <svg
+                class="ax-nav__caret ax-icon--directional"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                width="24"
+                height="24"
+            >
+                <path d="M9 6l6 6l-6 6"/>
+            </svg>
+        </button>
+
+
+        {{-- Child --}}
+        <div
+            class="ax-nav__children custom-driver-panel"
+            data-driver-panel
+            {{ $isAdminMenuOpen ? '' : 'hidden' }}
+        >
+
+            {{-- Admin User --}}
+            <a
+                class="ax-nav__item ax-nav__item--child {{ $isAdminUserActive ? 'ax-nav__item--active is-active' : '' }}"
+                role="treeitem"
+                aria-level="2"
+                href="{{ url('admin') }}"
+                tabindex="{{ $isAdminUserActive ? '0' : '-1' }}"
+                {{ $isAdminUserActive ? 'aria-current="page"' : '' }}
+            >
+                <span class="ax-nav__bar" aria-hidden="true"></span>
+                <span class="ax-nav__label">Admin Users</span>
+            </a>
+
+
+            {{-- Admin Roles --}}
+            <a
+                class="ax-nav__item ax-nav__item--child {{ $isAdminRoleActive ? 'ax-nav__item--active is-active' : '' }}"
+                role="treeitem"
+                aria-level="2"
+                href="{{ url('admin-role') }}"
+                tabindex="{{ $isAdminRoleActive ? '0' : '-1' }}"
+                {{ $isAdminRoleActive ? 'aria-current="page"' : '' }}
+            >
+                <span class="ax-nav__bar" aria-hidden="true"></span>
+                <span class="ax-nav__label">Admin Roles</span>
+            </a>
+
+
+            {{-- Admin Acitivity --}}
+            <a
+                class="ax-nav__item ax-nav__item--child {{ $isAdminActivityActive ? 'ax-nav__item--active is-active' : '' }}"
+                role="treeitem"
+                aria-level="2"
+                href="{{ url('admin-activity') }}"
+                tabindex="{{ $isAdminActivityActive ? '0' : '-1' }}"
+                {{ $isAdminActivityActive ? 'aria-current="page"' : '' }}
+            >
+                <span class="ax-nav__bar" aria-hidden="true"></span>
+                <span class="ax-nav__label">Admin Activities</span>
+            </a>
+
+        </div>
+
     </div>
 
 
@@ -668,11 +904,13 @@
   <!-- ===== FOOT: mini user card ===== -->
   <div class="ax-sidebar__foot">
     <div class="ax-sidebar__user">
-      <img class="ax-avatar ax-sidebar__user-avatar" src="https://i.pravatar.cc/80?img=12" alt="" width="36"
-        height="36" />
+      <span class="ax-avatar ax-avatar__initials"
+      style="background:color-mix(in oklab,var(--ax-accent) 16%,transparent);color:var(--ax-accent);"><span
+        class="ax-avatar__initials">{{ $adminInitials }}</span>
+      </span>
       <span class="ax-sidebar__user-meta">
-        <b class="ax-sidebar__user-name">Ali Ridho</b>
-        <small class="ax-sidebar__user-mail">aliridho@expressgroup.co.id</small>
+        <b class="ax-sidebar__user-name">{{ session('admin')['full_name'] }}</b>
+        <small class="ax-sidebar__user-mail">{{ session('admin')['email'] }}</small>
       </span>
       <a class="ax-sidebar__logout" href="{{ url("admin-logout") }}" aria-label="Logout">
         <svg class="ax-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"

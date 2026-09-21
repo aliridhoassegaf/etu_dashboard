@@ -41,13 +41,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
             aria-hidden="true">
             <path d="M9 6l6 6l-6 6"></path>
           </svg></li>
-        <li class="ax-breadcrumb__item" aria-current="page">Vehicles</li>
-        <li class="ax-breadcrumb__sep" aria-hidden="true"><svg class="ax-icon ax-icon--directional" viewBox="0 0 24 24"
-            fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
-            aria-hidden="true">
-            <path d="M9 6l6 6l-6 6"></path>
-          </svg></li>
-        <li class="ax-breadcrumb__item" aria-current="page">Vehicle</li>
+        <li class="ax-breadcrumb__item" aria-current="page">{{ $title }}</li>
       </ol>
     </nav>
     <!-- ───── DEFAULT TABLE ───── -->
@@ -55,16 +49,16 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
       <div class="ax-card__header">
         <div class="ax-card__titles">
           <h2 class="ax-card__title">{{ $title }}</h2>
-          <p class="ax-card__subtitle">Manage and monitor vehicle data and information.</p>
+          <p class="ax-card__subtitle">Manage vehicle and driver assignments.</p>
         </div>
         @if($data_state === 'has_data' || $data_state === 'filtered_empty')
           <div class="ax-card__actions">
             @php
                 $filterCount = collect([
-                    request()->filled('search'),
-                    request()->filled('user_id'),
-                    request()->filled('vehicle_id'),
-                    request()->filled('company_vehicle_rental_period_id'),
+                  request()->filled('vehicle_id'),
+                  request()->filled('user_id'),
+                  request()->filled('company_vehicle_rental_period_id'),
+                  request()->filled('status'),
                 ])->filter()->count();
             @endphp
             <div x-data="axModal()">
@@ -96,8 +90,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                 <div class="ax-modal ax-modal--centered" x-show="open" x-cloak @keydown.escape.window="hide()" role="dialog"
                   aria-modal="true" aria-labelledby="m-md-title">
                   <div class="ax-modal__backdrop" x-show="open" x-transition.opacity @click="hide()"></div>
-                  <div class="ax-modal__dialog" x-show="open" x-transition x-trap.inert.noscroll="open">
-                    <form method="GET">
+                  <div class="ax-modal__dialog ax-modal__dialog--scrollable" x-show="open" x-transition x-trap.inert.noscroll="open" style="max-height:calc(100vh - var(--ax-space-16));">
                       <div class="ax-modal__header">
                         <h2 class="ax-modal__title" id="m-md-title">Filter</h2>
                         <button type="button" class="ax-modal__close" @click="hide()" aria-label="Close dialog"><svg
@@ -107,114 +100,101 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                             <path d="M6 6l12 12" />
                           </svg></button>
                       </div>
-                      <div class="ax-modal__body" style="display:flex;flex-direction:column;gap:var(--ax-space-5);">
-                        <div class="ax-field">
-                          <label class="ax-label" for="fe-name">Search</label>
-                          <input id="fe-name" type="text" name="search" class="ax-input" placeholder="Search name" value="{{ request('search') }}">
+                      <form method="GET" style="display:contents;">
+                        <div class="ax-modal__body" style="display:flex;flex-direction:column;gap:var(--ax-space-5);">
+
+                          <div class="ax-field">
+                            <label class="ax-label" for="fe-name">Vehicle</label>
+                            <select id="fe-country" class="ax-select" name="vehicle_id">
+                              <option value="">--All--</option>
+
+                              @forelse ($vehicle as $value_select)
+                                <option
+                                    value="{{ $value_select['id'] }}"
+                                    {{ request('vehicle_id') == $value_select['id'] ? 'selected' : '' }}
+                                >
+                                    {{ $value_select['vehicle_brand_name'] }} - {{ $value_select['vehicle_model_name'] }} - {{ $value_select['year'] }} 
+                                </option>
+                              @empty
+                                <option value="" disabled>No data available</option>
+                              @endforelse
+                            </select>
+                          </div>
+
+                          <div class="ax-field">
+                            <label class="ax-label" for="fe-name">Driver</label>
+                            <select id="fe-country" class="ax-select" name="user_id">
+                              <option value="">--All--</option>
+
+                              @forelse ($user as $value_select2)
+                                <option
+                                    value="{{ $value_select2['id'] }}"
+                                    {{ request('user_id') == $value_select2['id'] ? 'selected' : '' }}
+                                >
+                                    {{ $value_select2['full_name'] }}
+                                </option>
+                              @empty
+                                <option value="" disabled>No data available</option>
+                              @endforelse
+                            </select>
+                          </div>
+
+                          <div class="ax-field">
+                            <label class="ax-label" for="fe-name">Rental Period</label>
+                            <select id="fe-country" class="ax-select" name="company_vehicle_rental_period_id">
+                              <option value="">--All--</option>
+
+                              @forelse ($companyVehicleRentalPeriod as $value_select3)
+                                <option
+                                    value="{{ $value_select3['id'] }}"
+                                    {{ request('company_vehicle_rental_period_id') == $value_select3['id'] ? 'selected' : '' }}
+                                >
+                                    {{ $value_select3['name'] }}
+                                </option>
+                              @empty
+                                <option value="" disabled>No data available</option>
+                              @endforelse
+                            </select>
+                          </div>
+
+                          
+
+                          <div class="ax-field">
+                            <label class="ax-label" for="fe-name">Status</label>
+                            <select id="fe-country" class="ax-select" name="status">
+                              <option value="">--All--</option>
+
+                              @forelse ($assignmentStatus as $value_select6)
+                                <option
+                                    value="{{ $value_select6['id'] }}"
+                                    {{ request('status') == $value_select6['id'] ? 'selected' : '' }}
+                                >
+                                    {{ $value_select6['name'] }}
+                                </option>
+                              @empty
+                                <option value="" disabled>No data available</option>
+                              @endforelse
+                            </select>
+                          </div>
+
                         </div>
+                        <div class="ax-modal__footer">
+                            <button
+                                type="button"
+                                class="ax-btn ax-btn--ghost"
+                                @click="window.location.href = window.location.pathname"
+                            >
+                                Reset
+                            </button>
 
-                        <div class="ax-field">
-                          <label class="ax-label" for="fe-name">Vehicle</label>
-                          <select id="fe-country" class="ax-select" name="vehicle_id">
-                            <option value="">--All--</option>
-
-                            @forelse ($vehicle as $value_select)
-                              <option
-                                  value="{{ $value_select['id'] }}"
-                                  {{ request('user_id') == $value_select['id'] ? 'selected' : '' }}
-                              >
-                                  {{ $value_select['vehicle_brand_name'] }}
-                              </option>
-                            @empty
-                              <option value="" disabled>No data available</option>
-                            @endforelse
-                          </select>
-                        </div>
-
-                        <div class="ax-field">
-                          <label class="ax-label" for="fe-name">Driver</label>
-                          <select id="fe-country" class="ax-select" name="user_id">
-                            <option value="">--All--</option>
-
-                            @forelse ($user as $value_select2)
-                              <option
-                                  value="{{ $value_select2['id'] }}"
-                                  {{ request('user_id') == $value_select2['id'] ? 'selected' : '' }}
-                              >
-                                  {{ $value_select2['full_name'] }}
-                              </option>
-                            @empty
-                              <option value="" disabled>No data available</option>
-                            @endforelse
-                          </select>
-                        </div>
-
-                        <div class="ax-field">
-                          <label class="ax-label" for="fe-name">Rental Period</label>
-                          <select id="fe-country" class="ax-select" name="admin_role_id">
-                            <option value="">--All--</option>
-
-                            @forelse ($companyVehicleRentalPeriod as $value_select3)
-                              <option
-                                  value="{{ $value_select3['id'] }}"
-                                  {{ request('company_vehicle_rental_period_id') == $value_select3['id'] ? 'selected' : '' }}
-                              >
-                                  {{ $value_select3['name'] }}
-                              </option>
-                            @empty
-                              <option value="" disabled>No data available</option>
-                            @endforelse
-                          </select>
-                        </div>
-
-                        
-
-                        <div class="ax-field">
-                          <label class="ax-label" for="fe-name">Status</label>
-                          <select id="fe-country" class="ax-select" name="status">
-                            <option value="">--All--</option>
-
-                            @forelse ($assignmentStatus as $value_select6)
-                              <option
-                                  value="{{ $value_select6['id'] }}"
-                                  {{ request('status') == $value_select6['id'] ? 'selected' : '' }}
-                              >
-                                  {{ $value_select6['name'] }}
-                              </option>
-                            @empty
-                              <option value="" disabled>No data available</option>
-                            @endforelse
-                          </select>
-                        </div>
-
-                      </div>
-                      <div class="ax-modal__footer">
-                          <button
-                              type="button"
-                              class="ax-btn ax-btn--ghost"
-                              @click="window.location.href = window.location.pathname"
-                          >
-                              Reset
-                          </button>
-
-                          <button class="ax-btn ax-btn--primary"
-                          @click="hide()">Filter Now</button></div>
+                            <button class="ax-btn ax-btn--primary"
+                            @click="hide()">Filter Now</button></div>
                     </form>
                   </div>
                 </div>
               </template>
             </div>
-            <button type="button" class="ax-btn ax-btn--secondary ax-btn--icon" aria-label="Export">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                class="icon icon-tabler icons-tabler-outline icon-tabler-download">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
-                <path d="M7 11l5 5l5 -5" />
-                <path d="M12 4l0 12" />
-              </svg>
-            </button>
-            <button type="button" class="ax-btn ax-btn--primary">
+            <a href="{{ url('assignment-create') }}" class="ax-btn ax-btn--primary">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
                 class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
@@ -223,7 +203,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                 <path d="M5 12l14 0" />
               </svg>
               <span class="ax-btn__label">Create</span>
-            </button>
+            </a>
           </div>
         @endif
       </div>
@@ -270,37 +250,110 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
           </div>
         </div>
       @endif
-      @if(request('search') || request('user_id') || request('vehicle_id') || request('company_vehicle_rental_period_id') || request('status'))
+      @if(request('vehicle_id') || request('user_id') || request('company_vehicle_rental_period_id') || request('status'))
         <div class="ax-card__body pt-0!">
 
           <div style="display:flex;flex-wrap:wrap;gap:var(--ax-space-2);min-height:24px;">
 
-              {{-- Search Filter --}}
-              @if(request('search'))
-                  <span class="ax-badge ax-badge--soft ax-badge--accent ax-badge--chip">
-                      <span>Search : {{ request('search') }}</span>
+              @if(request('vehicle_id'))
+                  @php
+                      $selectedVehicle = collect($vehicle)
+                          ->firstWhere('id', request('vehicle_id'));
+                  @endphp
 
-                      <button
-                          type="button"
-                          class="ax-badge__remove"
-                          aria-label="Remove Search"
-                          onclick="removeFilter('search')"
-                      >
-                          <svg
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              stroke-width="2.4"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              aria-hidden="true"
+                  @if($selectedVehicle)
+                      <span class="ax-badge ax-badge--soft ax-badge--accent ax-badge--chip">
+                          <span>Vehicle : {{ $selectedVehicle['vehicle_brand_name'] }} - {{ $selectedVehicle['vehicle_model_name'] }} - {{ $selectedVehicle['year'] }} </span>
+
+                          <button
+                              type="button"
+                              class="ax-badge__remove"
+                              aria-label="Remove Model"
+                              onclick="removeFilter('vehicle_id')"
                           >
-                              <path d="M18 6l-12 12" />
-                              <path d="M6 6l12 12" />
-                          </svg>
-                      </button>
-                  </span>
+                              <svg
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  stroke-width="2.4"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  aria-hidden="true"
+                              >
+                                  <path d="M18 6l-12 12" />
+                                  <path d="M6 6l12 12" />
+                              </svg>
+                          </button>
+                      </span>
+                  @endif
               @endif
+
+              @if(request('user_id'))
+                  @php
+                      $selecteduser = collect($user)
+                          ->firstWhere('id', request('user_id'));
+                  @endphp
+
+                  @if($selecteduser)
+                      <span class="ax-badge ax-badge--soft ax-badge--accent ax-badge--chip">
+                          <span>Driver : {{ $selecteduser['full_name'] }}</span>
+
+                          <button
+                              type="button"
+                              class="ax-badge__remove"
+                              aria-label="Remove Model"
+                              onclick="removeFilter('user_id')"
+                          >
+                              <svg
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  stroke-width="2.4"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  aria-hidden="true"
+                              >
+                                  <path d="M18 6l-12 12" />
+                                  <path d="M6 6l12 12" />
+                              </svg>
+                          </button>
+                      </span>
+                  @endif
+              @endif
+
+              @if(request('company_vehicle_rental_period_id'))
+                  @php
+                      $selectedCompanyVehicleRentalPeriod = collect($companyVehicleRentalPeriod)
+                          ->firstWhere('id', request('company_vehicle_rental_period_id'));
+                  @endphp
+
+                  @if($selectedCompanyVehicleRentalPeriod)
+                      <span class="ax-badge ax-badge--soft ax-badge--accent ax-badge--chip">
+                          <span>Company Vehicle Rental Period : {{ $selectedCompanyVehicleRentalPeriod['name'] }}</span>
+
+                          <button
+                              type="button"
+                              class="ax-badge__remove"
+                              aria-label="Remove Model"
+                              onclick="removeFilter('company_vehicle_rental_period_id')"
+                          >
+                              <svg
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  stroke-width="2.4"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  aria-hidden="true"
+                              >
+                                  <path d="M18 6l-12 12" />
+                                  <path d="M6 6l12 12" />
+                              </svg>
+                          </button>
+                      </span>
+                  @endif
+              @endif
+              
 
               {{-- Status Filter --}}
               @if(request('status'))
@@ -338,7 +391,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
 
 
           {{-- Reset All Filters --}}
-          @if(request('search') || request('status'))
+          @if(request('user_id') || request('company_vehicle_rental_period_id') || request('status'))
 
               <button
                   type="button"
@@ -411,7 +464,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                     {{ $value['plat_number'] }} <br>
                   </td>
                   <td class="ax-table__td" style="font-weight:var(--ax-weight-medium);color:var(--ax-text-strong);">
-                    {{ $value['company_vehicle_rental_period_name'] }} <br>
+                    {{ $value['company_vehicle_rental_period_name'] }} - {{ $value['company_vehicle_rental_option_name'] }} <br>
                     <small style="color:var(--ax-text-muted);font-weight: normal;">{{ $value['start_date'] }} - {{ $value['end_date'] }} </small>
                   </td>
                   <td class="ax-table__td"><span class="ax-badge ax-badge--soft ax-badge--success ax-badge--pill"><span
@@ -419,7 +472,7 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
                   <td class="ax-table__td">
                     <div class="ax-cluster" style="gap:6px;flex-wrap:nowrap;">
 
-                      <a class="ax-btn ax-btn--secondary ax-btn--sm ax-btn--icon" href="{{ url('vehicle/' . $value['id']) }}" aria-label="Email">
+                      <a class="ax-btn ax-btn--secondary ax-btn--sm ax-btn--icon" href="{{ url('assignment/' . $value['id']) }}" aria-label="Email">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                           stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
                           class="icon icon-tabler icons-tabler-outline icon-tabler-eye">
@@ -1072,9 +1125,13 @@ Pure CSS table variants; same DOM/classes/ARIA, no page script. --}}
     function resetFilters() {
         const url = new URL(window.location.href);
 
-        url.searchParams.delete('search');
+        url.searchParams.delete('vehicle_id');
+        url.searchParams.delete('user_id');
+        url.searchParams.delete('company_vehicle_rental_period_id');
         url.searchParams.delete('status');
         url.searchParams.delete('page');
+
+        http://localhost:8000/assignment?vehicle_id=e663b72c-ad99-4660-b95d-7207e4a73966&user_id=29a68145-3b34-4f4e-98f5-e5aaaa322f60&company_vehicle_rental_period_id=1&status=1
 
         window.location.href = url.toString();
     }
